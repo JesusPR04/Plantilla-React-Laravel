@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('descripcion');
             $table->float('precio');
             $table->timestamps();
-            // ESTO ES UN COMENTARIO PRUEBA
+            // ESTO ES UN COMENTARIO PRUEBA PABLO
 
             $table->foreign('idOrganizador')->references('id')->on('usuarios');
             $table->foreign('idCiudad')->references('id')->on('ciudades');
