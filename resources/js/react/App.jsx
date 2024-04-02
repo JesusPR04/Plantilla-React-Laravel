@@ -10,7 +10,7 @@ function App() {
     .then(resultado=>console.log(resultado))
     .catch(error => console.log(error))
   })
-
+//hola soy josevi
   return (
     <>
       <div>
