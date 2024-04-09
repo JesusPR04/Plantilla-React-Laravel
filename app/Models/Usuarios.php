@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class Usuarios extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -17,10 +17,16 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected $table = "usuarios";
+
     protected $fillable = [
-        'name',
+        'nombre',
+        'apellidos',
         'email',
-        'password',
+        'ciudad',
+        'telefono',
+        'rol',
+        'password'
     ];
 
     /**
@@ -42,4 +48,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // Sacar las tarjetas a partir del usuario
+    public function tarjetas(){
+        return $this->hasMany(Tarjetas::class);
+    }
+    // Sacar la peticion que ha hecho el usuario
+    public function peticion()
+    {
+        return $this->belongsTo(Peticiones::class);
+    }
 }
