@@ -5,7 +5,11 @@ export default {
     "./resources/js/react/**/*.jsx"
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        colorFuente: '#333333'
+      }
+    },
   },
   plugins: [],
 }
