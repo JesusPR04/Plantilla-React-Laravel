@@ -51,19 +51,19 @@ function Header() {
                         </div>
                         <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-whit">
                             <li>
-                                <Link to="/" className="block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa]">Encuentra eventos</Link>
+                                <Link to="/" className="block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500">Encuentra eventos</Link>
                             </li>
                             <li>
-                                <Link to="/" className="block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa]">Crear eventos</Link>
+                                <Link to="/" className="block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500">Crear eventos</Link>
                             </li>
                             <li>
-                                <Link to="/" className="block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa]">Ayuda</Link>
+                                <Link to="/" className="block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500">Ayuda</Link>
                             </li>
                             <li>
-                                <Link to="/" className="block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa]">Iniciar sesión</Link>
+                                <Link to="/" className="block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500">Iniciar sesión</Link>
                             </li>
                             <li>
-                                <Link to="/" className="block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa]">Registrarse</Link>
+                                <Link to="/" className="block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500">Registrarse</Link>
                             </li>
                         </ul>
                     </div>
