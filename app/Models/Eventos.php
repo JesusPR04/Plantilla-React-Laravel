@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
 class Eventos extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -17,6 +17,7 @@ class Eventos extends Model
     protected $table = "eventos";
 
     protected $fillable = [
+        'nombre',
         'hora',
         'fecha',
         'localizacion',
