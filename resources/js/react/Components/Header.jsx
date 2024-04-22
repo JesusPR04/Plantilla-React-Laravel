@@ -60,10 +60,10 @@ function Header() {
                                 <Link to="/" className="block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500">Ayuda</Link>
                             </li>
                             <li>
-                                <Link to="/" className="block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500">Iniciar sesión</Link>
+                                <Link to="/login" className="block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500">Iniciar sesión</Link>
                             </li>
                             <li>
-                                <Link to="/" className="block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500">Registrarse</Link>
+                                <Link to="/register" className="block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500">Registrarse</Link>
                             </li>
                         </ul>
                     </div>

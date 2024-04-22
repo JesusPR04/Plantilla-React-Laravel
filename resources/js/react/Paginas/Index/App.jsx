@@ -1,9 +1,9 @@
-import './App.css'
-import Header from './Components/Header'
-import Footer from './Components/Footer'
-import HeaderSection from './Components/HeaderSection'
-import PrincipalFilter from './Components/PrincipalFilter'
-import EventList from './Components/EventList'
+import Header from '../../Components/Header'
+import Footer from '../../Components/Footer'
+import HeaderSection from '../../Components/HeaderSection'
+import PrincipalFilter from '../../Components/PrincipalFilter'
+import EventList from '../../Components/EventList'
+import { Link } from "react-router-dom"
 
 function App() {
   const musicIco = (
@@ -43,7 +43,6 @@ function App() {
   return (
     <main>
       <header>
-        <Header />
         <HeaderSection />
       </header>
       <section className='mt-10'>
@@ -73,7 +72,7 @@ function App() {
           </div>
         </article>
       </section>
-      <Footer />
+      <Link to='/login'>Enlace a login</Link>
     </main>
   )
 }
