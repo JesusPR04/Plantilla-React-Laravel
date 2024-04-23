@@ -72,7 +72,6 @@ function App() {
           </div>
         </article>
       </section>
-      <Link to='/login'>Enlace a login</Link>
     </main>
   )
 }

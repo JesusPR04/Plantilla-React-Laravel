@@ -17,6 +17,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
 Route::get('getEventos','API\EventoController@getEventos')->name('getEventos');
 Route::post('storeEvento','API\EventoController@storeEvento')->name('storeEventos');
 Route::post('updateEvento','API\EventoController@updateEvento')->name('updateEventos');
