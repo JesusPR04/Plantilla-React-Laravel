@@ -41,11 +41,11 @@ function App() {
   )
 
   return (
-    <main>
+    <main className='bg-gray-50'>
       <header>
         <HeaderSection />
       </header>
-      <section className='mt-10'>
+      <section className='mt-14 mb-14'>
         <article>
           <h2 className='text-center text-blue-500 text-5xl xl:text-6xl 2xl:text-6xl lg:text-6xl md:text-6xl font-bold tracking-tight uppercase'>Géneros</h2>
           <div className='flex flex-wrap 2xl:flex-row xl:flex-row lg:flex-row md:flex-row justify-center gap-14 mt-6 mb-6'>
