@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Usuarios;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -14,22 +14,22 @@ class AuthController extends Controller
     /**
      * Create User
      * @param Request $request
-     * @return Usuarios
+     * @return User
      */
     public function createUser(Request $request)
     {
         try {
-            //Validated
+            //Validator de los datos del usuario
             $validateUser = Validator::make($request->all(),
             [
-                'name' => 'required',
+                'nombre' => 'required',
                 'apellidos' => 'required',
-                'email' => 'required|email|unique:users,email',
+                'email' => 'required|email|unique:usuarios,email',
                 'password' => 'required',
-                'alergias' => 'nullable',
                 'telefono' => 'required',
+                'ciudad' => 'required',
             ]);
-
+            //Fallo en la validacion del usuario
             if($validateUser->fails()){
                 return response()->json([
                     'status' => false,
@@ -37,22 +37,23 @@ class AuthController extends Controller
                     'errors' => $validateUser->errors()
                 ], 401);
             }
-
-            $user = Usuarios::create([
-                'name' => $request->name,
+            //Creacion del usuario
+            $user = User::create([
+                'nombre' => $request->nombre,
                 'apellidos' => $request->apellidos,
                 'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'alergias' => $request->alergias,
+                'ciudad' => $request->ciudad,
                 'telefono' => $request->telefono,
+                'rol' => 'Usuario',
+                'password' => Hash::make($request->password),
             ]);
-
+            //Respuesta ejecutado correctamente
             return response()->json([
                 'status' => true,
-                'message' => 'User Created Successfully',
+                'message' => 'Usuario Creado Correctamente.',
                 'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
-
+            //Respuesta catch
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
@@ -64,7 +65,7 @@ class AuthController extends Controller
     /**
      * Login The User
      * @param Request $request
-     * @return Usuarios
+     * @return User
      */
     public function loginUser(Request $request)
     {
@@ -86,15 +87,15 @@ class AuthController extends Controller
             if(!Auth::attempt($request->only(['email', 'password']))){
                 return response()->json([
                     'status' => false,
-                    'message' => 'Email & Password does not match with our record.',
+                    'message' => 'El Email y Contraseña proporcionados son incorrectos o no concuerdan.',
                 ], 401);
             }
 
-            $user = Usuarios::where('email', $request->email)->first();
+            $user = User::where('email', $request->email)->first();
 
             return response()->json([
                 'status' => true,
-                'message' => 'User Logged In Successfully',
+                'message' => 'Usuario logueado correctamente.',
                 'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
 
