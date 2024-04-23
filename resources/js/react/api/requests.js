@@ -53,3 +53,18 @@ export const register = async (name, surname, email, city, telephone, password) 
         console.log(error)
     }
 }
+
+export const getCiudades = async() =>{
+    const url = 'http://localhost/ciudades'
+    try {
+        const response = await fetch(url)
+        const data = response.json()
+        if (data.status) {
+            return data;
+        } else {
+            return data;
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
