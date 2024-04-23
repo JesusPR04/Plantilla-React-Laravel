@@ -62,7 +62,7 @@ function App() {
         <hr className="w-full h-[2px] bg-[#eeedf2]" />
         <article>
           <h2 className='text-center text-colorFuente text-5xl xl:text-6xl 2xl:text-6xl lg:text-6xl md:text-6xl font-bold tracking-tight uppercase mt-6'>Eventos en <span className="text-blue-500">Córdoba</span></h2>
-          <div className="flex flex-wrap gap-6 justify-evenly">
+          <div className="flex flex-wrap gap-6 justify-evenly mx-6">
             <EventList />
             <EventList />
             <EventList />
