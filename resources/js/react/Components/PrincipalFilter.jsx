@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 function PrincipalFilter({ icono, titulo, ruta }) {
-    //TODO: Circulos con enlaces que funcionan como filtro, mas responsive
+    
     const [hover, setHover] = useState(false)
 
     return (

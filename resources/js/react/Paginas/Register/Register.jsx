@@ -1,67 +1,58 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { register } from '../../api/requests'
 
 const Register = () => {
 
-    const user = {
+    const [usuario, setUsuario] = useState({
         nombre: '',
         apellidos: '',
         email: '',
         password: '',
         telefono: '',
         ciudad: ''
-    }
-
-    const [usuario, setUsuario] = useState(user)
-
-    const obtenerDatosFetch = () => {
-        const options = {
-            method: 'post',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(usuario)
-        }
-        const url = 'http://localhost/public/api/register'
-        fetch(url, options)
-            .then(respuesta => respuesta.json())
-            .then(respuesta => comprobarRegistro(respuesta))
-            .catch(error => console.log(error))
-    }
-    const comprobarRegistro = (respuesta) => {
-        if (respuesta.status) {
-            console.log(respuesta.token);
-        } else {
-            console.log(respuesta)
-        }
-    }
+    })
 
     const cambiarEmail = (e) => {
-        user.email = e.target.value
-        setUsuario(user)
+        setUsuario({
+            ...usuario,
+             email: e.target.value
+        })
     }
     const cambiarPassword = (e) => {
-        user.password = e.target.value
-        setUsuario(user)
+        setUsuario({
+            ...usuario,
+            password: e.target.value
+        })
     }
     const cambiarNombre = (e) => {
-        user.nombre = e.target.value
-        setUsuario(user)
+        setUsuario({
+            ...usuario,
+            nombre: e.target.value
+        })
     }
     const cambiarCiuad = (e) => {
-        user.ciudad = e.target.value
-        setUsuario(user)
+        setUsuario({
+            ...usuario,
+            ciudad: e.target.value
+        })
     }
     const cambiarTelefono = (e) => {
-        user.telefono = e.target.value
-        setUsuario(user)
+        setUsuario({
+            ...usuario,
+            telefono: e.target.value
+        })
     }
     const cambiarApellidos = (e) => {
-        user.apellidos = e.target.value
-        setUsuario(user)
+        setUsuario({
+            ...usuario,
+            apellidos: e.target.value
+        })
     }
     const crearUsuario = () => {
-        obtenerDatosFetch()
+        register(usuario.nombre, usuario.apellidos, usuario.email, usuario.ciudad, usuario.telefono, usuario.password)
+            .then(response => console.log(response))
+            .catch(error => console.log(error))
     }
 
     return (

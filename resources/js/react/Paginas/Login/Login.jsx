@@ -1,48 +1,32 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { login } from '../../api/requests'
 
 const Login = () => {
 
-  const user = {
+  const [usuario, setUsuario] = useState({
     email: '',
     password: ''
-  }
-
-  const [usuario, setUsuario] = useState(user)
-
-  const obtenerDatosFetch = () => {
-    const options = {
-      method: 'post',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify(usuario)
-    }
-    const url = 'http://localhost/public/api/login'
-    fetch(url, options)
-      .then(respuesta => respuesta.json())
-      .then(respuesta => comprobarRegistro(respuesta))
-      .catch(error => console.log(error))
-  }
-  const comprobarRegistro = (respuesta) => {
-    if (respuesta.status) {
-      console.log(respuesta.token);
-    } else {
-      console.log(respuesta)
-    }
-  }
+  })
 
   const cambiarEmail = (e) => {
-    user.email = e.target.value
-    setUsuario(user)
+    setUsuario({
+      ...usuario,
+      email: e.target.value
+    })
   }
   const cambiarPassword = (e) => {
-    user.password = e.target.value
-    setUsuario(user)
+    setUsuario({
+      ...usuario,
+      password: e.target.value
+    })
   }
   const iniciarSesion = () => {
-    obtenerDatosFetch()
+    login(usuario.email, usuario.password)
+      .then(response => console.log(response))
+      .catch(error => console.log(error))
   }
+
   return (
     <div className='flex justify-center'>
       <div className='flex flex-col gap-4'>
