@@ -19,6 +19,11 @@ class AuthController extends Controller
     public function createUser(Request $request)
     {
         try {
+            $mensajes = [
+                'required' => 'El campo :attribute es obligatorio',
+                'unique' => 'El :attribute ya está en uso',
+                'telefono.regex' => 'El :attribute debe tener 9 dígitos numéricos'
+            ];
             //Validator de los datos del usuario
             $validateUser = Validator::make($request->all(),
             [
@@ -26,9 +31,9 @@ class AuthController extends Controller
                 'apellidos' => 'required',
                 'email' => 'required|email|unique:usuarios,email',
                 'password' => 'required',
-                'telefono' => 'required',
+                'telefono' => 'required|regex:/^[0-9]{9}$/',
                 'ciudad' => 'required',
-            ]);
+            ], $mensajes);
             //Fallo en la validacion del usuario
             if($validateUser->fails()){
                 return response()->json([
