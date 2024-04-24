@@ -24,7 +24,7 @@ const Login = () => {
     const iniciarSesion = () => {
         login(usuario.email, usuario.password)
             .then((response) => console.log(response))
-            .catch((error) => console.log(error));
+            .catch((error) => console.log(error)) 
     };
 
     return (
@@ -33,9 +33,9 @@ const Login = () => {
                 <div className="w-full bg-white rounded-lg shadow border mt-14 mb-14 sm:max-w-md xl:p-0">
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                         <h1 className="text-xl font-bold leading-tight tracking-tight text-colorFuente md:text-2xl">
-                            Inicia sesión en su cuenta
+                            Iniciar sesión
                         </h1>
-                        <form className="space-y-4 md:space-y-6">
+                        <div className="space-y-4 md:space-y-6">
                             <div>
                                 <label
                                     for="email"
@@ -50,6 +50,7 @@ const Login = () => {
                                     className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
                                      focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     placeholder="name@company.com"
+                                    onChange={(e) => cambiarEmail(e)}
                                     required
                                 />
                             </div>
@@ -67,13 +68,14 @@ const Login = () => {
                                     placeholder="••••••••"
                                     className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500
                                      block w-full p-2.5"
+                                    onChange={(e) => cambiarPassword(e)}
                                     required
                                 />
                             </div>
                             <button
                                 type="submit"
                                 className="w-full text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none
-                                 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                                 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" onClick={() => iniciarSesion()}
                             >
                                 Iniciar sesión
                             </button>
@@ -86,7 +88,7 @@ const Login = () => {
                                     Regístrate
                                 </Link>
                             </p>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -8,7 +8,8 @@ import Header from './Components/Header.jsx'
 import Footer from './Components/Footer.jsx'
 import Login from './Paginas/Login/Login.jsx'
 import Register from './Paginas/Register/Register.jsx'
-import pagError from './Paginas/Error/Error.jsx'
+import Peticion from './Paginas/Peticion/Peticion.jsx'
+import PagError from './Paginas/Error/Error.jsx'
 
 function AppLayout() {
   return <>
@@ -21,7 +22,7 @@ function AppLayout() {
 const router = createBrowserRouter([
   { 
     element: <AppLayout />,
-    errorElement: <pagError/>,
+    errorElement: <PagError/>,
     children: [
     {
       path: "/",
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
     {
       path: "/register",
       element: <Register />,
+    },
+    {
+      path: "/organizador",
+      element: <Peticion />,
     }
     ]
   }

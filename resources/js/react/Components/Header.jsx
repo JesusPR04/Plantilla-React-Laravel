@@ -6,7 +6,7 @@ function Header() {
     return (
         <>
             <nav className="border-b border-[#eeedf2] text-colorFuente">
-                <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+                <div className="flex flex-wrap items-center justify-between w-5/6 m-auto p-4">
                     <Link 
                     to="" 
                     className="flex items-center space-x-3 rtl:space-x-reverse">
@@ -64,6 +64,9 @@ function Header() {
                             </li>
                             <li>
                                 <Link to="/register" className="block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500">Registrarse</Link>
+                            </li>
+                            <li>
+                                <Link to="/organizador" className="block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500">¿Quieres ser organizador?</Link>
                             </li>
                         </ul>
                     </div>
