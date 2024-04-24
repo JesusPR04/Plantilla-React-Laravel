@@ -9,6 +9,10 @@ const Login = () => {
         email: "",
         password: "",
     });
+    const [error, setError] = useState({
+        mensaje: '',
+        estado: false
+    })
 
     const cambiarEmail = (e) => {
         setUsuario({
@@ -24,16 +28,31 @@ const Login = () => {
     };
     const iniciarSesion = () => {
         login(usuario.email, usuario.password)
-            .then((response) => console.log(response))
-            .catch((error) => console.log(error)) 
+            .then((response) => comprobarEstado(response))
+            .catch((error) => console.log(error))
     };
-
+    const comprobarEstado = (data) => {
+        if (!data.status) {
+            setError({
+                ...error,
+                mensaje: data.message,
+                estado: true
+            })
+        }else{
+            setError({
+                ...error,
+                mensaje: "",
+                estado: false
+            })
+        }
+        
+    }
     return (
         <section className="bg-gray-50 flex flex-wrap justify-center ">
-            <div className="relative mt-14 mb-14 max-w-[500px] hidden lg:block lg:w-1/2 overflow-hidden">
+            <div className="relative mt-14 mb-14 rounded-l-lg max-w-[500px] hidden lg:block lg:w-1/2 overflow-hidden">
                 <img
                     src={imagen}
-                    className="rounded-l-lg h-full w-full transform transition-transform 
+                    className="h-full w-full transform transition-transform 
                       duration-5000 ease-out transform-origin-center"
                     onLoad={(e) => {
                         setTimeout(() => {
@@ -67,8 +86,9 @@ const Login = () => {
             <div className="2xl:w-full xl:w-full lg:w-full bg-white rounded-r-lg shadow border mt-14 mb-14 sm:max-w-md xl:p-0">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1 className="text-xl font-bold leading-tight tracking-tight text-colorFuente md:text-2xl">
-                        Inicia sesión en su cuenta
+                        Iniciar sesión
                     </h1>
+                    <p style={{display: error.estado ? 'block' : 'none'}} className="text-red-500 text-sm">{error.mensaje}</p>
                     <div className="space-y-4 md:space-y-6">
                         <div>
                             <label
