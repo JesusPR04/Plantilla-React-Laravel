@@ -8,7 +8,7 @@ function PrincipalFilter({ icono, titulo, ruta }) {
     return (
         <section className='flex flex-col items-center font-semibold'>
             <Link to={ruta}>
-                <div className="w-24 h-24 text-colorFuente rounded-full border-[1px] cursor-pointer border-blue-200 hover:bg-blue-300  flex flex-col items-center justify-center hover:text-blue-500"
+                <div className="w-24 h-24 text-colorFuente rounded-full border-[1px] cursor-pointer border-blue-200 hover:bg-blue-50  flex flex-col items-center justify-center hover:text-blue-500"
                     onMouseEnter={() => setHover(true)}
                     onMouseLeave={() => setHover(false)}>
                     {icono}
