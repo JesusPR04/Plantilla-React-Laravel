@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Peticiones;
+use Illuminate\Validation\Rules\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,8 +16,8 @@ class OrganizadorController extends Controller
             $validarPeticion = Validator::make($request->all(), [
                 'empresa' => 'required|max:100',
                 'dni' => 'required|regex:/^\d{8}[a-z]$/i',
-                'documento' => 'required',
-                'comentario' => 'nullable|max:500',
+                'documento' => ['required', File::types(['pdf'])->max(12 * 1024)],
+                'comentario' => 'nullable|max:500'
             ]);
 
             if ($validarPeticion->fails()) {
