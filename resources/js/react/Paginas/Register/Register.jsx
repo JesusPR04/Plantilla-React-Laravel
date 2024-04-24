@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { register } from '../../api/requests'
+import { register, getCiudades } from '../../api/requests'
+import Select from 'react-select';
 
 const Register = () => {
 
@@ -13,10 +14,12 @@ const Register = () => {
         ciudad: ''
     })
 
+    const [ciudades, setCiudades] = useState([])
+
     const cambiarEmail = (e) => {
         setUsuario({
             ...usuario,
-             email: e.target.value
+            email: e.target.value
         })
     }
     const cambiarPassword = (e) => {
@@ -31,10 +34,10 @@ const Register = () => {
             nombre: e.target.value
         })
     }
-    const cambiarCiuad = (e) => {
+    const cambiarCiudad = (e) => {
         setUsuario({
             ...usuario,
-            ciudad: e.target.value
+            ciudad: e
         })
     }
     const cambiarTelefono = (e) => {
@@ -55,13 +58,20 @@ const Register = () => {
             .catch(error => console.log(error))
     }
 
+    useEffect(() => {
+        let promesa = getCiudades()
+        promesa.then(data => setCiudades(data.ciudades))
+    }, []);
     return (
         <div className='flex justify-center'>
             <div className='flex flex-col gap-4'>
                 <input type="text" placeholder='Nombre' onChange={(e) => cambiarNombre(e)} />
                 <input type="text" placeholder='Apellidos' onChange={(e) => cambiarApellidos(e)} />
                 <input type="text" placeholder='Email' onChange={(e) => cambiarEmail(e)} />
-                <input type="text" placeholder='Ciudad' onChange={(e) => cambiarCiuad(e)} />
+                <Select options={ciudades.map(ciudad => ({ value: ciudad.id, label: ciudad.nombre }))}
+                onChange={(e) =>{cambiarCiudad(e.label)}}
+                placeholder="Ciudad"
+                isSearchable/>
                 <input type="text" placeholder='Teléfono' onChange={(e) => cambiarTelefono(e)} />
                 <input type="password" placeholder='Contraseña' onChange={(e) => cambiarPassword(e)} />
                 <p className='p-2 text-center lg:text-left'>¿Tienes ya una cuenta?

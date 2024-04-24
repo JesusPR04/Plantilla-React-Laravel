@@ -3,7 +3,11 @@
 namespace App\Models;
 
 
+use App\Models\User;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Tarjetas extends Model
 {
@@ -27,6 +31,6 @@ class Tarjetas extends Model
 
     public function usuario()
     {
-        return $this->belongsTo(Usuarios::class, 'idUsuario');
+        return $this->belongsTo(User::class, 'idUsuario');
     }
 }

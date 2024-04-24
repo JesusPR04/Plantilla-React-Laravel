@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\User;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Eventos extends Model
 {
@@ -33,7 +37,7 @@ class Eventos extends Model
     // Poder sacar el usuario que es el organizador del evento
     public function organizador()
     {
-        return $this->belongsTo(Usuarios::class, 'idOrganizador');
+        return $this->belongsTo(User::class, 'idOrganizador');
     }
     
     // Sacar la ciudad en la que se va a hacer el evento
