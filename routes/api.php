@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/register', [AuthController::class, 'createUser']);
 Route::post('/login', [AuthController::class, 'loginUser']);
 
-Route::post('/peticionOrganizador', [OrganizadorController::class, 'realizarPeticion'])->middleware('auth:sanctum');
+Route::post('/peticionOrganizador', [OrganizadorController::class, 'realizarPeticion'])/* ->middleware('auth:sanctum') */;
 
 Route::get('/prueba',function(){
     return response()->json([

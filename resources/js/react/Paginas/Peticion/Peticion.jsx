@@ -4,7 +4,7 @@ const Peticion = () => {
     const [peticion, setPeticion] = useState({
         empresa: "",
         dni: "",
-        documento: "",
+        documento: null,
         comentarios: ""
     })
     const [errorVisible, setError] = useState(false)
@@ -35,10 +35,32 @@ const Peticion = () => {
             e.target.value = ''
         } else {
             setError(false)
+            setPeticion({
+                ...peticion,
+                documento: e.target.files[0]
+            })
         }
     }
+
+
+
+
+
     const enviarPeticion = () => {
-        console.log(peticion);
+        const formData = new FormData();
+        formData.append('empresa', peticion.empresa);
+        formData.append('dni', peticion.dni);
+        formData.append('documento', peticion.documento);
+        formData.append('comentarios', peticion.comentarios);
+        const url = 'http://localhost/public/api/peticionOrganizador'
+        const options = {
+            method: 'Post',
+            body: formData
+        }
+        fetch(url, options)
+            .then(resultado => resultado.json())
+            .then(data => console.log(data))
+            .catch(error => console.log(error))
     }
     return (
         <div>
