@@ -58,7 +58,7 @@ const Login = () => {
                     className="mt-40 absolute inset-0 flex flex-col items-center justify-center text-center
                      text-white p-4 rounded-md transition-opacity duration-1000 opacity-0"
                 >
-                    <h2 className="text-xl font-semibold">
+                    <h2 className="text-xl font-bold">
                         Descubre, reserva y vive <br/> los mejores eventos con <br/>
                         <span className="text-3xl text-blue-500 uppercase">
                             eventia
