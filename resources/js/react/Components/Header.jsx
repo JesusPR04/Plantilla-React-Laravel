@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import logo from '../assets/Eventia-logo-removebg.png'
 
 function Header() {
+    //TODO: HAY QUE RETOCAR EL HEADER POR QUE LA BARRA DE BUSQUEDA SE VE MAL
     return (
         <>
             <nav className="border-b border-[#eeedf2] text-colorFuente">
