@@ -33,22 +33,18 @@ const Login = () => {
             <div className="relative mt-14 mb-14 max-w-[500px] hidden lg:block lg:w-1/2 overflow-hidden">
                 <img
                     src={imagen}
-                    className="rounded-lg h-full w-full transform transition-transform 
+                    className="rounded-l-lg h-full w-full transform transition-transform 
                       duration-5000 ease-out transform-origin-center"
                     onLoad={(e) => {
                         setTimeout(() => {
-                            e.target.classList.add("scale-125");
-                        }, 2000); // Zoom a 125% después de 3 segundos
-
-                        setTimeout(() => {
                             e.target.classList.add("scale-150");
-                        }, 4000); // Zoom a 150% después de 5 segundos
+                        }, 1000); // Zoom a 150% después de 5 segundos
 
                         setTimeout(() => {
                           document
                               .getElementById("fadeInText")
                               .classList.remove("opacity-0");
-                      }, 6000); // Mostrar texto después de 7 segundos
+                      }, 2000); // Mostrar texto después de 7 segundos
                     }}
                     alt="Imagen de bienvenida"
                 />
@@ -56,7 +52,7 @@ const Login = () => {
                 <div
                     id="fadeInText"
                     className="mt-40 absolute inset-0 flex flex-col items-center justify-center text-center
-                     text-white p-4 rounded-md transition-opacity duration-1000 opacity-0"
+                     text-white p-4 rounded-l-lg transition-opacity duration-1000 opacity-0"
                 >
                     <h2 className="text-xl font-bold">
                         Descubre, reserva y vive <br/> los mejores eventos con <br/>
@@ -68,7 +64,7 @@ const Login = () => {
                 </div>
             </div>
 
-            <div className="2xl:w-full xl:w-full lg:w-full bg-white rounded-lg shadow border mt-14 mb-14 sm:max-w-md xl:p-0">
+            <div className="2xl:w-full xl:w-full lg:w-full bg-white rounded-r-lg shadow border mt-14 mb-14 sm:max-w-md xl:p-0">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1 className="text-xl font-bold leading-tight tracking-tight text-colorFuente md:text-2xl">
                         Inicia sesión en su cuenta
