@@ -92,7 +92,7 @@ class AuthController extends Controller
             if(!Auth::attempt($request->only(['email', 'password']))){
                 return response()->json([
                     'status' => false,
-                    'message' => 'El Email y Contraseña proporcionados son incorrectos o no concuerdan.',
+                    'message' => 'El Email y Contraseña introducidos son incorrectos o no concuerdan.',
                 ], 401);
             }
 
