@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\CiudadesController;
+use App\Http\Controllers\API\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,8 @@ Route::get('/', function () {
 });
 
 Route::get('/ciudades', [CiudadesController::class, 'getCiudades']);
+
+Route::get('/correoPrueba', [UsuarioController::class, 'correoPrueba']);
 
 Route::get('getEventos','API\EventoController@getEventos')->name('getEventos');
 Route::post('storeEvento','API\EventoController@storeEvento')->name('storeEventos');
