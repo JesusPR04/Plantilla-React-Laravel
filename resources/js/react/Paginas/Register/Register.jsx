@@ -105,6 +105,60 @@ const Register = () => {
                     </h1>
                     {/* <p style={{display: error.estado ? 'block' : 'none'}} className="text-red-500 text-sm">{error.mensaje}</p> */}
                     <div className="space-y-4 md:space-y-6">
+                    <div>
+                            <label
+                                htmlFor="nombre"
+                                className="block mb-2 text-sm font-medium text-colorFuente"
+                            >
+                                Nombre
+                            </label>
+                            <input
+                                type="text"
+                                name="nombre"
+                                id="nombre"
+                                placeholder="Nombre"
+                                className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500
+                                  block w-full p-2.5"
+                                  onChange={(e) => cambiarNombre(e)}
+                                required
+                            />
+                        </div>
+                    <div>
+                            <label
+                                htmlFor="apellidos"
+                                className="block mb-2 text-sm font-medium text-colorFuente"
+                            >
+                                Apellidos
+                            </label>
+                            <input
+                                type="text"
+                                name="apellidos"
+                                id="apellidos"
+                                placeholder="Apellidos"
+                                className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500
+                                  block w-full p-2.5"
+                                  onChange={(e) => cambiarApellidos(e)}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label
+                                htmlFor="telefono"
+                                className="block mb-2 text-sm font-medium text-colorFuente"
+                            >
+                                Telefono
+                            </label>
+                            <input
+                                type="Number"
+                                name="telefono"
+                                id="telefono"
+                                placeholder="Telefono"
+                                className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500
+                                  block w-full p-2.5"
+                                  onChange={(e) => cambiarTelefono(e)}
+                                required
+                            />
+                        </div>
                         <div>
                             <label
                                 htmlFor="email"
