@@ -2,10 +2,20 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Mail\eventoMail;
+use Illuminate\Support\Facades\Mail;
 
 class UsuarioController extends Controller
 {
-    //
+    public function correoPrueba(){
+        try {
+            Mail::to('jpc0016@alu.medac.es')->send(new eventoMail());
+            dd('enviado');
+        } catch (\Throwable $th) {
+            dd('No enviado');
+        }
+        
+    }
 }
