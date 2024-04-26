@@ -133,7 +133,7 @@ function Header() {
                                 placeholder="Buscar eventos"
                             />
                         </div>
-                        <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:space-x-4 rtl:space-x-reverse md:flex-row md:justify-center md:mt-4 mb-4 md:border-0">
+                        <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:space-x-4 rtl:space-x-reverse md:flex-row md:justify-center md:mt-4 mb-4 md:border-0 2xl:ml-12">
                             <li>
                                 <Link
                                     to="/"
