@@ -96,10 +96,10 @@ const Register = () => {
                      text-white p-4 rounded-l-lg transition-opacity duration-1000 opacity-0"
                     >
                         <h2 className="text-xl font-bold">
-                            Descubre, reserva y vive <br/> los mejores eventos con <br/>
+                            ¡ Comienza una <br/> nueva aventura con <br/>
                             <span className="text-3xl text-blue-500 uppercase">
-                                eventia
-                            </span>
+                                eventia 
+                            </span> !
                         </h2>
                         <img src={logo} width={90} height={90} alt="Logo" />
                     </div>
