@@ -222,8 +222,7 @@ const Register = () => {
                                     noOptionsMessage={() => "Sin resultados"}
                                     classNames={{
                                         control: () =>  "!text-sm !bg-gray-50 !border !border-gray-300 !text-colorFuente !sm:text-sm !rounded-lg !focus:ring-blue-500 !focus:border-blue-500 !w-full !p-0.5",
-                                        input: (state) =>
-                                            state.isFocused && "ring-0 ring-shawdow-0",
+                                        input: (state) => state.isFocused ? "!ring-0 !shadow-none" : "",
                                         menuList: () => '!bg-gray-50'
                                     }}
                                 />
