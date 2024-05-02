@@ -41,11 +41,11 @@ function App() {
   )
 
   return (
-    <main className='min-h-[calc(100vh-436px)] bg-gray-50'>
+    <main className='min-h-[calc(100vh-436px)] bg-gray-100'>
       <header>
         <HeaderSection />
       </header>
-      <section className='mt-14 mb-14'>
+      <section className='mt-14'>
         <article>
           <h2 className='text-center text-blue-500 text-5xl xl:text-6xl 2xl:text-6xl lg:text-6xl md:text-6xl font-bold tracking-tight uppercase'>Géneros</h2>
           <div className='flex flex-wrap 2xl:flex-row xl:flex-row lg:flex-row md:flex-row justify-center gap-14 mt-6 mb-6'>
@@ -62,7 +62,7 @@ function App() {
         <hr className="w-full h-[2px] bg-[#eeedf2]" />
         <article>
           <h2 className='text-center text-colorFuente text-5xl xl:text-6xl 2xl:text-6xl lg:text-6xl md:text-6xl font-bold tracking-tight uppercase mt-6'>Eventos en <span className="text-blue-500">Córdoba</span></h2>
-          <div className="flex flex-wrap gap-6 justify-evenly mx-6">
+          <div className="flex flex-wrap gap-6 justify-evenly mx-6 pb-14">
             <EventList />
             <EventList />
             <EventList />

@@ -28,5 +28,5 @@ class Ciudades extends Model
     public function eventos(){
         return $this->hasMany(Eventos::class);
     }
-
+    
 }
