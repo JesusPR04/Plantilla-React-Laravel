@@ -73,7 +73,7 @@ const Register = () => {
 
     //TODO: FALTA EL MANEJO DE ERRORES
     return (
-        <section className="bg-gray-50 flex justify-center items-center min-h-[calc(100vh-436px)]">
+        <section className="bg-gray-100 flex justify-center items-center min-h-[calc(100vh-436px)]">
             <article className="flex justify-center">
                 <div className="relative mt-14 mb-14 rounded-l-lg basis-1/2 hidden lg:block lg:w-1/2 overflow-hidden">
                     <img
