@@ -41,7 +41,7 @@ function App() {
   )
 
   return (
-    <main className='bg-gray-50'>
+    <main className='min-h-[calc(100vh-436px)] bg-gray-50'>
       <header>
         <HeaderSection />
       </header>
