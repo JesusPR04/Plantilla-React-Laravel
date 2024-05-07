@@ -48,6 +48,6 @@ class Eventos extends Model
 
     public function categoria()
     {
-        return $this->belongsTo(Categorias::class, 'idCiudad');
+        return $this->belongsTo(Categorias::class, 'idCategoria');
     }
 }
