@@ -28,8 +28,6 @@ const Ayuda = () => {
                         <li>Dirección: 8 Calle Felipe II, Córdoba, España</li>
                     </ul>
                 </div>
-                   
-                
             </div>
         </div>
     );
