@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('idCiudad');
             $table->unsignedBigInteger('aforoTotal');
             $table->unsignedBigInteger('aforoDisponible');
-            $table->string('categoria');
+            $table->unsignedBigInteger('idCategoria');
             $table->string('descripcion');
             $table->float('precio');
             $table->timestamps();
@@ -28,6 +28,7 @@ return new class extends Migration
 
             $table->foreign('idOrganizador')->references('id')->on('usuarios');
             $table->foreign('idCiudad')->references('id')->on('ciudades');
+            $table->foreign('idCategoria')->references('id')->on('categorias');
         });
     }
 

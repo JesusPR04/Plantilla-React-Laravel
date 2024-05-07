@@ -27,11 +27,11 @@ class Eventos extends Model
         'localizacion',
         'aforoTotal',
         'aforoDisponible',
-        'categoria',
         'descripcion',
         'precio',
         'idOrganizador',
-        'idCiudad'
+        'idCiudad',
+        'idCategoria'
     ];
 
     // Poder sacar el usuario que es el organizador del evento
@@ -44,5 +44,10 @@ class Eventos extends Model
     public function ciudad()
     {
         return $this->belongsTo(Ciudades::class, 'idCiudad');
+    }
+
+    public function categoria()
+    {
+        return $this->belongsTo(Categorias::class, 'idCiudad');
     }
 }

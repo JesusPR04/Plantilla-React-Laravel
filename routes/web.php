@@ -20,6 +20,8 @@ Route::get('/', function () {
 });
 
 Route::get('/ciudades', [CiudadesController::class, 'getCiudades']);
+Route::get('/categorias', [CategoriasController::class, 'getCategorias']);
+
 
 Route::get('/correoPrueba', [UsuarioController::class, 'correoPrueba']);
 
