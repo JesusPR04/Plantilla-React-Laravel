@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import Select from "react-select";
+import { getGenrers, getCiudades } from '../api/requests';
 
 Modal.setAppElement('#root');
 
 const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
-    const [ciudad, setCiudad] = useState('');
     const [fechaDesde, setFechaDesde] = useState(null);
     const [fechaHasta, setFechaHasta] = useState(null);
     const [precioMin, setPrecioMin] = useState(0);
@@ -21,6 +22,15 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
         closeModal();
     };
 
+    const [ciudades, setCiudades] = useState([]);
+    const [genrers, setGenrers] = useState([]);
+    useEffect(() => {
+        let promesaCiudades = getCiudades();
+        promesaCiudades.then((data) => setCiudades(data.ciudades));
+        let promesaGeneros = getGenrers();
+        promesaGeneros.then((data) => setGenrers(data.categorias));
+    }, []);
+
     return (
         <Modal
             isOpen={isOpen}
@@ -29,22 +39,24 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
             className="modal rounded-lg overflow-hidden"
             overlayClassName="overlay fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50"
         >
-            <div className="modal-content bg-white p-8 w-96">
+            <div className="modal-content text-colorFuente bg-white p-8 w-96">
                 <h2 className="text-2xl font-bold mb-4">Filtrar Eventos</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
-                        <label htmlFor="ciudad" className="block text-sm font-medium mb-1">Ciudad:</label>
-                        <select
-                            id="ciudad"
-                            value={ciudad}
-                            onChange={(e) => setCiudad(e.target.value)}
-                            className="input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
-                        >
-                            <option value="">Seleccionar Ciudad</option>
-                            <option value="ciudad1">Ciudad 1</option>
-                            <option value="ciudad2">Ciudad 2</option>
-                            <option value="ciudad3">Ciudad 3</option>
-                        </select>
+                    <Select
+                        options={ciudades.map((ciudad) => ({
+                            value: ciudad.id,
+                            label: ciudad.nombre,
+                        }))}
+                        placeholder="Ciudad"
+                        isSearchable
+                        noOptionsMessage={() => "Sin resultados"}
+                        classNames={{
+                            control: () =>  "!text-sm !bg-gray-50 !border !border-gray-300 !text-colorFuente !sm:text-sm !rounded-lg !focus:ring-blue-500 !focus:border-blue-500 !w-full !p-0.5",
+                            input: (state) => state.isFocused ? "!ring-0 !shadow-none" : "",
+                            menuList: () => '!bg-gray-50'
+                        }}
+                    />
                     </div>
                     <div className="mb-4">
                         <label htmlFor="fechaDesde" className="block text-sm font-medium mb-1">Fecha Desde:</label>
@@ -52,7 +64,8 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
                             id="fechaDesde"
                             selected={fechaDesde}
                             onChange={date => setFechaDesde(date)}
-                            className="input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+                            wrapperClassName="w-full"
+                            className="w-full bg-gray-50 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500"
                         />
                     </div>
                     <div className="mb-4">
@@ -61,7 +74,8 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
                             id="fechaHasta"
                             selected={fechaHasta}
                             onChange={date => setFechaHasta(date)}
-                            className="input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+                            wrapperClassName="w-full"
+                            className="w-full bg-gray-50 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500"
                         />
                     </div>
                     <div className="mb-4">
@@ -89,18 +103,20 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
                         />
                     </div>
                     <div className="mb-4">
-                        <label htmlFor="categoria" className="block text-sm font-medium mb-1">Categoría:</label>
-                        <select
-                            id="categoria"
-                            value={categoria}
-                            onChange={(e) => setCategoria(e.target.value)}
-                            className="input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
-                        >
-                            <option value="">Seleccionar Categoría</option>
-                            <option value="categoria1">Categoría 1</option>
-                            <option value="categoria2">Categoría 2</option>
-                            <option value="categoria3">Categoría 3</option>
-                        </select>
+                        <Select
+                            options={genrers.map((genrer) => ({
+                                value: genrer.id,
+                                label: genrer.nombre,
+                            }))}
+                            placeholder="Géneros"
+                            isSearchable
+                            noOptionsMessage={() => "Sin resultados"}
+                            classNames={{
+                                control: () => "!text-sm !bg-gray-50 !border !border-gray-300 !text-colorFuente !sm:text-sm !rounded-lg !focus:ring-blue-500 !focus:border-blue-500 !w-full !p-0.5",
+                                input: (state) => state.isFocused ? "!ring-0 !shadow-none" : "",
+                                menuList: () => '!bg-gray-50'
+                            }}
+                        />
                     </div>
                     <div className="mb-4">
                         <label htmlFor="aforoMin" className="block text-sm font-medium mb-1">Aforo Mínimo: {aforoMin}</label>

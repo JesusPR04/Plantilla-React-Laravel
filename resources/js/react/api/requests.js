@@ -70,7 +70,7 @@ export const getCiudades = async() => {
 }
 
 export const getGenrers = async() => {
-    const url = ''
+    const url = 'http://localhost/categorias'
     try {
         const response = await fetch(url)
         const data = response.json()
