@@ -15,6 +15,8 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
     const [aforoMin, setAforoMin] = useState(0);
     const [aforoMax, setAforoMax] = useState(40000);
 
+    const today = new Date();
+    const formattedDate = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`;
     const handleSubmit = (e) => {
         e.preventDefault();
         applyFilters({ ciudad, fechaDesde, fechaHasta, precioMin, precioMax, categoria, aforoMin, aforoMax });
@@ -26,7 +28,7 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
             isOpen={isOpen}
             onRequestClose={closeModal}
             contentLabel="Filtrar eventos"
-            className="modal rounded-lg overflow-hidden"
+            className="modal rounded-lg overflow-y-auto"
             overlayClassName="overlay fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50"
         >
             <div className="modal-content bg-white p-8 w-96">
@@ -52,6 +54,7 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
                             id="fechaDesde"
                             selected={fechaDesde}
                             onChange={date => setFechaDesde(date)}
+                            placeholderText={formattedDate}
                             className="input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
                         />
                     </div>
@@ -61,6 +64,7 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
                             id="fechaHasta"
                             selected={fechaHasta}
                             onChange={date => setFechaHasta(date)}
+                            placeholderText='Fecha hasta...'
                             className="input w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
                         />
                     </div>
