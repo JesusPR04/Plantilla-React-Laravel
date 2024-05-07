@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import logo from "../../assets/Eventia-logo-removebg.png";
 
 const Peticion = () => {
     const [peticion, setPeticion] = useState({
@@ -65,13 +66,13 @@ const Peticion = () => {
     return (
         <div className='p-10'>
             <div className='justify-center'>
-                <p className="text-4xl pb-4 font-bold text-colorFuente">¿Quieres ser organizador?</p>
+                <p className="text-4xl pb-4 font-bold text-colorFuente"> ¿Quieres ser organizador?</p>
                 <p className='pb-2 pt-2'>¡Manda una solicitud mediante este formulario para poder publicitar tus propios eventos!</p>
-                <p><span className='text-red-500 font-bold'>*</span>Nombre de tu empresa</p>
+                <p><span className='text-red-500 font-bold p-1'>*</span>Nombre de tu empresa</p>
                 <input type="text" name="" id="" placeholder='Nombre de tu empresa' onChange={(e) => cambiarEmpresa(e)} />
-                <p><span className='text-red-500 font-bold'>*</span>DNI</p>
+                <p><span className='text-red-500 font-bold p-1'>*</span>DNI</p>
                 <input type="text" name="" id="" placeholder='DNI' onChange={(e) => cambiarDni(e)} />
-                <p><span className='text-red-500 font-bold'>*</span>Documento que te acredite como miembro de la empresa</p>
+                <p><span className='text-red-500 font-bold p-1'>*</span>Documento que te acredite como miembro de la empresa</p>
                 <input type="file" name="" id="" onChange={(e) => documento(e)} />
                 <p style={{ color: 'red', display: errorVisible ? 'block' : 'none' }}>El documento deberá ser en formato .pdf</p>
                 <p>Comentarios</p>

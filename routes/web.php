@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\UsuarioController;
 use App\Http\Controllers\API\CiudadesController;

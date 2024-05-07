@@ -16,6 +16,8 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
     const [aforoMin, setAforoMin] = useState(0);
     const [aforoMax, setAforoMax] = useState(40000);
 
+    const today = new Date();
+    const formattedDate = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`;
     const handleSubmit = (e) => {
         e.preventDefault();
         applyFilters({ ciudad, fechaDesde, fechaHasta, precioMin, precioMax, categoria, aforoMin, aforoMax });
@@ -36,7 +38,7 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
             isOpen={isOpen}
             onRequestClose={closeModal}
             contentLabel="Filtrar eventos"
-            className="modal rounded-lg overflow-hidden"
+            className="modal rounded-lg overflow-y-auto"
             overlayClassName="overlay fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50"
         >
             <div className="modal-content text-colorFuente bg-white p-8 w-96">
