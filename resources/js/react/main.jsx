@@ -10,6 +10,7 @@ import Login from './Paginas/Login/Login.jsx'
 import Register from './Paginas/Register/Register.jsx'
 import Peticion from './Paginas/Peticion/Peticion.jsx'
 import PagError from './Paginas/Error/Error.jsx'
+import Ayuda from './Paginas/Ayuda/Ayuda.jsx'
 import BuscadorEventos from './Paginas/BuscadorEventos/BuscadorEventos.jsx'
 
 function AppLayout() {
@@ -21,13 +22,17 @@ function AppLayout() {
 }
 
 const router = createBrowserRouter([
-  { 
+  {
     element: <AppLayout />,
     errorElement: <PagError/>,
     children: [
     {
       path: "/",
       element: <App />,
+    },
+    {
+      path: "/ayuda",
+      element: <Ayuda />,
     },
     {
       path: "/login",
@@ -40,12 +45,11 @@ const router = createBrowserRouter([
     {
       path: "/organizador",
       element: <Peticion />,
-    },    
+    },
     {
       path: "/buscadoreventos",
       element: <BuscadorEventos />,
     },
-    
     ]
   }
 ]);

@@ -10,6 +10,7 @@ export default {
         colorFuente: '#333333'
       }
     },
+    // Azul background-blue-500 y hover background-blue-700
   },
   plugins: [],
 }

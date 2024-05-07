@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Categorias;
 use App\Models\Ciudades;
 use Illuminate\Http\Request;
 

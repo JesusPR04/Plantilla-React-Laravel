@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\CiudadesController;
+use App\Http\Controllers\API\CategoriasController;
 use App\Http\Controllers\API\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
