@@ -54,7 +54,7 @@ export const register = async (name, surname, email, city, telephone, password) 
     }
 }
 
-export const getCiudades = async() =>{
+export const getCiudades = async() => {
     const url = 'http://localhost/ciudades'
     try {
         const response = await fetch(url)
@@ -64,6 +64,21 @@ export const getCiudades = async() =>{
         } else {
             return data;
         }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const getGenrers = async() => {
+    const url = ''
+    try {
+        const response = await fetch(url)
+        const data = response.json()
+        if (data.status) {
+            return data;
+        } else {
+            return data;
+        } 
     } catch (error) {
         console.log(error)
     }

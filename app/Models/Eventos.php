@@ -39,7 +39,7 @@ class Eventos extends Model
     {
         return $this->belongsTo(User::class, 'idOrganizador');
     }
-    
+
     // Sacar la ciudad en la que se va a hacer el evento
     public function ciudad()
     {
@@ -48,6 +48,6 @@ class Eventos extends Model
 
     public function categoria()
     {
-        return $this->belongsTo(Categorias::class, 'idCiudad');
+        return $this->belongsTo(Categorias::class, 'idCategoria');
     }
 }
