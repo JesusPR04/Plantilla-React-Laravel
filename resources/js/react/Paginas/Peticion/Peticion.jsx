@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import "../../Css/FileButton.css"
 import logo from "../../assets/Eventia-logo-removebg.png";
 
 const Peticion = () => {
@@ -63,26 +64,117 @@ const Peticion = () => {
             .then(data => console.log(data))
             .catch(error => console.log(error))
     }
+
     return (
-        <div className='p-10'>
-            <div className='justify-center'>
-                <p className="text-4xl pb-4 font-bold text-colorFuente"> ¿Quieres ser organizador?</p>
-                <p className='pb-2 pt-2'>¡Manda una solicitud mediante este formulario para poder publicitar tus propios eventos!</p>
-                <p><span className='text-red-500 font-bold p-1'>*</span>Nombre de tu empresa</p>
-                <input type="text" name="" id="" placeholder='Nombre de tu empresa' onChange={(e) => cambiarEmpresa(e)} />
-                <p><span className='text-red-500 font-bold p-1'>*</span>DNI</p>
-                <input type="text" name="" id="" placeholder='DNI' onChange={(e) => cambiarDni(e)} />
-                <p><span className='text-red-500 font-bold p-1'>*</span>Documento que te acredite como miembro de la empresa</p>
-                <input type="file" name="" id="" onChange={(e) => documento(e)} />
-                <p style={{ color: 'red', display: errorVisible ? 'block' : 'none' }}>El documento deberá ser en formato .pdf</p>
-                <p>Comentarios</p>
-                <textarea name="" id="" cols="50" rows="5" placeholder='Comentarios sobre su solicitud...' onChange={(e) => cambiarComentarios(e)} />
-                <p>Los campos con (<span className='text-red-500 font-bold'>*</span>) son obligatorios</p>
-                <input type="submit" value="Enviar"
-                    className="w-40 text-white bg-blue-500 hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                    onClick={() => enviarPeticion()} />
-            </div>
-        </div>
+        <section className='p-10 min-h-[calc(100vh-436px)] bg-gray-100 '>
+            <article className='p-5'>
+                <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-colorFuente uppercase text-center"> 
+                    ¿ Quieres ser
+                    <span className='text-blue-500'> organizador</span> ?
+                </h2>
+                <h2 className='pb-2 pt-6 font-semibold text-colorFuente text-center'>
+                    ¡ Manda una <span className='text-blue-500'>solicitud</span> mediante este formulario para poder 
+                    <span className='text-blue-500'> publicitar</span> tus propios 
+                    <span className='text-blue-500 uppercase'> eventos</span> !
+                </h2>
+                
+                <article className='mt-6 mx-auto space-y-4 md:space-y-6 grid grid-cols-2 gap-x-8 items-end max-w-xl'>
+                    <div className='col-span-2 sm:col-span-1'>
+                        <div className='flex flex-row gap-2 mb-2 justify-between'>
+                            <label
+                                htmlFor="nombreEmpresa"
+                                className="block mb-2 text-sm font-medium text-colorFuente"
+                            >
+                                Nombre de tu Empresa
+                            </label>
+                            <span className="bg-blue-500 text-white font-semibold px-2 py-1 text-xs rounded-full inline-block">
+                                Requerido
+                            </span>
+                        </div>
+                        <input
+                            type="text"
+                            name="nombreEmpresa"
+                            id="nombreEmpresa"
+                            className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
+                            focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            placeholder="Nombre"
+                            onChange={(e) => cambiarEmpresa(e)}
+                            required
+                        />
+                    </div>
+                    <div className='col-span-2 sm:col-span-1'>
+                        <div className='flex flex-row gap-2 mb-2 justify-between'>
+                            <label
+                                htmlFor="dni"
+                                className="block mb-2 text-sm font-medium text-colorFuente"
+                            >
+                                DNI
+                            </label>
+                            <span className="bg-blue-500 text-white font-semibold px-2 py-1 text-xs rounded-full inline-block">
+                                Requerido
+                            </span>
+                        </div>
+                        <input
+                            type="text"
+                            name="dni"
+                            id="dni"
+                            className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
+                            focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            placeholder="DNI"
+                            onChange={(e) => cambiarDni(e)}
+                            required
+                        />
+                    </div>
+                    <div className='col-span-2'>
+                        <div className='flex flex-row gap-2 mb-2 justify-between'>
+                            <label
+                                htmlFor="documento"
+                                className="block mb-2 text-sm font-medium text-colorFuente"
+                            >
+                                Acreditación Empresarial
+                            </label>
+                            <span className="bg-blue-500 text-white font-semibold px-2 py-1 text-xs rounded-full inline-block">
+                                Requerido
+                            </span> 
+                        </div>
+                        <input
+                            type="file"
+                            name="documento"
+                            id="documento"
+                            className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
+                            focus:ring-blue-500 focus:border-blue-500 block w-full"
+                            onChange={(e) => documento(e)}
+                            required
+                        />
+                        <p style={{ color: 'red', marginTop: '8px', display: errorVisible ? 'block' : 'none' }}>
+                            El documento deberá ser en formato .pdf
+                        </p>
+                    </div>
+                    <div className='col-span-2'>
+                        <div className='flex flex-row gap-2 mb-2 justify-between'>
+                            <label
+                                htmlFor="comentario"
+                                className="block mb-2 text-sm font-medium text-colorFuente"
+                            >
+                                Comentarios
+                            </label>
+                        </div>
+                        <textarea 
+                            name='comentario' id='comentario' cols={50} rows={5}
+                            placeholder='Comentarios sobre su solicitud...'
+                            onChange={(e) => cambiarComentarios(e)}
+                            className='bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
+                            focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
+                        />
+                    </div>
+                    <input 
+                        type="submit" value="Enviar"
+                        className="w-40 text-white bg-blue-500 hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center cursor-pointer col-span-2 justify-self-center sm:justify-self-end"
+                        onClick={() => enviarPeticion()} 
+                    />   
+                </article>
+            </article>
+        </section>
     )
 }
 

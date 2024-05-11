@@ -20,7 +20,7 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
     const formattedDate = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`;
     const handleSubmit = (e) => {
         e.preventDefault();
-        applyFilters({ ciudad, fechaDesde, fechaHasta, precioMin, precioMax, categoria, aforoMin, aforoMax });
+        applyFilters({ ciudades, fechaDesde, fechaHasta, precioMin, precioMax, categoria, aforoMin, aforoMax });
         closeModal();
     };
 

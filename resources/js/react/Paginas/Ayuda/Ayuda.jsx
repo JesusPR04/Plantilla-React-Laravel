@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 const Ayuda = () => {
     return (
-        <div className="bg-gray-100 rounded shadow p-3">
-            <div className="card flex-col items-center justify-center">
+        <div className="bg-gray-100 text-colorFuente rounded shadow p-3">
+            <div className="card flex-col items-center justify-center max-w-5xl mx-auto py-10">
                 <div className="card-body bg-blue-100 border border-blue-500 p-4 mb-4">
                     <p className="text-colorFuente mb-4">
                         Somos una empresa líder en la organización de eventos, especializada en crear experiencias inolvidables para nuestros clientes. Con un equipo de profesionales altamente capacitados y creativos, nos esforzamos por superar las expectativas en cada proyecto que emprendemos.
@@ -20,12 +20,21 @@ const Ayuda = () => {
                     </p>
                 </div>
                 <div>
-                    <h2 className="text-2xl font-bold mb-4">Contáctanos</h2>
+                    <h2 className="text-2xl font-bold text-blue-500 uppercase mb-4">Contáctanos</h2>
                     <p className="text-colorFuente mb-4">Para cualquier consulta o asistencia, no dudes en contactarnos:</p>
                     <ul className="list-disc pl-6">
-                        <li>Email: eventia@gmail.com</li>
-                        <li>Teléfono: +34 646-456-789</li>
-                        <li>Dirección: 8 Calle Felipe II, Córdoba, España</li>
+                        <li>
+                            <span className='font-bold text-blue-500'>Email</span> 
+                            <span className='font-semibold'>: eventia@gmail.com</span>
+                        </li>
+                        <li>
+                            <span className='font-bold text-blue-500'>Teléfono</span> 
+                            <span className='font-semibold'>: +34 646-456-789</span>
+                        </li>
+                        <li>
+                            <span className='font-bold text-blue-500'>Dirección</span> 
+                            <span className='font-semibold'>: Calle Felipe II, 8 14006 Córdoba, España</span>
+                        </li>
                     </ul>
                 </div>
             </div>

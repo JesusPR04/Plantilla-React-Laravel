@@ -54,7 +54,7 @@ function HeaderSection() {
             </div>
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl lg:mx-0">
-                    <h2 className="text-4xl font-bold tracking-tight text-white sm:text-4xl uppercase"><span className='text-blue-500 text-5xl xl:text-6xl 2xl:text-6xl lg:text-6xl md:text-6xl'>Conectando</span><br />momentos inolvidables</h2>
+                    <h2 className="text-4xl font-bold tracking-tight text-white uppercase"><span className='text-blue-500 text-5xl xl:text-6xl 2xl:text-6xl lg:text-6xl md:text-6xl'>Conectando</span><br />momentos inolvidables</h2>
                     <p className="mt-6 text-lg leading-8 text-gray-300">
                         Conéctate con la comunidad y descubre eventos locales que se adaptan a tus intereses y pasiones.
                     </p>
