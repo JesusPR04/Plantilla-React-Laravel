@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('ciudad');
             $table->string('rol');
             $table->string('password');
+            $table->integer('puntos')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
