@@ -2,23 +2,21 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Models\Peticiones;
-use Illuminate\Validation\Rules\File;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rules\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class OrganizadorController extends Controller
 {
     public function realizarPeticion(Request $request)
     {
-        /* return response()->json([
-            'asd' => $request->documento
-        ]); */
         $validarPeticion = Validator::make($request->all(), [
             'empresa' => 'required|max:100',
             'dni' => 'required|regex:/^\d{8}[a-z]$/i',
-            'documento' => ['required', File::types(['pdf'])->max(12 * 1024)],
+            'documento' => ['required', File::types(['pdf'])->max(15 * 1024)],
             'comentario' => 'nullable|max:500'
         ]);
 
@@ -28,11 +26,37 @@ class OrganizadorController extends Controller
                 'message' => 'Error de validacion de la petición',
                 'errors' => $validarPeticion->errors()
             ], 401);
-        }else{
-            return response()->json([
-                'asd' => true
-            ]);
         }
+        $documento = $_FILES['documento'];
+        $nombreFichero = 'peticiones/' . time().'_'.$documento['name'];
+        // Ruta de destino
+        $rutaDestino = storage_path($nombreFichero);
+        // Mover el archivo a la ubicación deseada
+        if (move_uploaded_file($documento['tmp_name'], $rutaDestino)) {
+
+            Peticiones::create([
+                'empresa' => $request->empresa,
+                'dni' => $request->dni,
+                'documento' => $nombreFichero,
+                'comentario' => $request->comentario ?? null,
+                'idUsuario' => 1
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Petición realizada correctamente'
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al mover el archivo'
+            ], 401);
+        }
+        /* 
+        return response()->json([
+            'status' => true,
+            'message' => $documento//'Petición recibida correctamente'
+        ]); */
         /* try {
             $validarPeticion = Validator::make($request->all(), [
                 'empresa' => 'required|max:100',

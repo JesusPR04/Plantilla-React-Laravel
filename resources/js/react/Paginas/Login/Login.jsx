@@ -11,6 +11,8 @@ const Login = () => {
     });
     const [error, setError] = useState({
         mensaje: "",
+        email: "",
+        pass: "",
         estado: false,
     });
 
@@ -32,12 +34,35 @@ const Login = () => {
             .catch((error) => console.log(error));
     };
     const comprobarEstado = (data) => {
+        console.log(data);
         if (!data.status) {
             setError({
                 ...error,
                 mensaje: data.message,
                 estado: true,
             });
+            if (data.errors.email) {
+                setError({
+                    ...error,
+                    email: data.errors.email[0]
+                });
+            }else{
+                setError({
+                    ...error,
+                    email: ''
+                });
+            }
+            if (data.errors.password) {
+                setError({
+                    ...error,
+                    pass: data.errors.password[0]
+                });
+            }else{
+                setError({
+                    ...error,
+                    pass: ''
+                });
+            }
         } else {
             setError({
                 ...error,
@@ -101,7 +126,7 @@ const Login = () => {
                                     htmlFor="email"
                                     className="block mb-2 text-sm font-medium text-colorFuente"
                                 >
-                                    Tu correo electrónico
+                                    Correo electrónico
                                 </label>
                                 <input
                                     type="email"
@@ -113,6 +138,12 @@ const Login = () => {
                                     onChange={(e) => cambiarEmail(e)}
                                     required
                                 />
+                                <p
+                                    style={{ display: error.estado ? "block" : "none" }}
+                                    className="text-red-500 text-sm"
+                                >
+                                    {error.email}
+                                </p>
                             </div>
                             <div>
                                 <label
@@ -131,6 +162,12 @@ const Login = () => {
                                     onChange={(e) => cambiarPassword(e)}
                                     required
                                 />
+                                <p
+                                    style={{ display: error.estado ? "block" : "none" }}
+                                    className="text-red-500 text-sm"
+                                >
+                                    {error.pass}
+                                </p>
                             </div>
                             <button
                                 type="submit"

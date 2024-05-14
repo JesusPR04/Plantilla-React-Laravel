@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import "../../Css/FileButton.css"
 import logo from "../../assets/Eventia-logo-removebg.png";
+import { organizador } from '../../api/requests';
 
 const Peticion = () => {
     const [peticion, setPeticion] = useState({
@@ -43,26 +44,17 @@ const Peticion = () => {
             })
         }
     }
-
-
-
-
-
+    
     const enviarPeticion = () => {
         const formData = new FormData();
         formData.append('empresa', peticion.empresa);
         formData.append('dni', peticion.dni);
         formData.append('documento', peticion.documento);
-        formData.append('comentarios', peticion.comentarios);
-        const url = 'http://localhost/public/api/peticionOrganizador'
-        const options = {
-            method: 'Post',
-            body: formData
-        }
-        fetch(url, options)
-            .then(resultado => resultado.json())
-            .then(data => console.log(data))
-            .catch(error => console.log(error))
+        formData.append('comentario', peticion.comentarios);
+        
+        organizador(formData)
+            .then((response) => console.log(response))
+            .catch((error) => console.log(error));
     }
 
     return (

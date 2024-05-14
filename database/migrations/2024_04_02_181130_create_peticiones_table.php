@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('peticiones', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('idUsuario');
             $table->string('empresa');
-            $table->string('descripcion');
             $table->string('dni');
             $table->string('documento');
+            $table->string('comentario')->nullable();
+            $table->unsignedBigInteger('idUsuario');
             $table->timestamps();
 
 

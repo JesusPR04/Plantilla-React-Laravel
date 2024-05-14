@@ -75,16 +75,21 @@ class AuthController extends Controller
     public function loginUser(Request $request)
     {
         try {
+            $mensajes = [
+                'required' => 'El campo :attribute es obligatorio',
+                'email' => 'El formato del :attribute no es correcto',
+                'message' => 'asd'
+            ];
             $validateUser = Validator::make($request->all(),
             [
                 'email' => 'required|email',
                 'password' => 'required'
-            ]);
+            ], $mensajes);
 
             if($validateUser->fails()){
                 return response()->json([
                     'status' => false,
-                    'message' => 'validation error',
+                    'message' => 'Rellene correctamente el formulario',
                     'errors' => $validateUser->errors()
                 ], 401);
             }
