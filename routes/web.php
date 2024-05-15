@@ -29,3 +29,8 @@ Route::get('getEventos','API\EventoController@getEventos')->name('getEventos');
 Route::post('storeEvento','API\EventoController@storeEvento')->name('storeEventos');
 Route::post('updateEvento','API\EventoController@updateEvento')->name('updateEventos');
 Route::post('deleteEvento','API\EventoController@deleteEvento')->name('deleteEventos');
+
+// ARREGLO DEL ERROR 404 AL RECARGAR
+Route::get('/{any}', function () {
+    return view('welcome');
+})->where('any', '.*');
