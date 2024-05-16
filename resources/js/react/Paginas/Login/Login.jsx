@@ -11,11 +11,16 @@ const Login = () => {
     });
     const [error, setError] = useState({
         mensaje: "",
-        email: "",
-        pass: "",
         estado: false,
     });
-
+    const [email, setEmail] = useState({
+        mensaje: "",
+        estado: false,
+    });
+    const [password, setPass] = useState({
+        mensaje: "",
+        estado: false,
+    });
     const cambiarEmail = (e) => {
         setUsuario({
             ...usuario,
@@ -33,38 +38,50 @@ const Login = () => {
             .then((response) => comprobarEstado(response))
             .catch((error) => console.log(error));
     };
-    const comprobarEstado = (data) => {
-        console.log(data);
+
+    const comprobarEstado = (data) => { 
         if (!data.status) {
             setError({
                 ...error,
                 mensaje: data.message,
                 estado: true,
             });
-            if (data.errors.email) {
-                setError({
-                    ...error,
-                    email: data.errors.email[0]
+            if (data?.errors?.email) {
+                setEmail({
+                    ...email,
+                    mensaje: data.errors.email[0],
+                    estado: true,
                 });
             }else{
-                setError({
-                    ...error,
-                    email: ''
+                setEmail({
+                    ...email,
+                    mensaje: ''
                 });
             }
-            if (data.errors.password) {
-                setError({
-                    ...error,
-                    pass: data.errors.password[0]
+            if (data?.errors?.password) {
+                setPass({
+                    ...password,
+                    mensaje: data.errors.password[0],
+                    estado: true,
                 });
             }else{
-                setError({
-                    ...error,
-                    pass: ''
+                setPass({
+                    ...password,
+                    mensaje: ''
                 });
             }
         } else {
             setError({
+                ...error,
+                mensaje: "",
+                estado: false,
+            });
+            setEmail({
+                ...error,
+                mensaje: "",
+                estado: false,
+            });
+            setPass({
                 ...error,
                 mensaje: "",
                 estado: false,
@@ -139,10 +156,10 @@ const Login = () => {
                                     required
                                 />
                                 <p
-                                    style={{ display: error.estado ? "block" : "none" }}
+                                    style={{ display: email.estado ? "block" : "none" }}
                                     className="text-red-500 text-sm"
                                 >
-                                    {error.email}
+                                    {email.mensaje}
                                 </p>
                             </div>
                             <div>
@@ -163,10 +180,10 @@ const Login = () => {
                                     required
                                 />
                                 <p
-                                    style={{ display: error.estado ? "block" : "none" }}
+                                    style={{ display: password.estado ? "block" : "none" }}
                                     className="text-red-500 text-sm"
                                 >
-                                    {error.pass}
+                                    {password.mensaje}
                                 </p>
                             </div>
                             <button
