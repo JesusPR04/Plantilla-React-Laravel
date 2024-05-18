@@ -8,14 +8,17 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     * 
      */
     public function up(): void
     {
         Schema::create('imagenes', function (Blueprint $table) {
             $table->id();
             $table->string('ruta');
-            $table->unsignedBigInteger('id_evento');
+            $table->unsignedBigInteger('idEvento');
             $table->timestamps();
+
+            $table->foreign('idEvento')->references('id')->on('eventos')->onDelete('cascade');
         });
     }
 

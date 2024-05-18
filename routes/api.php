@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\EventoController;
 use App\Http\Controllers\API\OrganizadorController;
 
 /*
@@ -22,6 +23,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/register', [AuthController::class, 'createUser']);
 Route::post('/login', [AuthController::class, 'loginUser']);
+
+Route::post('/storeEvent', [EventoController::class, 'store']);
+//TODO: Cambiar los post por la acción pertienente
+Route::post('/updateEvent/{id}', [EventoController::class, 'update']);
+Route::post('/deleteEvent/{id}', [EventoController::class, 'delete']);
 
 Route::post('/organizador', [OrganizadorController::class, 'realizarPeticion'])/* ->middleware('auth:sanctum') */;
 

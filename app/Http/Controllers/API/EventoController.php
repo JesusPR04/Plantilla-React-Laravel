@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Models\Eventos;
+use App\Models\Imagenes;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
 class EventoController extends Controller
@@ -67,11 +69,15 @@ class EventoController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'nombre' => 'required',
+            'precio' => 'required',
+            'hora' => 'required',
             'fecha' => 'required',
             'aforoTotal' => 'required',
             'descripcion' => 'required',
             'idOrganizador' => 'required',
             'idCiudad' => 'required',
+            'imagenes.*' => 'required|image|mimes:jpeg,png,jpg,gif' // Valida cada imagen individualmente
         ]);
 
         if ($validator->fails()) {
@@ -85,7 +91,7 @@ class EventoController extends Controller
         $evento->localizacion = $request->localizacion;
         $evento->aforoTotal = $request->aforoTotal;
         $evento->aforoDisponible = $request->aforoDisponible;
-        $evento->categoria = $request->categoria;
+        $evento->idCategoria = $request->idCategoria;
         $evento->descripcion = $request->descripcion;
         $evento->precio = $request->precio;
         $evento->idOrganizador = $request->idOrganizador;
@@ -93,17 +99,38 @@ class EventoController extends Controller
 
         $evento->save();
 
+        // Comprueba si en la solicitud ($request) hay un archivo con el nombre imagenes.
+        if ($request->hasFile('imagenes')) {
+            // Iteración sobre cada imagen
+            foreach ($request->file('imagenes') as $image) {
+                $uuid = Str::uuid(); // Genera un UUID único
+                // Nombre de la imagen idEvento más id único aleatorio más la extensión de la imagen
+                $imageName = 'Event'.$evento->id.'_'.$uuid.'.'.$image->getClientOriginalExtension();
+                // Guarda la imagen en la carpeta 'public/images'
+                $image->move(public_path('images'), $imageName); 
+
+                $imagen = new Imagenes();
+                $imagen->ruta = 'images/'.$imageName; // Guarda la ruta de la imagen
+                $imagen->idEvento = $evento->id; // Asocia la imagen con el evento
+                $imagen->save();
+            }
+        }
+
         return response()->json($evento, 201);
     }
 
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
+            'nombre' => 'required',
+            'precio' => 'required',
+            'hora' => 'required',
             'fecha' => 'required',
             'aforoTotal' => 'required',
             'descripcion' => 'required',
             'idOrganizador' => 'required',
             'idCiudad' => 'required',
+            'imagenes.*' => 'image|mimes:jpeg,png,jpg,gif' // Valida cada imagen individualmente, al actualizar evento no es obligatorio
         ]);
 
         if ($validator->fails()) {
@@ -121,13 +148,47 @@ class EventoController extends Controller
         $evento->localizacion = $request->localizacion;
         $evento->aforoTotal = $request->aforoTotal;
         $evento->aforoDisponible = $request->aforoDisponible;
-        $evento->categoria = $request->categoria;
+        $evento->idCategoria = $request->idCategoria;
         $evento->descripcion = $request->descripcion;
         $evento->precio = $request->precio;
         $evento->idOrganizador = $request->idOrganizador;
         $evento->idCiudad = $request->idCiudad;
 
         $evento->save();
+
+        // Maneja la eliminación de imágenes existentes
+        // Imagenes a eliminar contendrá el id de la imagen o un array en caso de ser más de una
+        if ($request->has('imagenes_a_eliminar')) {
+            foreach ($request->imagenes_a_eliminar as $imagenId) {
+                // Encuentra la imagen por su ID
+                $imagen = Imagenes::find($imagenId);
+                if (!is_null($imagen)) {
+                    // Elimina el archivo de imagen del servidor
+                    if (file_exists(public_path($imagen->ruta))) {
+                        unlink(public_path($imagen->ruta));
+                    }
+                    // Elimina la entrada de la imagen de la base de datos
+                    $imagen->delete();
+                }
+            }
+        }
+
+        // Comprueba si en la solicitud ($request) hay un archivo con el nombre imagenes.
+        if ($request->hasFile('imagenes')) {
+            // Iteración sobre cada imagen
+            foreach ($request->file('imagenes') as $image) {
+                $uuid = Str::uuid(); // Genera un UUID único
+                // Nombre de la imagen idEvento más id único aleatorio más la extensión de la imagen
+                $imageName = 'Event'.$evento->id.'_'.$uuid.'.'.$image->getClientOriginalExtension();
+                // Guarda la imagen en la carpeta 'public/images'
+                $image->move(public_path('images'), $imageName); 
+
+                $imagen = new Imagenes();
+                $imagen->ruta = 'images/'.$imageName; // Guarda la ruta de la imagen
+                $imagen->idEvento = $evento->id; // Asocia la imagen con el evento
+                $imagen->save();
+            }
+        }
 
         return response()->json($evento);
     }

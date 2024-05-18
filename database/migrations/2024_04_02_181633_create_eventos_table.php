@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('eventos', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre');
             $table->string('hora');
             $table->date('fecha');
             $table->string('localizacion');
@@ -24,7 +25,7 @@ return new class extends Migration
             $table->string('descripcion');
             $table->float('precio');
             $table->timestamps();
-            // ESTO ES UN COMENTARIO PRUEBA JESUS
+            $table->softDeletes();
 
             $table->foreign('idOrganizador')->references('id')->on('usuarios');
             $table->foreign('idCiudad')->references('id')->on('ciudades');

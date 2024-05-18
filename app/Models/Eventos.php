@@ -21,17 +21,17 @@ class Eventos extends Model
     protected $table = "eventos";
 
     protected $fillable = [
-        'nombre',
-        'hora',
-        'fecha',
-        'localizacion',
-        'aforoTotal',
-        'aforoDisponible',
-        'descripcion',
+        'nombre', 
+        'hora', 
+        'fecha', 
+        'localizacion', 
+        'aforoTotal', 
+        'aforoDisponible', 
+        'descripcion', 
         'precio',
-        'idOrganizador',
-        'idCiudad',
-        'idCategoria'
+        'idOrganizador', 
+        'idCiudad', 
+        'idCategoria' 
     ];
 
     // Poder sacar el usuario que es el organizador del evento
@@ -49,5 +49,11 @@ class Eventos extends Model
     public function categoria()
     {
         return $this->belongsTo(Categorias::class, 'idCategoria');
+    }
+
+    // Relación con Imagenes
+    public function imagenes()
+    {
+        return $this->hasMany(Imagenes::class, 'idEvento');
     }
 }
