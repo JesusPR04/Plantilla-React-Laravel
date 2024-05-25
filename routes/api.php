@@ -21,8 +21,12 @@ use App\Http\Controllers\API\UsuarioController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     $user = $request->user();
     return response()->json([
-        'name' => $user->name,
+        'nombre' => $user->nombre,
+        'apellidos' => $user->apellidos,
         'email' => $user->email,
+        'rol' => $user->rol,
+        'ciudad' => $user->ciudad,
+        'telefono' => $user->telefono
     ]);
 });
 
