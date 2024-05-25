@@ -128,3 +128,19 @@ export const fetchUserData = async () => {
       throw error;
     }
   };
+
+  export const updateUserData = async (userData) => {
+    const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
+    const response = await fetch('http://localhost/api/user', {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userData)
+    });
+  
+    if (!response.ok) {
+      throw new Error('No se pudo actualizar los datos del usuario.');
+    }
+  };

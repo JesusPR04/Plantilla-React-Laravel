@@ -18,6 +18,7 @@ use App\Http\Controllers\API\UsuarioController;
 |
 */
 
+// Usuario
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     $user = $request->user();
     return response()->json([
@@ -29,15 +30,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         'telefono' => $user->telefono
     ]);
 });
-
+Route::middleware('auth:sanctum')->put('/user', [UsuarioController::class, 'updateUserData']);
 Route::post('/register', [AuthController::class, 'createUser']);
 Route::post('/login', [AuthController::class, 'loginUser']);
 
+// Evento
 Route::post('/storeEvent', [EventoController::class, 'store']);
 //TODO: Cambiar los post por la acción pertienente
 Route::post('/updateEvent/{id}', [EventoController::class, 'update']);
 Route::post('/deleteEvent/{id}', [EventoController::class, 'delete']);
 
+// Organizador
 Route::post('/organizador', [OrganizadorController::class, 'realizarPeticion'])/* ->middleware('auth:sanctum') */;
 
 Route::get('/prueba',function(){

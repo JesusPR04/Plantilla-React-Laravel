@@ -13,6 +13,7 @@ import PagError from './Paginas/Error/Error.jsx'
 import Ayuda from './Paginas/Ayuda/Ayuda.jsx'
 import BuscadorEventos from './Paginas/BuscadorEventos/BuscadorEventos.jsx'
 import Perfil from './Paginas/Perfil/Perfil.jsx'
+import Editar from './Paginas/Perfil/Editar.jsx'
 
 function AppLayout() {
   return <>
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
     {
       path: "/perfil",
       element: <Perfil />,
+    },
+    {
+      path: "/editar-perfil",
+      element: <Editar />,
     },
     ]
   }
