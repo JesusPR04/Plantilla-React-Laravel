@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\EventoController;
 use App\Http\Controllers\API\OrganizadorController;
+use App\Http\Controllers\API\UsuarioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,11 @@ use App\Http\Controllers\API\OrganizadorController;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    $user = $request->user();
+    return response()->json([
+        'name' => $user->name,
+        'email' => $user->email,
+    ]);
 });
 
 Route::post('/register', [AuthController::class, 'createUser']);

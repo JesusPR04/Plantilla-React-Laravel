@@ -12,6 +12,7 @@ import Peticion from './Paginas/Peticion/Peticion.jsx'
 import PagError from './Paginas/Error/Error.jsx'
 import Ayuda from './Paginas/Ayuda/Ayuda.jsx'
 import BuscadorEventos from './Paginas/BuscadorEventos/BuscadorEventos.jsx'
+import Perfil from './Paginas/Perfil/Perfil.jsx'
 
 function AppLayout() {
   return <>
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
     {
       path: "/buscadoreventos",
       element: <BuscadorEventos />,
+    },
+    {
+      path: "/perfil",
+      element: <Perfil />,
     },
     ]
   }

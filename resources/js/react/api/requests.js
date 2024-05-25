@@ -1,28 +1,25 @@
 export const login = async (email, password) => {
-    const url = "http://localhost/api/login";
-    const options = {
-        method: "Post",
-        headers: {
-            "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-            email: email,
-            password: password,
-        }),
-    };
-
     try {
-        const response = await fetch(url, options)
-        const data = response.json()
-        if (data.status) {
-            return data;
-        } else {
-            return data;
-        }
+      const response = await fetch('http://localhost/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Login failed');
+      }
+  
+      const data = await response.json();
+      localStorage.setItem('user-token', data.token); // Guarda el token en localStorage
+      return data;
     } catch (error) {
-        console.log(error)
+      console.error('Error during login:', error);
+      throw error;
     }
-};
+  };
 
 export const register = async (name, surname, email, city, telephone, password) => {
     const url = 'http://localhost/api/register'
@@ -103,3 +100,31 @@ export const organizador = async (formData) => {
         console.log(error)
     }
 }
+
+export const fetchUserData = async () => {
+    const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
+  
+    if (!token) {
+      throw new Error('No token found');
+    }
+  
+    try {
+      const response = await fetch('http://localhost/api/user', { // Asegúrate de usar la URL correcta
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      throw error;
+    }
+  };
