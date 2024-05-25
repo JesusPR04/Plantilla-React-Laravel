@@ -1,8 +1,8 @@
-import Header from '../../Components/Header'
-import Footer from '../../Components/Footer'
+import {useEffect, useState} from 'react'
 import HeaderSection from '../../Components/HeaderSection'
 import PrincipalFilter from '../../Components/PrincipalFilter'
 import EventList from '../../Components/EventList'
+import { fetchUserData } from '../../api/requests'
 import { Link } from "react-router-dom"
 
 function App() {
@@ -40,10 +40,18 @@ function App() {
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chef-hat"><path d="M17 21a1 1 0 0 0 1-1v-5.35c0-.457.316-.844.727-1.041a4 4 0 0 0-2.134-7.589 5 5 0 0 0-9.186 0 4 4 0 0 0-2.134 7.588c.411.198.727.585.727 1.041V20a1 1 0 0 0 1 1Z" /><path d="M6 17h12" /></svg>
   )
 
+  const token = localStorage.getItem('user-token') 
+  const [user, setUser] = useState({})
+  useEffect(() => {
+    if (token) {
+        fetchUserData().then(data => setUser(data))
+    }
+}, [token])
+
   return (
     <main className='min-h-[calc(100vh-436px)] bg-gray-100'>
       <header>
-        <HeaderSection />
+        <HeaderSection user={user}/>
       </header>
       <section className='mt-14'>
         <article>
@@ -61,7 +69,7 @@ function App() {
         </article>
         <hr className="w-full h-[2px] bg-[#eeedf2]" />
         <article>
-          <h2 className='text-center text-colorFuente text-5xl xl:text-6xl 2xl:text-6xl lg:text-6xl md:text-6xl font-bold tracking-tight uppercase mt-6'>Eventos en <span className="text-blue-500">Córdoba</span></h2>
+          <h2 className='text-center text-colorFuente text-5xl xl:text-6xl 2xl:text-6xl lg:text-6xl md:text-6xl font-bold tracking-tight uppercase mt-6'>Eventos en <span className="text-blue-500">{user.ciudad ? user.ciudad : 'Córdoba'}</span></h2>
           <div className="flex flex-wrap gap-6 justify-evenly mx-6 pb-14">
             <EventList />
             <EventList />

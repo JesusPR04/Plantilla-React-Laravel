@@ -71,7 +71,7 @@ const Register = () => {
         promesa.then((data) => setCiudades(data.ciudades));
     }, []);
 
-    //TODO: FALTA EL MANEJO DE ERRORES
+    //TODO: FALTA EL MANEJO DE ERRORES Y LA REDIRECCION
     return (
         <section className="bg-gray-100 flex justify-center items-center min-h-[calc(100vh-436px)]">
             <article className="flex justify-center">

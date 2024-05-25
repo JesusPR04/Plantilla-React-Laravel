@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../api/requests";
 import imagen from "../../assets/login.jpg";
 import logo from "../../assets/Eventia-logo-removebg.png";
 
 const Login = () => {
+    const navigate = useNavigate();
     const [usuario, setUsuario] = useState({
         email: "",
         password: "",
@@ -86,8 +87,11 @@ const Login = () => {
                 mensaje: "",
                 estado: false,
             });
+            navigate('/')
+            navigate(0)
         }
     };
+
     return (
         <section className="bg-gray-100 flex justify-center items-center min-h-[calc(100vh-436px)]">
             <article className="flex justify-center">
