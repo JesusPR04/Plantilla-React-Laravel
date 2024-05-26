@@ -14,6 +14,7 @@ import Ayuda from './Paginas/Ayuda/Ayuda.jsx'
 import BuscadorEventos from './Paginas/BuscadorEventos/BuscadorEventos.jsx'
 import Perfil from './Paginas/Perfil/Perfil.jsx'
 import Editar from './Paginas/Perfil/Editar.jsx'
+import SobreNosotros from './Paginas/SobreNosotros/SobreNosotros.jsx'
 
 function AppLayout() {
   return <>
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
       path: "/editar-perfil",
       element: <Editar />,
     },
+    {
+      path: "/sobreNosotros",
+      element: <SobreNosotros />,
+    }
     ]
   }
 ]);

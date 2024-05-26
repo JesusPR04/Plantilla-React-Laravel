@@ -13,27 +13,10 @@ function Footer() {
                         <h2 className="mb-6 text-sm font-semibold uppercase text-white">Eventia</h2>
                         <ul className="text-gray-400 font-medium">
                             <li className="mb-4">
-                                <Link to="" className=" hover:underline">Sobre nosotros</Link>
+                                <Link to="/sobreNosotros" className="hover:underline">Sobre nosotros</Link>
                             </li>
                             <li className="mb-4">
-                                <Link to="" className="hover:underline">Desarrolladores</Link>
-                            </li>
-                            <li className="mb-4">
-                                <Link to="" className="hover:underline">Blog</Link>
-                            </li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h2 className="mb-6 text-sm font-semibold  uppercase text-white">Ayuda</h2>
-                        <ul className="text-gray-400 font-medium">
-                            <li className="mb-4">
-                                <Link to="" className="hover:underline">Servidor de Discord</Link>
-                            </li>
-                            <li className="mb-4">
-                                <Link to="" className="hover:underline">Facebook</Link>
-                            </li>
-                            <li className="mb-4">
-                                <Link to="" className="hover:underline">Contacto</Link>
+                                <Link to="/ayuda" className="hover:underline">Contacto</Link>
                             </li>
                         </ul>
                     </div>
