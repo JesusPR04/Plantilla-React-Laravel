@@ -15,13 +15,10 @@ import BuscadorEventos from './Paginas/BuscadorEventos/BuscadorEventos.jsx'
 import Perfil from './Paginas/Perfil/Perfil.jsx'
 import Editar from './Paginas/Perfil/Editar.jsx'
 import SobreNosotros from './Paginas/SobreNosotros/SobreNosotros.jsx'
-<<<<<<< Updated upstream
 import PoliticaPrivacidad from './Paginas/PoliticaPrivacidad/PoliticaPrivacidad.jsx'
 import TerminosCondiciones from './Paginas/Terminos&Condiciones/TerminosCondiciones.jsx'
-=======
 import Evento from './Paginas/Evento/Evento.jsx'
 
->>>>>>> Stashed changes
 
 function AppLayout() {
   return <>
@@ -73,17 +70,16 @@ const router = createBrowserRouter([
       element: <SobreNosotros />,
     },
     {
-<<<<<<< Updated upstream
       path: "/politicaPrivacidad",
       element: <PoliticaPrivacidad />,
     },
     {
       path: "/terminos&condiciones",
       element: <TerminosCondiciones />,
-=======
+    },
+    {
       path: "/evento/:id",
       element: <Evento />,
->>>>>>> Stashed changes
     }
     ]
   }
