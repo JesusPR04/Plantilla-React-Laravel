@@ -3,6 +3,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\UsuarioController;
 use App\Http\Controllers\API\CiudadesController;
 use App\Http\Controllers\API\CategoriasController;
+use App\Http\Controllers\API\EventoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +26,6 @@ Route::get('/categorias', [CategoriasController::class, 'getCategorias']);
 
 Route::get('/correoPrueba', [UsuarioController::class, 'correoPrueba']);
 
-Route::get('getEventos','API\EventoController@getEventos')->name('getEventos');
 // Route::post('storeEvento','API\EventoController@storeEvento')->name('storeEventos');
 // Route::post('updateEvento','API\EventoController@updateEvento')->name('updateEventos');
 // Route::post('deleteEvento','API\EventoController@deleteEvento')->name('deleteEventos');

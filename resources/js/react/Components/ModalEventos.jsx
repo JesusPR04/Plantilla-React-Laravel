@@ -1,37 +1,57 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import Select from "react-select";
 import { getGenrers, getCiudades } from '../api/requests';
 
 Modal.setAppElement('#root');
 
 const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
-    const [fechaDesde, setFechaDesde] = useState(null);
-    const [fechaHasta, setFechaHasta] = useState(null);
+    const [fechaDesde, setFechaDesde] = useState('');
+    const [fechaHasta, setFechaHasta] = useState('');
     const [precioMin, setPrecioMin] = useState(0);
     const [precioMax, setPrecioMax] = useState(200);
     const [categoria, setCategoria] = useState('');
     const [aforoMin, setAforoMin] = useState(0);
     const [aforoMax, setAforoMax] = useState(40000);
-
-    const today = new Date();
-    const formattedDate = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`;
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        applyFilters({ ciudades, fechaDesde, fechaHasta, precioMin, precioMax, categoria, aforoMin, aforoMax });
-        closeModal();
-    };
+    const [ciudad, setCiudad] = useState('');
 
     const [ciudades, setCiudades] = useState([]);
     const [genrers, setGenrers] = useState([]);
+
     useEffect(() => {
         let promesaCiudades = getCiudades();
         promesaCiudades.then((data) => setCiudades(data.ciudades));
         let promesaGeneros = getGenrers();
         promesaGeneros.then((data) => setGenrers(data.categorias));
     }, []);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        applyFilters({
+            fechaDesde,
+            fechaHasta,
+            precioMin,
+            precioMax,
+            categoria,
+            aforoMin,
+            aforoMax,
+            ciudad,
+        });
+        closeModal();
+    };
+
+    const handlePrecioMinChange = (e) => {
+        const value = parseInt(e.target.value, 10);
+        if (value <= precioMax) {
+            setPrecioMin(value);
+        }
+    };
+
+    const handlePrecioMaxChange = (e) => {
+        const value = parseInt(e.target.value, 10);
+        if (value >= precioMin) {
+            setPrecioMax(value);
+        }
+    };
 
     return (
         <Modal
@@ -41,112 +61,168 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
             className="modal rounded-lg overflow-y-auto"
             overlayClassName="overlay fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50"
         >
-            <div className="modal-content text-colorFuente bg-white p-8 w-96">
-                <h2 className="text-2xl font-bold mb-4">Filtrar Eventos</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-4">
-                    <Select
-                        options={ciudades.map((ciudad) => ({
-                            value: ciudad.id,
-                            label: ciudad.nombre,
-                        }))}
-                        placeholder="Ciudad"
-                        isSearchable
-                        noOptionsMessage={() => "Sin resultados"}
-                        classNames={{
-                            control: () =>  "!text-sm !bg-gray-50 !border !border-gray-300 !text-colorFuente !sm:text-sm !rounded-lg !focus:ring-blue-500 !focus:border-blue-500 !w-full !p-0.5",
-                            input: (state) => state.isFocused ? "!ring-0 !shadow-none" : "",
-                            menuList: () => '!bg-gray-50'
-                        }}
-                    />
+            <section className="bg-white dark:bg-gray-950 py-8 md:py-8 lg:py-8">
+                <div className="container mx-auto px-4 md:px-6">
+                    <div className="max-w-3xl mx-auto">
+                        <h1 className="text-3xl md:text-4xl font-bold text-gray-950 dark:text-white mb-4">Busca tus eventos</h1>
+                        <form className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6 md:p-8" onSubmit={handleSubmit}>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label
+                                            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                                            htmlFor="start-date"
+                                        >
+                                            Fecha desde
+                                        </label>
+                                        <div className="relative">
+                                            <input
+                                                className="w-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md py-2 px-3 text-sm text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                                id="start-date"
+                                                type="date"
+                                                value={fechaDesde}
+                                                onChange={(e) => setFechaDesde(e.target.value)}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor="end-date">
+                                            Fecha hasta
+                                        </label>
+                                        <div className="relative">
+                                            <input
+                                                className="w-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md py-2 px-3 text-sm text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                                id="end-date"
+                                                type="date"
+                                                value={fechaHasta}
+                                                onChange={(e) => setFechaHasta(e.target.value)}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor="min-capacity">
+                                            Aforo mínimo {aforoMin}
+                                        </label>
+                                        <div className="relative">
+                                            <input
+                                                className="w-full h-1 bg-blue-500 rounded-full appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 focus:scale-105 transition-transform"
+                                                value={aforoMin}
+                                                onChange={(e) => setAforoMin(e.target.value)}
+                                                id="min-capacity"
+                                                max="50000"
+                                                min="0"
+                                                step="10"
+                                                type="range"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor="max-capacity">
+                                            Aforo máximo {aforoMax}
+                                        </label>
+                                        <div className="relative">
+                                            <input
+                                                className="w-full h-1 bg-blue-500 rounded-full appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 focus:scale-105 transition-transform"
+                                                value={aforoMax}
+                                                onChange={(e) => setAforoMax(e.target.value)}
+                                                id="max-capacity"
+                                                max="50000"
+                                                min="0"
+                                                step="10"
+                                                type="range"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor="min-price">
+                                        Precio mínimo {precioMin}
+                                    </label>
+                                    <div className="relative">
+                                        <input
+                                            className="w-full h-1 bg-blue-500 rounded-full appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 focus:scale-105 transition-transform"
+                                            value={precioMin}
+                                            onChange={handlePrecioMinChange}
+                                            id="min-price"
+                                            max="1000"
+                                            min="0"
+                                            step="10"
+                                            type="range"
+                                        />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor="max-price">
+                                        Precio máximo {precioMax}
+                                    </label>
+                                    <div className="relative">
+                                        <input
+                                            className="w-full h-1 bg-blue-500 rounded-full appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 focus:scale-105 transition-transform"
+                                            value={precioMax}
+                                            onChange={handlePrecioMaxChange}
+                                            id="max-price"
+                                            max="1000"
+                                            min="0"
+                                            step="10"
+                                            type="range"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor="city">
+                                        Ciudad
+                                    </label>
+                                    <div className="relative">
+                                        <select
+                                            className="w-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md py-2 px-3 text-sm text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                            id="city"
+                                            value={ciudad}
+                                            onChange={(e) => setCiudad(e.target.value)}
+                                        >
+                                            <option value="">Selecciona una ciudad</option>
+                                            {ciudades.map((city) => (
+                                                <option key={city.id} value={city.id}>{city.nombre}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor="genre">
+                                        Género
+                                    </label>
+                                    <div className="relative">
+                                        <select
+                                            className="w-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md py-2 px-3 text-sm text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                            id="genre"
+                                            value={categoria}
+                                            onChange={(e) => setCategoria(e.target.value)}
+                                        >
+                                            <option value="">Selecciona un género</option>
+                                            {genrers.map((genre) => (
+                                                <option key={genre.id} value={genre.id}>{genre.nombre}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="mt-6">
+                                <button
+                                    className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg"
+                                    type="submit"
+                                >
+                                    Buscar
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                    <div className="mb-4">
-                        <label htmlFor="fechaDesde" className="block text-sm font-medium mb-1">Fecha Desde:</label>
-                        <DatePicker
-                            id="fechaDesde"
-                            selected={fechaDesde}
-                            onChange={date => setFechaDesde(date)}
-                            wrapperClassName="w-full"
-                            className="w-full bg-gray-50 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label htmlFor="fechaHasta" className="block text-sm font-medium mb-1">Fecha Hasta:</label>
-                        <DatePicker
-                            id="fechaHasta"
-                            selected={fechaHasta}
-                            onChange={date => setFechaHasta(date)}
-                            wrapperClassName="w-full"
-                            className="w-full bg-gray-50 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label htmlFor="precioMin" className="block text-sm font-medium mb-1">Precio Mínimo: {precioMin} €</label>
-                        <input
-                            id="precioMin"
-                            type="range"
-                            min="0"
-                            max={precioMax}
-                            value={precioMin}
-                            onChange={(e) => setPrecioMin(parseInt(e.target.value))}
-                            className="w-full"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label htmlFor="precioMax" className="block text-sm font-medium mb-1">Precio Máximo: {precioMax} €</label>
-                        <input
-                            id="precioMax"
-                            type="range"
-                            min={precioMin}
-                            max="200"
-                            value={precioMax}
-                            onChange={(e) => setPrecioMax(parseInt(e.target.value))}
-                            className="w-full"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <Select
-                            options={genrers.map((genrer) => ({
-                                value: genrer.id,
-                                label: genrer.nombre,
-                            }))}
-                            placeholder="Géneros"
-                            isSearchable
-                            noOptionsMessage={() => "Sin resultados"}
-                            classNames={{
-                                control: () => "!text-sm !bg-gray-50 !border !border-gray-300 !text-colorFuente !sm:text-sm !rounded-lg !focus:ring-blue-500 !focus:border-blue-500 !w-full !p-0.5",
-                                input: (state) => state.isFocused ? "!ring-0 !shadow-none" : "",
-                                menuList: () => '!bg-gray-50'
-                            }}
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label htmlFor="aforoMin" className="block text-sm font-medium mb-1">Aforo Mínimo: {aforoMin}</label>
-                        <input
-                            id="aforoMin"
-                            type="range"
-                            min="0"
-                            max={aforoMax}
-                            value={aforoMin}
-                            onChange={(e) => setAforoMin(parseInt(e.target.value))}
-                            className="w-full"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label htmlFor="aforoMax" className="block text-sm font-medium mb-1">Aforo Máximo: {aforoMax}</label>
-                        <input
-                            id="aforoMax"
-                            type="range"
-                            min={aforoMin}
-                            max="40000"
-                            value={aforoMax}
-                            onChange={(e) => setAforoMax(parseInt(e.target.value))}
-                            className="w-full"
-                        />
-                    </div>
-                    <button type="submit" className="btn bg-blue-500 text-white hover:bg-blue-600 px-4 py-2 rounded-md">Aplicar filtros</button>
-                </form>
-            </div>
+                </div>
+            </section>
         </Modal>
     );
 };

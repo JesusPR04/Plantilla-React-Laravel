@@ -14,24 +14,25 @@ class EventoController extends Controller
 {
     public function getEventos(Request $request)
     {
-        $query = "SELECT * FROM eventos";
+        $query = "SELECT e.* , i.ruta FROM eventos e
+        LEFT JOIN  imagenes i on i.idEvento=e.id";
 
         $filtros = [];
 
-        if (!is_null($request->input('fecha_desde'))) {
-            $filtros[] = "fecha >= '" . $request->input('fecha_desde') . "'";
+        if (!is_null($request->input('fechaDesde'))) {
+            $filtros[] = "fecha >= '" . $request->input('fechaDesde') . "'";
         }
 
-        if (!is_null($request->input('fecha_hasta'))) {
-            $filtros[] = "fecha <= '" . $request->input('fecha_hasta') . "'";
+        if (!is_null($request->input('fechaHasta'))) {
+            $filtros[] = "fecha <= '" . $request->input('fechaHasta') . "'";
         }
 
-        if (!is_null($request->input('aforo_min'))) {
-            $filtros[] = "aforoDisponible >= " . $request->input('aforo_min');
+        if (!is_null($request->input('aforoMin'))) {
+            $filtros[] = "aforoDisponible >= " . $request->input('aforoMin');
         }
 
-        if (!is_null($request->input('aforo_max'))) {
-            $filtros[] = "aforoDisponible <= " . $request->input('aforo_max');
+        if (!is_null($request->input('aforoMax'))) {
+            $filtros[] = "aforoDisponible <= " . $request->input('aforoMax');
         }
 
         if (!is_null($request->input('agotado'))) {
@@ -40,15 +41,15 @@ class EventoController extends Controller
         }
 
         if (!is_null($request->input('categoria'))) {
-            $filtros[] = "categoria = '" . $request->input('categoria') . "'";
+            $filtros[] = "idCategoria = '" . $request->input('categoria') . "'";
         }
 
-        if (!is_null($request->input('precio_min'))) {
-            $filtros[] = "precio >= " . $request->input('precio_min');
+        if (!is_null($request->input('precioMin'))) {
+            $filtros[] = "precio >= " . $request->input('precioMin');
         }
 
-        if (!is_null($request->input('precio_max'))) {
-            $filtros[] = "precio <= " . $request->input('precio_max');
+        if (!is_null($request->input('precioMax'))) {
+            $filtros[] = "precio <= " . $request->input('precioMax');
         }
 
         if (!is_null($request->input('ciudad'))) {
@@ -66,6 +67,16 @@ class EventoController extends Controller
         return response()->json($eventos);
     }
 
+
+    public function getEventoById(Request $request, $id)
+    {
+        try {
+            $evento = Eventos::with(['organizador', 'ciudad', 'categoria', 'imagenes'])->findOrFail($id);
+            return response()->json($evento);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Evento no encontrado'], 404);
+        }
+    }
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -105,12 +116,12 @@ class EventoController extends Controller
             foreach ($request->file('imagenes') as $image) {
                 $uuid = Str::uuid(); // Genera un UUID único
                 // Nombre de la imagen idEvento más id único aleatorio más la extensión de la imagen
-                $imageName = 'Event'.$evento->id.'_'.$uuid.'.'.$image->getClientOriginalExtension();
+                $imageName = 'Event' . $evento->id . '_' . $uuid . '.' . $image->getClientOriginalExtension();
                 // Guarda la imagen en la carpeta 'public/images'
-                $image->move(public_path('images'), $imageName); 
+                $image->move(public_path('images'), $imageName);
 
                 $imagen = new Imagenes();
-                $imagen->ruta = 'images/'.$imageName; // Guarda la ruta de la imagen
+                $imagen->ruta = 'images/' . $imageName; // Guarda la ruta de la imagen
                 $imagen->idEvento = $evento->id; // Asocia la imagen con el evento
                 $imagen->save();
             }
@@ -179,12 +190,12 @@ class EventoController extends Controller
             foreach ($request->file('imagenes') as $image) {
                 $uuid = Str::uuid(); // Genera un UUID único
                 // Nombre de la imagen idEvento más id único aleatorio más la extensión de la imagen
-                $imageName = 'Event'.$evento->id.'_'.$uuid.'.'.$image->getClientOriginalExtension();
+                $imageName = 'Event' . $evento->id . '_' . $uuid . '.' . $image->getClientOriginalExtension();
                 // Guarda la imagen en la carpeta 'public/images'
-                $image->move(public_path('images'), $imageName); 
+                $image->move(public_path('images'), $imageName);
 
                 $imagen = new Imagenes();
-                $imagen->ruta = 'images/'.$imageName; // Guarda la ruta de la imagen
+                $imagen->ruta = 'images/' . $imageName; // Guarda la ruta de la imagen
                 $imagen->idEvento = $evento->id; // Asocia la imagen con el evento
                 $imagen->save();
             }

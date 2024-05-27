@@ -15,11 +15,19 @@
     },
     "dependencies": {
         "@vitejs/plugin-react": "^4.2.1",
+        "button": "^1.1.1",
+        "popover": "^2.4.1",
         "react": "^18.2.0",
+        "react-button": "^1.2.1",
+        "react-carousel": "^4.3.0",
         "react-datepicker": "^6.9.0",
         "react-dom": "^18.2.0",
         "react-modal": "^3.16.1",
+        "react-responsive-carousel": "^3.2.23",
         "react-router-dom": "^6.22.3",
-        "react-select": "^5.8.0"
+        "react-select": "^5.8.0",
+        "ui": "^0.2.4",
+        "ui-button": "^2.1.12",
+        "yarn": "^1.22.22"
     }
 }
