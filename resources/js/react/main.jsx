@@ -15,6 +15,8 @@ import BuscadorEventos from './Paginas/BuscadorEventos/BuscadorEventos.jsx'
 import Perfil from './Paginas/Perfil/Perfil.jsx'
 import Editar from './Paginas/Perfil/Editar.jsx'
 import SobreNosotros from './Paginas/SobreNosotros/SobreNosotros.jsx'
+import PoliticaPrivacidad from './Paginas/PoliticaPrivacidad/PoliticaPrivacidad.jsx'
+import TerminosCondiciones from './Paginas/Terminos&Condiciones/TerminosCondiciones.jsx'
 
 function AppLayout() {
   return <>
@@ -64,6 +66,14 @@ const router = createBrowserRouter([
     {
       path: "/sobreNosotros",
       element: <SobreNosotros />,
+    },
+    {
+      path: "/politicaPrivacidad",
+      element: <PoliticaPrivacidad />,
+    },
+    {
+      path: "/terminos&condiciones",
+      element: <TerminosCondiciones />,
     }
     ]
   }
