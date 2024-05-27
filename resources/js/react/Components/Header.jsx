@@ -181,8 +181,9 @@ function Header() {
                                     <button
                                         id="dropdownNavbarLink"
                                         data-dropdown-toggle="dropdownNavbar"
-                                        className="py-2 px-3 text-white rounded-md 
-                                       bg-blue-500 flex flex-row items-center"
+                                        className="py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500
+                                         md:text-white md:rounded-md 
+                                         md:bg-blue-500 md:hover:bg-blue-500 md:hover:text-white flex flex-row items-center"
                                     >
                                         <span>{user.nombre}</span>
                                         <svg
