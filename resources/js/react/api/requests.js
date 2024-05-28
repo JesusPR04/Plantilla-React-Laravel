@@ -113,16 +113,16 @@ export const comprarEntrada = async ({ idUsuario, idEvento, cantidad }) => {
 
 export const getEntradas = async (token) => {
   const response = await fetch('http://localhost/api/entradas', {
-      method: 'GET',
-      headers: {
-          'Authorization': `Bearer ${token}`,
-          'Accept': 'application/json',
-      },
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Accept': 'application/json',
+    },
   });
 
   if (!response.ok) {
-      const errorMessage = await response.text();
-      throw new Error(`Error: ${errorMessage}`);
+    const errorMessage = await response.text();
+    throw new Error(`Error: ${errorMessage}`);
   }
 
   return await response.json();
@@ -218,6 +218,55 @@ export const comprobarAcceso = async () => {
     return data;
   } catch (error) {
     console.error('Error fetching user data:', error);
+    throw error;
+  }
+}
+
+export const recogerPeticiones = async () => {
+  const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
+
+  if (!token) {
+    throw new Error('No token found');
+  }
+  try {
+    const url = 'http://localhost/api/peticiones'
+    const headers = {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+    }
+    const response = await fetch(url, headers);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log('Error fetching user data: ', error);
+    throw error;
+  }
+}
+
+export const descargarArchivo = async(archivo) => {
+  const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
+
+  if (!token) {
+    throw new Error('No token found');
+  }
+  try {
+    const url = 'http://localhost/api/descargarArchivo'
+    const headers = {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(archivo)
+    }
+    const response = await fetch(url, headers);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log('Error fetching user data: ', error);
     throw error;
   }
 }

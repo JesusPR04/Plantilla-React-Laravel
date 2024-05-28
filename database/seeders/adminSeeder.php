@@ -17,9 +17,9 @@ class adminSeeder extends Seeder
             'nombre' => 'nombre',
             'apellidos' => 'apellidos',
             'email' => 'admin@admin.com',
-            'password' => 'admin',
+            'password' => '$2y$12$DIGLoxyXtMr301I0YduEouAhTtXHIe6t4z.4D72FJS4y4dLBeyA7.',
             'telefono' => '123456789',
-            'ciudad' => 'Cordoba',
+            'ciudad' => 'Córdoba',
             'rol' => 'Administrador'
         ]);
     }
