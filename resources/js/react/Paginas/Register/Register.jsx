@@ -14,7 +14,34 @@ const Register = () => {
         telefono: "",
         ciudad: "",
     });
-
+    const [error, setError] = useState({
+        mensaje: "",
+        estado: false,
+    });
+    const [nombre, setNombre] = useState({
+        mensaje: "",
+        estado: false,
+    });
+    const [apellidos, setApellidos] = useState({
+        mensaje: "",
+        estado: false,
+    });
+    const [telefono, setTelefono] = useState({
+        mensaje: "",
+        estado: false,
+    });
+    const [ciudad, setCiudad] = useState({
+        mensaje: "",
+        estado: false,
+    });
+    const [email, setEmail] = useState({
+        mensaje: "",
+        estado: false,
+    });
+    const [password, setPass] = useState({
+        mensaje: "",
+        estado: false,
+    });
     const navigate = useNavigate()
     const [ciudades, setCiudades] = useState([]);
 
@@ -63,14 +90,128 @@ const Register = () => {
             usuario.telefono,
             usuario.password
         )
-            .then((response) => {
-                if (response.status) {
-                    localStorage.setItem('user-token', response.token)
-                    navigate('/')
-                    navigate(0)
-                }
-            })
+            .then((response) => comprobarEstado(response))
             .catch((error) => console.log(error));
+    };
+    const comprobarEstado = (data) => {
+        if (!data.status) {
+            setError({
+                ...error,
+                mensaje: data.message,
+                estado: true,
+            });
+            if (data?.errors?.email) {
+                setEmail({
+                    ...email,
+                    mensaje: data.errors.email[0],
+                    estado: true,
+                });
+            } else {
+                setEmail({
+                    ...email,
+                    mensaje: ''
+                });
+            }
+            if (data?.errors?.apellidos) {
+                setApellidos({
+                    ...apellidos,
+                    mensaje: data.errors.apellidos[0],
+                    estado: true,
+                });
+            } else {
+                setApellidos({
+                    ...apellidos,
+                    mensaje: ''
+                });
+            }
+            if (data?.errors?.telefono) {
+                setTelefono({
+                    ...telefono,
+                    mensaje: data.errors.telefono[0],
+                    estado: true,
+                });
+            } else {
+                setTelefono({
+                    ...telefono,
+                    mensaje: ''
+                });
+            }
+            if (data?.errors?.password) {
+                setPass({
+                    ...password,
+                    mensaje: data.errors.password[0],
+                    estado: true,
+                });
+            } else {
+                setPass({
+                    ...password,
+                    mensaje: ''
+                });
+            }
+            if (data?.errors?.ciudad) {
+                setCiudad({
+                    ...ciudad,
+                    mensaje: data.errors.ciudad[0],
+                    estado: true,
+                });
+            } else {
+                setCiudad({
+                    ...ciudad,
+                    mensaje: ''
+                });
+            }
+            if (data?.errors?.nombre) {
+                setNombre({
+                    ...nombre,
+                    mensaje: data.errors.nombre[0],
+                    estado: true,
+                });
+            } else {
+                setNombre({
+                    ...nombre,
+                    mensaje: ''
+                });
+            }
+        } else {
+            setError({
+                ...error,
+                mensaje: "",
+                estado: false,
+            });
+            setNombre({
+                ...nombre,
+                mensaje: "",
+                estado: false,
+            });
+            setApellidos({
+                ...apellidos,
+                mensaje: "",
+                estado: false,
+            });
+            setEmail({
+                ...error,
+                mensaje: "",
+                estado: false,
+            });
+            setPass({
+                ...error,
+                mensaje: "",
+                estado: false,
+            });
+            setTelefono({
+                ...telefono,
+                mensaje: "",
+                estado: false,
+            });
+            setCiudad({
+                ...ciudad,
+                mensaje: "",
+                estado: false,
+            });
+            localStorage.setItem('user-token', data.token); // Guarda el token en localStorage
+            navigate('/')
+            navigate(0)
+        }
     };
 
     useEffect(() => {
@@ -103,20 +244,26 @@ const Register = () => {
                      text-white p-4 rounded-l-lg transition-opacity duration-1000 opacity-0"
                     >
                         <h2 className="text-xl font-bold">
-                            ¡ Comienza una <br/> nueva aventura con <br/>
+                            ¡ Comienza una <br /> nueva aventura con <br />
                             <span className="text-3xl text-blue-500 uppercase">
-                                eventia 
+                                eventia
                             </span> !
                         </h2>
                         <img src={logo} width={90} height={90} alt="Logo" />
                     </div>
-                </div> 
+                </div>
 
                 <div className="2xl:w-full xl:w-full lg:w-full sm:max-w-md lg:basis-1/2 bg-white rounded-lg lg:rounded-l-none lg:rounded-r-lg shadow border mt-14 mb-14 xl:p-0">
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                         <h1 className="text-xl font-bold leading-tight tracking-tight text-colorFuente md:text-2xl">
                             Regístrate Gratis
                         </h1>
+                        <p
+                            style={{ display: error.estado ? "block" : "none" }}
+                            className="text-red-500 text-sm"
+                        >
+                            {error.mensaje}
+                        </p>
                         {/* <p style={{display: error.estado ? 'block' : 'none'}} className="text-red-500 text-sm">{error.mensaje}</p> */}
                         <div className="space-y-4 md:space-y-6 grid grid-cols-2 gap-x-8 justify-start items-end">
                             <div className="w-full col-span-2 sm:col-span-1">
@@ -130,6 +277,7 @@ const Register = () => {
                                     type="text"
                                     name="nombre"
                                     id="nombre"
+                                    style={{borderColor: nombre.estado ? 'red' : '#D1D5DB'}}
                                     className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
                                   focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     placeholder="Tu nombre"
@@ -148,6 +296,7 @@ const Register = () => {
                                     type="text"
                                     name="apellidos"
                                     id="apellidos"
+                                    style={{borderColor: apellidos.estado ? 'red' : '#D1D5DB'}}
                                     className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
                                   focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     placeholder="Tus apellidos"
@@ -166,6 +315,7 @@ const Register = () => {
                                     type="email"
                                     name="email"
                                     id="email"
+                                    style={{borderColor: email.estado ? 'red' : '#D1D5DB'}}
                                     className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
                                   focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     placeholder="name@company.com"
@@ -185,6 +335,7 @@ const Register = () => {
                                     name="password"
                                     id="password"
                                     placeholder="••••••••"
+                                    style={{borderColor: password.estado ? 'red' : '#D1D5DB'}}
                                     className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500
                                   block w-full p-2.5"
                                     onChange={(e) => cambiarPassword(e)}
@@ -202,6 +353,7 @@ const Register = () => {
                                     type="text"
                                     name="telefono"
                                     id="telefono"
+                                    style={{borderColor: telefono.estado ? 'red' : '#D1D5DB'}}
                                     className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
                                   focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     placeholder="Tu teléfono"
@@ -228,7 +380,7 @@ const Register = () => {
                                     isSearchable
                                     noOptionsMessage={() => "Sin resultados"}
                                     classNames={{
-                                        control: () =>  "!text-sm !bg-gray-50 !border !border-gray-300 !text-colorFuente !sm:text-sm !rounded-lg !focus:ring-blue-500 !focus:border-blue-500 !w-full !p-0.5",
+                                        control: () => "!text-sm !bg-gray-50 !border !border-gray-300 !text-colorFuente !sm:text-sm !rounded-lg !focus:ring-blue-500 !focus:border-blue-500 !w-full !p-0.5",
                                         input: (state) => state.isFocused ? "!ring-0 !shadow-none" : "",
                                         menuList: () => '!bg-gray-50'
                                     }}

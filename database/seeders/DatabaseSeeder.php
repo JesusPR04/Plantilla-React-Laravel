@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call(ciudadesSeeder::class);
         $this->call(categoriasSeeder::class);
+        $this->call(adminSeeder::class);
     }
 }
