@@ -7,6 +7,7 @@ use App\Http\Controllers\API\EventoController;
 use App\Http\Controllers\API\OrganizadorController;
 use App\Http\Controllers\API\UsuarioController;
 use App\Http\Controllers\API\EntradaController;
+use App\Models\Entradas;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +47,11 @@ Route::get('/evento/{id}', [EventoController::class, 'getEventoById']);
 
 //Entrada
 Route::post('/entradas/comprar', [EntradaController::class, 'comprar']);
+Route::middleware('auth:sanctum')->get('/entradas', function (Request $request) {
+    $user = $request->user();
+    $entradas = Entradas::where('idUsuario', $user->id)->with('evento')->get();
+    return response()->json($entradas);
+});
 
 
 // Organizador

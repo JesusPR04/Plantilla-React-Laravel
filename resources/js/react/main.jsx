@@ -18,6 +18,7 @@ import SobreNosotros from './Paginas/SobreNosotros/SobreNosotros.jsx'
 import PoliticaPrivacidad from './Paginas/PoliticaPrivacidad/PoliticaPrivacidad.jsx'
 import TerminosCondiciones from './Paginas/Terminos&Condiciones/TerminosCondiciones.jsx'
 import Evento from './Paginas/Evento/Evento.jsx'
+import Entrada from './Paginas/Entrada/Entrada.jsx'
 
 
 function AppLayout() {
@@ -80,6 +81,10 @@ const router = createBrowserRouter([
     {
       path: "/evento/:id",
       element: <Evento />,
+    },
+    {
+      path: "/entradas",
+      element: <Entrada />,
     }
     ]
   }

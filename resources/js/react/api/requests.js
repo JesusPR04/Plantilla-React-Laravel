@@ -116,6 +116,23 @@ export const comprarEntrada = async ({idUsuario, idEvento, cantidad }) => {
   return data;
 };
 
+export const getEntradas = async (token) => {
+  const response = await fetch('http://localhost/api/entradas', {
+      method: 'GET',
+      headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/json',
+      },
+  });
+
+  if (!response.ok) {
+      const errorMessage = await response.text();
+      throw new Error(`Error: ${errorMessage}`);
+  }
+
+  return await response.json();
+};
+
 export const fetchUserData = async () => {
   const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
 
