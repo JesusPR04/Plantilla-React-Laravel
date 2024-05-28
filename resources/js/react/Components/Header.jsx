@@ -185,7 +185,7 @@ function Header() {
                                          md:text-white md:rounded-md 
                                          md:bg-blue-500 md:hover:bg-blue-500 md:hover:text-white flex flex-row items-center"
                                     >
-                                        <span>{user.nombre}</span>
+                                        <span className="capitalize">{user.nombre}</span>
                                         <svg
                                             className="w-2.5 h-2.5 ms-2.5 hover:w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
@@ -202,6 +202,9 @@ function Header() {
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-badge-cent text-blue-500"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" /><path d="M12 7v10" /><path d="M15.4 10a4 4 0 1 0 0 4" /></svg>
                                                     </div>
                                                 </div>
+                                            </li>
+                                            <li>
+                                                <Link to="/entradas" className="block px-4 py-2 hover:text-blue-500">Mis entradas</Link>
                                             </li>
                                             <li>
                                                 <Link to="/perfil" className="block px-4 py-2 hover:text-blue-500">Perfil</Link>

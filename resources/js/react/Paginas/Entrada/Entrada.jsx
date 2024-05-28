@@ -33,15 +33,15 @@ const Entrada = () => {
     }, []);
 
     if (loading) {
-        return <div className='min-h-[calc(100vh-436px)]'>Cargando...</div>;
+        return <div className='min-h-[calc(100vh-436px)] text-center mt-10 text-colorFuente text-2xl font-bold'>Cargando...</div>;
     }
 
     if (error) {
-        return <div className='min-h-[calc(100vh-436px)]'>{error}</div>;
+        return <div className='min-h-[calc(100vh-436px)] text-center mt-10 text-red-500 text-2xl font-bold'>{error}</div>;
     }
 
     if (entradas.length === 0) {
-        return <div>No tienes entradas</div>;
+        return <div className='min-h-[calc(100vh-436px)] text-center mt-10 text-colorFuente text-2xl font-bold'>No tienes entradas</div>;
     }
 
     return (

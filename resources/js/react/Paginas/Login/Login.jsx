@@ -87,7 +87,6 @@ const Login = () => {
                 mensaje: "",
                 estado: false,
             });
-            alert(data.message)
             localStorage.setItem('user-token', data.token); // Guarda el token en localStorage
             navigate('/')
             navigate(0)

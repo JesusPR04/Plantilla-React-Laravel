@@ -65,7 +65,6 @@ const Register = () => {
         )
             .then((response) => {
                 if (response.status) {
-                    alert(response.message)
                     localStorage.setItem('user-token', response.token)
                     navigate('/')
                     navigate(0)

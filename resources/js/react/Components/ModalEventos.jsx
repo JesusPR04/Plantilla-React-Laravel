@@ -61,23 +61,23 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
             className="modal rounded-lg overflow-y-auto"
             overlayClassName="overlay fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50"
         >
-            <section className="bg-white dark:bg-gray-950 py-8 md:py-8 lg:py-8">
+            <section className="bg-white py-8 md:py-8 lg:py-8">
                 <div className="container mx-auto px-4 md:px-6">
                     <div className="max-w-3xl mx-auto">
-                        <h1 className="text-3xl md:text-4xl font-bold text-gray-950 dark:text-white mb-4">Busca tus eventos</h1>
-                        <form className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6 md:p-8" onSubmit={handleSubmit}>
+                        <h1 className="text-3xl md:text-4xl font-bold text-colorFuente mb-4 uppercase">Busca tus <span className='text-blue-500'>eventos</span></h1>
+                        <form className="bg-white rounded-lg shadow-lg p-6 md:p-8" onSubmit={handleSubmit}>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
                                         <label
-                                            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                                            className="block text-sm font-medium text-colorFuente mb-1"
                                             htmlFor="start-date"
                                         >
                                             Fecha desde
                                         </label>
                                         <div className="relative">
                                             <input
-                                                className="w-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md py-2 px-3 text-sm text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                                className="w-full bg-gray-100 border border-gray-200 rounded-md py-2 px-3 text-sm text-colorFuente focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                                 id="start-date"
                                                 type="date"
                                                 value={fechaDesde}
@@ -86,12 +86,12 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
                                         </div>
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor="end-date">
+                                        <label className="block text-sm font-medium text-colorFuente mb-1" htmlFor="end-date">
                                             Fecha hasta
                                         </label>
                                         <div className="relative">
                                             <input
-                                                className="w-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md py-2 px-3 text-sm text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                                className="w-full bg-gray-100 border border-gray-200 rounded-md py-2 px-3 text-sm text-colorFuente focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                                 id="end-date"
                                                 type="date"
                                                 value={fechaHasta}
@@ -102,7 +102,7 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
                                 </div>
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor="min-capacity">
+                                        <label className="block text-sm font-medium text-colorFuente mb-1" htmlFor="min-capacity">
                                             Aforo mínimo {aforoMin}
                                         </label>
                                         <div className="relative">
@@ -119,7 +119,7 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
                                         </div>
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor="max-capacity">
+                                        <label className="block text-sm font-medium text-colorFuente mb-1" htmlFor="max-capacity">
                                             Aforo máximo {aforoMax}
                                         </label>
                                         <div className="relative">
@@ -139,7 +139,7 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor="min-price">
+                                    <label className="block text-sm font-medium text-colorFuente mb-1" htmlFor="min-price">
                                         Precio mínimo {precioMin}
                                     </label>
                                     <div className="relative">
@@ -156,7 +156,7 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor="max-price">
+                                    <label className="block text-sm font-medium text-colorFuente mb-1" htmlFor="max-price">
                                         Precio máximo {precioMax}
                                     </label>
                                     <div className="relative">
@@ -175,12 +175,12 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor="city">
+                                    <label className="block text-sm font-medium text-colorFuente mb-1" htmlFor="city">
                                         Ciudad
                                     </label>
                                     <div className="relative">
                                         <select
-                                            className="w-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md py-2 px-3 text-sm text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                            className="w-full bg-gray-100 border border-gray-200 rounded-md py-2 px-3 text-sm text-colorFuente focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                             id="city"
                                             value={ciudad}
                                             onChange={(e) => setCiudad(e.target.value)}
@@ -193,12 +193,12 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" htmlFor="genre">
+                                    <label className="block text-sm font-medium text-colorFuente mb-1" htmlFor="genre">
                                         Género
                                     </label>
                                     <div className="relative">
                                         <select
-                                            className="w-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md py-2 px-3 text-sm text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                            className="w-full bg-gray-100  border border-gray-200  rounded-md py-2 px-3 text-sm text-colorFuente focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                             id="genre"
                                             value={categoria}
                                             onChange={(e) => setCategoria(e.target.value)}
@@ -213,7 +213,7 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
                             </div>
                             <div className="mt-6">
                                 <button
-                                    className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-6 rounded-lg"
+                                    className="w-full bg-blue-500 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg"
                                     type="submit"
                                 >
                                     Buscar
