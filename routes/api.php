@@ -6,12 +6,9 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\AdminController;
 use App\Http\Controllers\API\EventoController;
 use App\Http\Controllers\API\EntradaController;
-<<<<<<< HEAD
 use App\Http\Controllers\API\UsuarioController;
 use App\Http\Controllers\API\OrganizadorController;
-=======
 use App\Models\Entradas;
->>>>>>> aa0b93cd8582060b77c19cab2a089d108a22b6a0
 
 /*
 |--------------------------------------------------------------------------
