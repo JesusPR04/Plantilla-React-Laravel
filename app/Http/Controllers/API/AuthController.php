@@ -78,11 +78,12 @@ class AuthController extends Controller
             $mensajes = [
                 'required' => 'El campo :attribute es obligatorio',
                 'email' => 'El formato del :attribute no es correcto',
+                'regex' => 'El formato del :attribute no es correcto',
                 'message' => 'asd'
             ];
             $validateUser = Validator::make($request->all(),
             [
-                'email' => 'required|email',
+                'email' => 'required|email|regex:/^[^@]+@[^@]+\.[a-zA-Z]{2,}$/i',
                 'password' => 'required'
             ], $mensajes);
 

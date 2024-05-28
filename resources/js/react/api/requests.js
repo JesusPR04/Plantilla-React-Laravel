@@ -8,10 +8,6 @@ export const login = async (email, password) => {
       body: JSON.stringify({ email, password }),
     });
 
-    if (!response.ok) {
-      throw new Error('Login failed');
-    }
-
     const data = await response.json();
     localStorage.setItem('user-token', data.token); // Guarda el token en localStorage
     return data;
@@ -101,16 +97,16 @@ export const organizador = async (formData) => {
   }
 }
 
-export const comprarEntrada = async ({idUsuario, idEvento, cantidad }) => {
+export const comprarEntrada = async ({ idUsuario, idEvento, cantidad }) => {
   const response = await fetch('http://localhost/api/entradas/comprar', {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({idUsuario, idEvento, cantidad })
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ idUsuario, idEvento, cantidad })
   });
   if (!response.ok) {
-      throw new Error('Error purchasing ticket');
+    throw new Error('Error purchasing ticket');
   }
   const data = await response.json();
   return data;
@@ -185,3 +181,27 @@ export const getEventoById = async (id) => {
   }
 };
 
+export const comprobarAcceso = async () => {
+  const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
+
+  if (!token) {
+    throw new Error('No token found');
+  }
+
+  try {
+    const url = 'http://localhost/api/admin'
+    const headers = {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+    }
+    const response = await fetch(url, headers);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    throw error;
+  }
+}

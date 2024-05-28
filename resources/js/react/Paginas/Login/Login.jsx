@@ -88,7 +88,6 @@ const Login = () => {
                 estado: false,
             });
             navigate('/')
-            navigate(0)
         }
     };
 
