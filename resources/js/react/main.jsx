@@ -18,7 +18,11 @@ import SobreNosotros from './Paginas/SobreNosotros/SobreNosotros.jsx'
 import PoliticaPrivacidad from './Paginas/PoliticaPrivacidad/PoliticaPrivacidad.jsx'
 import TerminosCondiciones from './Paginas/Terminos&Condiciones/TerminosCondiciones.jsx'
 import Evento from './Paginas/Evento/Evento.jsx'
+<<<<<<< HEAD
 import Admin from './Paginas/Admin/Admin.jsx'
+=======
+import Entrada from './Paginas/Entrada/Entrada.jsx'
+>>>>>>> aa0b93cd8582060b77c19cab2a089d108a22b6a0
 
 
 function AppLayout() {
@@ -83,8 +87,13 @@ const router = createBrowserRouter([
       element: <Evento />,
     },
     {
+<<<<<<< HEAD
       path: "/admin",
       element: <Admin />,
+=======
+      path: "/entradas",
+      element: <Entrada />,
+>>>>>>> aa0b93cd8582060b77c19cab2a089d108a22b6a0
     }
     ]
   }

@@ -6,8 +6,12 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\AdminController;
 use App\Http\Controllers\API\EventoController;
 use App\Http\Controllers\API\EntradaController;
+<<<<<<< HEAD
 use App\Http\Controllers\API\UsuarioController;
 use App\Http\Controllers\API\OrganizadorController;
+=======
+use App\Models\Entradas;
+>>>>>>> aa0b93cd8582060b77c19cab2a089d108a22b6a0
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +34,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         'email' => $user->email,
         'rol' => $user->rol,
         'ciudad' => $user->ciudad,
-        'telefono' => $user->telefono
+        'telefono' => $user->telefono,
+        'puntos' => $user->puntos
     ]);
 });
 Route::middleware('auth:sanctum')->put('/user', [UsuarioController::class, 'updateUserData']);
@@ -47,6 +52,11 @@ Route::get('/evento/{id}', [EventoController::class, 'getEventoById']);
 
 //Entrada
 Route::post('/entradas/comprar', [EntradaController::class, 'comprar']);
+Route::middleware('auth:sanctum')->get('/entradas', function (Request $request) {
+    $user = $request->user();
+    $entradas = Entradas::where('idUsuario', $user->id)->with('evento')->get();
+    return response()->json($entradas);
+});
 
 
 // Organizador
