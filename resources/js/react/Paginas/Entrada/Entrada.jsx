@@ -47,7 +47,7 @@ const Entrada = () => {
     return (
         <section className="bg-gray-100 py-12 md:py-16 lg:py-20 min-h-[calc(100vh-436px)]">
             <div className="container mx-auto px-4 md:px-6">
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-950 dark:text-white mb-6">Mis Entradas</h1>
+                <h1 className="text-3xl md:text-4xl font-bold text-colorFuente mb-6 text-center">Entradas</h1>
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {entradas.map((entrada) => (
                         <div key={entrada.id} className="border p-4 rounded shadow">

@@ -30,7 +30,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         'email' => $user->email,
         'rol' => $user->rol,
         'ciudad' => $user->ciudad,
-        'telefono' => $user->telefono
+        'telefono' => $user->telefono,
+        'puntos' => $user->puntos
     ]);
 });
 Route::middleware('auth:sanctum')->put('/user', [UsuarioController::class, 'updateUserData']);

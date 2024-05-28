@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Entradas;
+use App\Models\User;
 
 class EntradaController extends Controller
 {
@@ -21,6 +22,14 @@ class EntradaController extends Controller
             'idEvento' => $validated['idEvento'],
             'cantidad' => $validated['cantidad'],
         ]);
+
+        // Calcular puntos ganados
+        $puntosGanados = $validated['cantidad'] * 10; // Ejemplo: 10 puntos por cada entrada
+
+        // Actualizar puntos del usuario
+        $user = User::findOrFail($validated['idUsuario']);
+        $user->puntos += $puntosGanados;
+        $user->save();
 
         return response()->json($entrada, 201);
     }
