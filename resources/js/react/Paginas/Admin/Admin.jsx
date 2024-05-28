@@ -9,6 +9,7 @@ const Admin = () => {
     useEffect(() => {
         comprobarAcceso()
         .then(respuesta => comprobarRespuesta(respuesta))
+        .catch(error => navigate('/'))
     }, [])
 
     const comprobarRespuesta = (respuesta) => {
