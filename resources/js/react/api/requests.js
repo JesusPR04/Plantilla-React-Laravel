@@ -101,6 +101,21 @@ export const organizador = async (formData) => {
   }
 }
 
+export const comprarEntrada = async ({idUsuario, idEvento, cantidad }) => {
+  const response = await fetch('http://localhost/api/entradas/comprar', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({idUsuario, idEvento, cantidad })
+  });
+  if (!response.ok) {
+      throw new Error('Error purchasing ticket');
+  }
+  const data = await response.json();
+  return data;
+};
+
 export const fetchUserData = async () => {
   const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
 

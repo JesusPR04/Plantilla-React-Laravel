@@ -6,6 +6,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\EventoController;
 use App\Http\Controllers\API\OrganizadorController;
 use App\Http\Controllers\API\UsuarioController;
+use App\Http\Controllers\API\EntradaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,7 @@ use App\Http\Controllers\API\UsuarioController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     $user = $request->user();
     return response()->json([
+        'id' => $user->id,
         'nombre' => $user->nombre,
         'apellidos' => $user->apellidos,
         'email' => $user->email,
@@ -41,6 +43,10 @@ Route::post('/updateEvent/{id}', [EventoController::class, 'update']);
 Route::post('/deleteEvent/{id}', [EventoController::class, 'delete']);
 Route::get('/getEventos', [EventoController::class, 'getEventos']);
 Route::get('/evento/{id}', [EventoController::class, 'getEventoById']);
+
+//Entrada
+Route::post('/entradas/comprar', [EntradaController::class, 'comprar']);
+
 
 // Organizador
 Route::post('/organizador', [OrganizadorController::class, 'realizarPeticion'])/* ->middleware('auth:sanctum') */;
