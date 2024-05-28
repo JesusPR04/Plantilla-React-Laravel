@@ -9,7 +9,6 @@ export const login = async (email, password) => {
     });
 
     const data = await response.json();
-    localStorage.setItem('user-token', data.token); // Guarda el token en localStorage
     return data;
   } catch (error) {
     console.error('Error during login:', error);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { register, getCiudades } from "../../api/requests";
 import Select from "react-select";
 import img from "../../assets/register.jpg";
@@ -15,6 +15,7 @@ const Register = () => {
         ciudad: "",
     });
 
+    const navigate = useNavigate()
     const [ciudades, setCiudades] = useState([]);
 
     const cambiarEmail = (e) => {
@@ -62,7 +63,14 @@ const Register = () => {
             usuario.telefono,
             usuario.password
         )
-            .then((response) => console.log(response))
+            .then((response) => {
+                if (response.status) {
+                    alert(response.message)
+                    localStorage.setItem('user-token', response.token)
+                    navigate('/')
+                    navigate(0)
+                }
+            })
             .catch((error) => console.log(error));
     };
 

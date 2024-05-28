@@ -210,6 +210,7 @@ function Header() {
                                         <div className="py-1">
                                             <button onClick={() => {
                                                 localStorage.removeItem('user-token')
+                                                navigate('/')
                                                 navigate(0)
                                             }}
                                                 className="block px-4 py-2 text-sm font-semibold hover:text-blue-500"
