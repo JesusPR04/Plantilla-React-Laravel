@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Entradas;
 use App\Models\User;
+use App\Models\Eventos;
 
 class EntradaController extends Controller
 {
@@ -17,6 +18,8 @@ class EntradaController extends Controller
             'cantidad' => 'required|integer|min:1',
         ]);
 
+        $evento = Eventos::findOrFail($validated['idEvento']);
+
         $entrada = Entradas::create([
             'idUsuario' => $validated['idUsuario'],
             'idEvento' => $validated['idEvento'],
@@ -24,7 +27,7 @@ class EntradaController extends Controller
         ]);
 
         // Calcular puntos ganados
-        $puntosGanados = $validated['cantidad'] * 10; // Ejemplo: 10 puntos por cada entrada
+        $puntosGanados = $evento->precio * $validated['cantidad']; // Ejemplo: 10 puntos por cada entrada
 
         // Actualizar puntos del usuario
         $user = User::findOrFail($validated['idUsuario']);
