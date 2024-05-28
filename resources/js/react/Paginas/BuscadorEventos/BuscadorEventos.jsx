@@ -4,6 +4,11 @@ import { getEventos } from '../../api/requests';
 import { Link } from 'react-router-dom';
 import concierto from '../../assets/concierto.jpg';
 import eventodefecto from '../../assets/eventodefecto.jpg';
+import { FaCalendarAlt } from "react-icons/fa";
+import { FaClock } from "react-icons/fa6";
+import { CiLocationOn } from "react-icons/ci";
+import { BsPeople } from "react-icons/bs";
+import { RiPriceTag3Line } from "react-icons/ri";
 
 const BASE_URL = 'http://localhost:';
 
@@ -65,24 +70,53 @@ const BuscadorEventos = () => {
             />
             <div className="grid grid-cols-1 p-20 pt-0 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {eventos.map((evento) => (
-                    <div key={evento.id} className="bg-white shadow-lg rounded-lg overflow-hidden">
-                        <Link to={`/evento/${evento.id}`}>
-                            <img className="w-full h-64 object-cover object-center" src={evento.ruta ? `${BASE_URL}${evento.ruta}` : eventodefecto} alt={evento.nombre} />
+                    <div key={evento.id} className="relative group overflow-hidden rounded-lg">
+                        <Link className="absolute inset-0 z-10" href="#">
+                            <span className="sr-only">View event</span>
                         </Link>
-                        <div className="p-4">
-                            <h2 className="text-xl font-semibold mb-2">{evento.nombre}</h2>
-                            <p className="text-gray-700">{evento.descripcion}</p>
-                            <p className="mt-2">Fecha: {evento.fecha}</p>
-                            <p>Hora: {evento.hora}</p>
-                            <p>Localización: {evento.localizacion}</p>
-                            <p>Aforo Total: {evento.aforoTotal}</p>
-                            <p>Aforo Disponible: {evento.aforoDisponible}</p>
-                            <p>Precio: {evento.precio}</p>
+                        <img
+                            alt= {evento.nombre}
+                            className="object-cover w-full h-60 group-hover:scale-105 transition-transform"
+                            height={400}
+                            src={eventodefecto}
+                            style={{
+                                aspectRatio: "600/400",
+                                objectFit: "cover",
+                            }}
+                            width={600}
+                        />
+                        <div className="bg-white p-4 dark:bg-gray-950">
+                            <h3 className="font-semibold text-lg md:text-xl">{evento.nombre}</h3>
+                            <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
+                            {evento.descripcion}
+                            </p>
+                            <div className="grid gap-2 pt-4">
+                                <div className="flex items-center gap-2 text-sm">
+                                    <FaCalendarAlt className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                                    <span>{evento.fecha}</span>
+                                </div>
+                                <div className="flex items-center gap-2 text-sm">
+                                    <FaClock className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                                    <span>{evento.hora}</span>
+                                </div>
+                                <div className="flex items-center gap-2 text-sm">
+                                    <CiLocationOn className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                                    <span>{evento.localizacion}, {evento.ciudad}</span>
+                                </div>
+                                <div className="flex items-center gap-2 text-sm">
+                                    <BsPeople  className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                                    <span>Total: {evento.aforoTotal} | Available: {evento.aforoDisponible}</span>
+                                </div>
+                                <div className="flex items-center gap-2 text-sm">
+                                    <RiPriceTag3Line  className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                                    <span>${evento.precio}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 ))}
-            </div>
-        </main>
+        </div>
+        </main >
     );
 };
 
