@@ -20,7 +20,7 @@ class adminSeeder extends Seeder
             'password' => 'admin',
             'telefono' => '123456789',
             'ciudad' => 'Cordoba',
-            'role' => 'Administrador'
+            'rol' => 'Administrador'
         ]);
     }
 }
