@@ -8,10 +8,10 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
     const [fechaDesde, setFechaDesde] = useState('');
     const [fechaHasta, setFechaHasta] = useState('');
     const [precioMin, setPrecioMin] = useState(0);
-    const [precioMax, setPrecioMax] = useState(200);
+    const [precioMax, setPrecioMax] = useState(300);
     const [categoria, setCategoria] = useState('');
     const [aforoMin, setAforoMin] = useState(0);
-    const [aforoMax, setAforoMax] = useState(40000);
+    const [aforoMax, setAforoMax] = useState(100000);
     const [ciudad, setCiudad] = useState('');
 
     const [ciudades, setCiudades] = useState([]);
@@ -53,176 +53,208 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
         }
     };
 
+    const customStyles = {
+        content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+            padding: '2rem',
+            backgroundColor: 'white',
+            borderRadius: '0.375rem',
+            maxWidth: '600px',
+            width: '90%',
+        },
+        overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.75)',
+            zIndex: 1000,
+        },
+    };
+
     return (
         <Modal
             isOpen={isOpen}
             onRequestClose={closeModal}
             contentLabel="Filtrar eventos"
-            className="modal rounded-lg overflow-y-auto"
-            overlayClassName="overlay fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50"
+            style={customStyles}
         >
-            <section className="bg-white py-8 md:py-8 lg:py-8">
-                <div className="container mx-auto px-4 md:px-6">
-                    <div className="max-w-3xl mx-auto">
-                        <h1 className="text-3xl md:text-4xl font-bold text-colorFuente mb-4 uppercase">Busca tus <span className='text-blue-500'>eventos</span></h1>
-                        <form className="bg-white rounded-lg shadow-lg p-6 md:p-8" onSubmit={handleSubmit}>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <label
-                                            className="block text-sm font-medium text-colorFuente mb-1"
-                                            htmlFor="start-date"
-                                        >
-                                            Fecha desde
-                                        </label>
-                                        <div className="relative">
-                                            <input
-                                                className="w-full bg-gray-100 border border-gray-200 rounded-md py-2 px-3 text-sm text-colorFuente focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                                id="start-date"
-                                                type="date"
-                                                value={fechaDesde}
-                                                onChange={(e) => setFechaDesde(e.target.value)}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-colorFuente mb-1" htmlFor="end-date">
-                                            Fecha hasta
-                                        </label>
-                                        <div className="relative">
-                                            <input
-                                                className="w-full bg-gray-100 border border-gray-200 rounded-md py-2 px-3 text-sm text-colorFuente focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                                id="end-date"
-                                                type="date"
-                                                value={fechaHasta}
-                                                onChange={(e) => setFechaHasta(e.target.value)}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="block text-sm font-medium text-colorFuente mb-1" htmlFor="min-capacity">
-                                            Aforo mínimo {aforoMin}
-                                        </label>
-                                        <div className="relative">
-                                            <input
-                                                className="w-full h-1 bg-blue-500 rounded-full appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 focus:scale-105 transition-transform"
-                                                value={aforoMin}
-                                                onChange={(e) => setAforoMin(e.target.value)}
-                                                id="min-capacity"
-                                                max="50000"
-                                                min="0"
-                                                step="10"
-                                                type="range"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-colorFuente mb-1" htmlFor="max-capacity">
-                                            Aforo máximo {aforoMax}
-                                        </label>
-                                        <div className="relative">
-                                            <input
-                                                className="w-full h-1 bg-blue-500 rounded-full appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 focus:scale-105 transition-transform"
-                                                value={aforoMax}
-                                                onChange={(e) => setAforoMax(e.target.value)}
-                                                id="max-capacity"
-                                                max="50000"
-                                                min="0"
-                                                step="10"
-                                                type="range"
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                                <div>
-                                    <label className="block text-sm font-medium text-colorFuente mb-1" htmlFor="min-price">
-                                        Precio mínimo {precioMin}
-                                    </label>
-                                    <div className="relative">
-                                        <input
-                                            className="w-full h-1 bg-blue-500 rounded-full appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 focus:scale-105 transition-transform"
-                                            value={precioMin}
-                                            onChange={handlePrecioMinChange}
-                                            id="min-price"
-                                            max="1000"
-                                            min="0"
-                                            step="10"
-                                            type="range"
-                                        />
-                                    </div>
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-colorFuente mb-1" htmlFor="max-price">
-                                        Precio máximo {precioMax}
-                                    </label>
-                                    <div className="relative">
-                                        <input
-                                            className="w-full h-1 bg-blue-500 rounded-full appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 focus:scale-105 transition-transform"
-                                            value={precioMax}
-                                            onChange={handlePrecioMaxChange}
-                                            id="max-price"
-                                            max="1000"
-                                            min="0"
-                                            step="10"
-                                            type="range"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                                <div>
-                                    <label className="block text-sm font-medium text-colorFuente mb-1" htmlFor="city">
-                                        Ciudad
-                                    </label>
-                                    <div className="relative">
-                                        <select
-                                            className="w-full bg-gray-100 border border-gray-200 rounded-md py-2 px-3 text-sm text-colorFuente focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                            id="city"
-                                            value={ciudad}
-                                            onChange={(e) => setCiudad(e.target.value)}
-                                        >
-                                            <option value="">Selecciona una ciudad</option>
-                                            {ciudades.map((city) => (
-                                                <option key={city.id} value={city.id}>{city.nombre}</option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-colorFuente mb-1" htmlFor="genre">
-                                        Género
-                                    </label>
-                                    <div className="relative">
-                                        <select
-                                            className="w-full bg-gray-100  border border-gray-200  rounded-md py-2 px-3 text-sm text-colorFuente focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                            id="genre"
-                                            value={categoria}
-                                            onChange={(e) => setCategoria(e.target.value)}
-                                        >
-                                            <option value="">Selecciona un género</option>
-                                            {genrers.map((genre) => (
-                                                <option key={genre.id} value={genre.id}>{genre.nombre}</option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="mt-6">
-                                <button
-                                    className="w-full bg-blue-500 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg"
-                                    type="submit"
-                                >
-                                    Buscar
-                                </button>
-                            </div>
-                        </form>
+            <h1 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '1rem', textTransform: 'uppercase' }}>
+                Busca tus <span style={{ color: '#1e40af' }}>eventos</span>
+            </h1>
+            <form onSubmit={handleSubmit}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                    <div>
+                        <label style={{ display: 'block', marginBottom: '0.5rem' }} htmlFor="start-date">
+                            Fecha desde
+                        </label>
+                        <input
+                            style={{
+                                width: '100%',
+                                padding: '0.5rem',
+                                borderRadius: '0.375rem',
+                                border: '1px solid #e2e8f0',
+                                backgroundColor: '#f7fafc',
+                                fontSize: '0.875rem',
+                            }}
+                            id="start-date"
+                            type="date"
+                            value={fechaDesde}
+                            onChange={(e) => setFechaDesde(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <label style={{ display: 'block', marginBottom: '0.5rem' }} htmlFor="end-date">
+                            Fecha hasta
+                        </label>
+                        <input
+                            style={{
+                                width: '100%',
+                                padding: '0.5rem',
+                                borderRadius: '0.375rem',
+                                border: '1px solid #e2e8f0',
+                                backgroundColor: '#f7fafc',
+                                fontSize: '0.875rem',
+                            }}
+                            id="end-date"
+                            type="date"
+                            value={fechaHasta}
+                            onChange={(e) => setFechaHasta(e.target.value)}
+                        />
                     </div>
                 </div>
-            </section>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginTop: '1rem' }}>
+                    <div>
+                        <label style={{ display: 'block', marginBottom: '0.5rem' }} htmlFor="min-capacity">
+                            Aforo mínimo {aforoMin}
+                        </label>
+                        <input
+                            style={{ width: '100%' }}
+                            value={aforoMin}
+                            onChange={(e) => setAforoMin(e.target.value)}
+                            id="min-capacity"
+                            max="50000"
+                            min="0"
+                            step="10"
+                            type="range"
+                        />
+                    </div>
+                    <div>
+                        <label style={{ display: 'block', marginBottom: '0.5rem' }} htmlFor="max-capacity">
+                            Aforo máximo {aforoMax}
+                        </label>
+                        <input
+                            style={{ width: '100%' }}
+                            value={aforoMax}
+                            onChange={(e) => setAforoMax(e.target.value)}
+                            id="max-capacity"
+                            max="50000"
+                            min="0"
+                            step="10"
+                            type="range"
+                        />
+                    </div>
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginTop: '1rem' }}>
+                    <div>
+                        <label style={{ display: 'block', marginBottom: '0.5rem' }} htmlFor="min-price">
+                            Precio mínimo {precioMin}
+                        </label>
+                        <input
+                            style={{ width: '100%' }}
+                            value={precioMin}
+                            onChange={handlePrecioMinChange}
+                            id="min-price"
+                            max="1000"
+                            min="0"
+                            step="10"
+                            type="range"
+                        />
+                    </div>
+                    <div>
+                        <label style={{ display: 'block', marginBottom: '0.5rem' }} htmlFor="max-price">
+                            Precio máximo {precioMax}
+                        </label>
+                        <input
+                            style={{ width: '100%' }}
+                            value={precioMax}
+                            onChange={handlePrecioMaxChange}
+                            id="max-price"
+                            max="1000"
+                            min="0"
+                            step="10"
+                            type="range"
+                        />
+                    </div>
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginTop: '1rem' }}>
+                    <div>
+                        <label style={{ display: 'block', marginBottom: '0.5rem' }} htmlFor="city">
+                            Ciudad
+                        </label>
+                        <select
+                            style={{
+                                width: '100%',
+                                padding: '0.5rem',
+                                borderRadius: '0.375rem',
+                                border: '1px solid #e2e8f0',
+                                backgroundColor: '#f7fafc',
+                                fontSize: '0.875rem',
+                            }}
+                            id="city"
+                            value={ciudad}
+                            onChange={(e) => setCiudad(e.target.value)}
+                        >
+                            <option value="">Selecciona una ciudad</option>
+                            {ciudades.map((city) => (
+                                <option key={city.id} value={city.id}>{city.nombre}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div>
+                        <label style={{ display: 'block', marginBottom: '0.5rem' }} htmlFor="genre">
+                            Género
+                        </label>
+                        <select
+                            style={{
+                                width: '100%',
+                                padding: '0.5rem',
+                                borderRadius: '0.375rem',
+                                border: '1px solid #e2e8f0',
+                                backgroundColor: '#f7fafc',
+                                fontSize: '0.875rem',
+                            }}
+                            id="genre"
+                            value={categoria}
+                            onChange={(e) => setCategoria(e.target.value)}
+                        >
+                            <option value="">Selecciona un género</option>
+                            {genrers.map((genre) => (
+                                <option key={genre.id} value={genre.id}>{genre.nombre}</option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
+                <div style={{ marginTop: '1rem' }}>
+                    <button
+                        style={{
+                            width: '100%',
+                            padding: '0.75rem',
+                            borderRadius: '0.375rem',
+                            backgroundColor: '#1e40af',
+                            color: 'white',
+                            fontSize: '1rem',
+                            fontWeight: 'medium',
+                            border: 'none',
+                            cursor: 'pointer',
+                        }}
+                        type="submit"
+                    >
+                        Buscar
+                    </button>
+                </div>
+            </form>
         </Modal>
     );
 };

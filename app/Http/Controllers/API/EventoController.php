@@ -44,7 +44,7 @@ class EventoController extends Controller
             $filtros[] = "idCategoria = '" . $request->input('categoria') . "'";
         }
 
-        if (!is_null($request->input('precioMin'))) {
+        if (!is_null($request->input('precioMin')) && $request->input('precioMin') !=0) {
             $filtros[] = "precio >= " . $request->input('precioMin');
         }
 
@@ -61,6 +61,8 @@ class EventoController extends Controller
         }
 
         $query .= " ORDER BY fecha ASC";
+
+        
 
         $eventos = DB::select($query);
 
