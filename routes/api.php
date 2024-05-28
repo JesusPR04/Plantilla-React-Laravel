@@ -61,6 +61,8 @@ Route::post('/organizador', [OrganizadorController::class, 'realizarPeticion'])/
 
 // Admin
 Route::post('/admin', [AdminController::class, 'index'])->middleware('auth:sanctum'); //Comprueba el rol para acceder a la página
+Route::get('/peticiones', [AdminController::class, 'peticiones'])->middleware(('auth:sanctum')); //Recoge las peticiones para colaborador
+Route::post('/descargarArchivo', [AdminController::class, 'descargarArchivo'])->middleware(('auth:sanctum')); //Recoge las peticiones para colaborador
 
 Route::get('/prueba',function(){
     return response()->json([

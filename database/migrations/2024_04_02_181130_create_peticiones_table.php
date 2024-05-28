@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('dni');
             $table->string('documento');
             $table->string('comentario')->nullable();
+            $table->string('estado')->nullable()->default('En revisión');
             $table->unsignedBigInteger('idUsuario');
             $table->timestamps();
 
