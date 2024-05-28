@@ -105,7 +105,7 @@ const BuscadorEventos = () => {
                                 </div>
                                 <div className="flex items-center gap-2 text-sm">
                                     <BsPeople  className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-                                    <span>Total: {evento.aforoTotal} | Available: {evento.aforoDisponible}</span>
+                                    <span>Total: {evento.aforoTotal} | Disponible: {evento.aforoDisponible}</span>
                                 </div>
                                 <div className="flex items-center gap-2 text-sm">
                                     <RiPriceTag3Line  className="w-4 h-4 text-gray-500 dark:text-gray-400" />
