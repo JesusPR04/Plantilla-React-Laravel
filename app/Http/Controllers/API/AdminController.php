@@ -6,10 +6,15 @@ use App\Models\Peticiones;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum');
+    }
     public function index()
     {
         $rolUser = Auth::user()->rol;
@@ -45,23 +50,12 @@ class AdminController extends Controller
 
     public function descargarArchivo(Request $request)
     {
-        $ruta = storage_path($request->documento);
-        if (file_exists($ruta)) {
-            if(Response::download($ruta)){
-                return response()->json([
-                   'status' => true,
-                   'message' => 'Archivo descargado correctamente'
-                ], 200);
-            }else{
-                return response()->json([
-                   'status' => false,
-                   'message' => 'Error al descargar el archivo'
-                ], 500);
-            }
-        }else{
+        if (Storage::disk('local')->exists($request->documento)) {
+            return Storage::disk('local')->download($request->documento);
+        } else {
             return response()->json([
-               'status' => false,
-               'message' => 'El archivo no existe'
+                'status' => false,
+                'error' => 'Archivo no encontrado'
             ], 404);
         }
     }
