@@ -80,7 +80,7 @@ const BuscadorEventos = () => {
                 closeModal={closeModal}
                 applyFilters={applyFilters}
             />
-            <div className={`grid grid-cols-1 px-4 sm:px-20 pt-0 md:grid-cols-2 lg:grid-cols-3 gap-6`}>
+            <div className={`grid grid-cols-1 px-4 py-10 sm:px-20 pt-0 md:grid-cols-2 lg:grid-cols-3 gap-6`}>
                 {eventos.map((evento) => (
                     <div
                         key={evento.id}
