@@ -1,9 +1,27 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "../../Css/FileButton.css"
 import logo from "../../assets/Eventia-logo-removebg.png";
 import { organizador } from '../../api/requests';
+import { permitirOrganizador } from '../../api/requests';
+import { useNavigate } from 'react-router-dom';
 
 const Peticion = () => {
+    const navigate = useNavigate()
+
+    const [autorizacion, setAutorizacion] = useState(false)
+
+    useEffect(()=>{
+        permitirOrganizador()
+        .then(respuesta => comprobarRespuesta(respuesta))
+        .catch(error => navigate('/'))
+    }, [])
+
+    const comprobarRespuesta = (respuesta) => {
+        if (respuesta.status) {
+            setAutorizacion(true)
+        }
+    }
+
     const [peticion, setPeticion] = useState({
         empresa: "",
         dni: "",

@@ -272,7 +272,7 @@ export const descargarArchivo = async (archivo) => {
     const link = document.createElement('a');
     link.href = enlace;
     link.setAttribute('download', archivo.documento.split('/').pop());
-    
+
     document.body.appendChild(link);
     link.click();
     link.parentNode.removeChild(link);
@@ -280,6 +280,31 @@ export const descargarArchivo = async (archivo) => {
     return true;
   } catch (error) {
     console.log('Error fetching user data: ', error);
+    throw error;
+  }
+}
+
+export const permitirOrganizador = async () => {
+  const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
+
+  if (!token) {
+    throw new Error('No token found');
+  }
+
+  try {
+    const url = 'http://localhost/api/organizador'
+    const headers = {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+    }
+    const response = await fetch(url, headers);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching user data:', error);
     throw error;
   }
 }

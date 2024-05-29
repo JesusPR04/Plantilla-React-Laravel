@@ -11,6 +11,21 @@ use Illuminate\Support\Facades\Validator;
 
 class OrganizadorController extends Controller
 {
+
+    public function index(Request $request){
+        $user = $request->user()->id;
+        $peticion = Peticiones::where('idUsuario', $user)->first();
+        if ($peticion === null) {
+            return response()->json([
+                'status' => true
+            ], 200);
+        }else{
+            return response()->json([
+                'status' => false
+            ], 200);
+        }
+    }
+
     public function realizarPeticion(Request $request)
     {
         $validarPeticion = Validator::make($request->all(), [
@@ -30,7 +45,7 @@ class OrganizadorController extends Controller
         $documento = $request->file('documento');
         $nombreFichero = time() . '_' . $documento->getClientOriginalName();
 
-        // Guarda el documento en el Storage (en la carpeta 'documentos')
+        // Guarda el documento en el Storage en la carpeta peticiones
         if($documento->storeAs('peticiones', $nombreFichero)){
 
             Peticiones::create([
@@ -38,7 +53,7 @@ class OrganizadorController extends Controller
                 'dni' => $request->dni,
                 'documento' => 'peticiones/' . $nombreFichero,
                 'comentario' => $request->comentario ?? null,
-                'idUsuario' => 1
+                'idUsuario' => $request->user()->id
             ]);
 
             return response()->json([
