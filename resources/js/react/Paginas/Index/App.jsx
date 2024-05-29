@@ -75,7 +75,7 @@ function App() {
           >
             Eventos en <span className="text-blue-500">{user.ciudad ? user.ciudad : 'Córdoba'}</span>
           </h2>
-          <BuscadorEventos userCity={user.ciudad} />
+          <BuscadorEventos />
         </article>
       </section>
     </main>

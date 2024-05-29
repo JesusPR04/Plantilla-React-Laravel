@@ -12,7 +12,7 @@ import { RiPriceTag3Line } from "react-icons/ri";
 
 const BASE_URL = "http://localhost:";
 
-const BuscadorEventos = ({userCity}) => {
+const BuscadorEventos = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const openModal = () => {
         setModalIsOpen(true);
@@ -29,22 +29,6 @@ const BuscadorEventos = ({userCity}) => {
             );
             const data = await response.json();
             setEventos(data);
-        } catch (error) {
-            console.error(error);
-            setError("Error fetching eventos");
-        }
-
-        //TODO: PRUEBA EVENTOS LANDING PAGE
-        try {
-            if (userCity) {
-                filters.ciudad = userCity;
-                const queryString = new URLSearchParams(filters).toString();
-                const response = await fetch(
-                    `http://localhost/api/getEventos?${queryString}`
-                );
-                const data = await response.json();
-                setEventos(data);
-            }
         } catch (error) {
             console.error(error);
             setError("Error fetching eventos");
@@ -80,11 +64,11 @@ const BuscadorEventos = ({userCity}) => {
     }
 
     return (
-        <main className="min-h-[calc(100vh-436px)] bg-gray-100 text-center mb-10">
+        <main className="min-h-[calc(100vh-436px)] bg-gray-100 text-center">
             <div className="flex sm:px-16">
                 <button
                     className={`bg-blue-500 font-bold hover:bg-blue-700
-                     text-white py-2 px-4 rounded m-5 justify-start ${userCity && 'hidden'}`}
+                     text-white py-2 px-4 rounded m-5 justify-start`}
                     onClick={openModal}
                 >
                     Aplica los filtros
@@ -96,7 +80,7 @@ const BuscadorEventos = ({userCity}) => {
                 closeModal={closeModal}
                 applyFilters={applyFilters}
             />
-            <div className={`grid grid-cols-1 px-4 sm:px-20 pt-0 md:grid-cols-2 lg:grid-cols-3 gap-6 ${userCity && 'mt-10'}`}>
+            <div className={`grid grid-cols-1 px-4 sm:px-20 pt-0 md:grid-cols-2 lg:grid-cols-3 gap-6`}>
                 {eventos.map((evento) => (
                     <div
                         key={evento.id}
