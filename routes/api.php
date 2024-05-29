@@ -8,6 +8,7 @@ use App\Http\Controllers\API\EventoController;
 use App\Http\Controllers\API\EntradaController;
 use App\Http\Controllers\API\UsuarioController;
 use App\Http\Controllers\API\OrganizadorController;
+use App\Models\Ciudades;
 use App\Models\Entradas;
 
 /*
@@ -24,6 +25,7 @@ use App\Models\Entradas;
 // Usuario
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     $user = $request->user();
+    $ciudad_id=Ciudades::where('nombre',$user->ciudad)->first()->id;
     return response()->json([
         'id' => $user->id,
         'nombre' => $user->nombre,
@@ -32,9 +34,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         'rol' => $user->rol,
         'ciudad' => $user->ciudad,
         'telefono' => $user->telefono,
-        'puntos' => $user->puntos
+        'puntos' => $user->puntos,
+        'ciudad_id' => $ciudad_id
     ]);
 });
+
 Route::middleware('auth:sanctum')->put('/user', [UsuarioController::class, 'updateUserData']);
 Route::post('/register', [AuthController::class, 'createUser']);
 Route::post('/login', [AuthController::class, 'loginUser']);
