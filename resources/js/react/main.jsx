@@ -20,6 +20,7 @@ import TerminosCondiciones from './Paginas/Terminos&Condiciones/TerminosCondicio
 import Evento from './Paginas/Evento/Evento.jsx'
 import Admin from './Paginas/Admin/Admin.jsx'
 import Entrada from './Paginas/Entrada/Entrada.jsx'
+import CrearEvento from './Paginas/Evento/CrearEvento.jsx'
 
 
 function AppLayout() {
@@ -90,6 +91,10 @@ const router = createBrowserRouter([
     {
       path: "/entradas",
       element: <Entrada />,
+    },
+    {
+      path: "/crearEvento",
+      element: <CrearEvento />,
     }
     ]
   }

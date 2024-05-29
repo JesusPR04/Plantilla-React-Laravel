@@ -58,22 +58,41 @@ function App() {
     }
   }, [token])
 
-  useEffect(() => {
-    const fetchEventos = async () => {
-      console.log({user});
-      try {
-        const response = await fetch(
-          `http://localhost/api/getEventos?ciudad=`+user.ciudad_id+''
-        );        
-        const data = await response.json();
-        setEventos(data);
-      } catch (error) {
-        setError("Error fetching eventos");
-      }
-    };
-
-    fetchEventos();
-  }, [user]);
+  if (token) {
+    useEffect(() => {
+      const fetchEventos = async () => {
+        console.log({user});
+        try {
+          const response = await fetch(
+            `http://localhost/api/getEventos?ciudad=`+user.ciudad_id+''
+          );        
+          const data = await response.json();
+          setEventos(data);
+        } catch (error) {
+          setError("Error fetching eventos");
+        }
+      };
+  
+      fetchEventos();
+    }, [user]);
+  } else {
+    useEffect(() => {
+      const fetchEventos = async () => {
+        try {
+          const response = await fetch(
+            `http://localhost/api/getEventos?ciudad=3`
+          );        
+          const data = await response.json();
+          setEventos(data);
+        } catch (error) {
+          setError("Error fetching eventos");
+        }
+      };
+  
+      fetchEventos();
+    }, []);
+  }
+  
 
   return (
     <main className='min-h-[calc(100vh-436px)] bg-gray-100'>
@@ -95,14 +114,14 @@ function App() {
           </div>
         </article>
         <hr className="w-full h-[2px] bg-[#eeedf2]" />
-        <article>
+        <article className='pb-14'>
           <h2
             className='text-center text-colorFuente text-5xl xl:text-6xl 2xl:text-6xl
-            lg:text-6xl md:text-6xl font-bold tracking-tight uppercase my-6'
+            lg:text-6xl md:text-6xl font-bold tracking-tight uppercase mt-6'
           >
             Eventos en <span className="text-blue-500">{user.ciudad ? user.ciudad : 'Córdoba'}</span>
           </h2>
-          <div className={`grid grid-cols-1 px-4 py-10 sm:px-20 pt-0 md:grid-cols-2 lg:grid-cols-3 gap-6`}>
+          <div className={`grid grid-cols-1 px-4 pt-6 sm:px-20 md:grid-cols-2 lg:grid-cols-3 gap-6`}>
                 {eventos.map((evento) => (
                     <div
                         key={evento.id}
@@ -172,14 +191,15 @@ function App() {
                         </div>
                     </div>
                 ))}
-              </div>    
-              <Link
-                to="/buscadoreventos"
-                className="bg-blue-500 font-bold hover:bg-blue-700 text-white py-2 px-4 rounded m-5 justify-start"
-              >
-                Más eventos
-              </Link>      
-              
+                <div className='flex justify-center col-span-3'>
+                  <Link
+                    to="/buscadoreventos"
+                    className="bg-blue-500 font-bold hover:bg-blue-700 text-white py-2 px-4 rounded"
+                  >
+                    Más eventos ...
+                  </Link>  
+              </div>  
+              </div>  
         </article>
       </section>
     </main>

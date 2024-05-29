@@ -263,7 +263,6 @@ const Register = () => {
                         >
                             {error.mensaje}
                         </p>
-                        {/* <p style={{display: error.estado ? 'block' : 'none'}} className="text-red-500 text-sm">{error.mensaje}</p> */}
                         <div className="space-y-4 md:space-y-6 grid grid-cols-2 gap-x-8 justify-start items-end">
                             <div className="w-full col-span-2 sm:col-span-1">
                                 <label

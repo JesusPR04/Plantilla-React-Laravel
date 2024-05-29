@@ -146,7 +146,7 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
                         </label>
                         <input
                             className="mt-1 block w-full px-3 py-2 border bg-gray-50 border-gray-300 
-                            rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             value={aforoMin}
                             onChange={(e) => setAforoMin(e.target.value)}
                             id="min-capacity"
@@ -162,7 +162,7 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
                         </label>
                         <input
                             className="mt-1 block w-full px-3 py-2 border bg-gray-50 border-gray-300 
-                            rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             value={aforoMax}
                             onChange={(e) => setAforoMax(e.target.value)}
                             id="max-capacity"
@@ -180,7 +180,7 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
                         </label>
                         <input
                             className="mt-1 block w-full px-3 py-2 border bg-gray-50 border-gray-300 
-                            rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             value={precioMin}
                             onChange={handlePrecioMinChange}
                             id="min-price"
@@ -196,7 +196,7 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
                         </label>
                         <input
                             className="mt-1 block w-full px-3 py-2 border bg-gray-50 border-gray-300 
-                            rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             value={precioMax}
                             onChange={handlePrecioMaxChange}
                             id="max-price"
