@@ -14,8 +14,8 @@ class EventoController extends Controller
 {
     public function getEventos(Request $request)
     {
-        $query = "SELECT e.* , i.ruta FROM eventos e
-        LEFT JOIN  imagenes i on i.idEvento=e.id";
+        /* $query = "SELECT e.* , i.ruta FROM eventos e
+        LEFT JOIN  imagenes i on i.idEvento=e.id"; 
 
         $filtros = [];
 
@@ -65,6 +65,51 @@ class EventoController extends Controller
         
 
         $eventos = DB::select($query);
+
+        return response()->json($eventos); */
+
+        $query = Eventos::with(['imagenes', 'ciudad']);
+
+        if (!is_null($request->input('fechaDesde'))) {
+            $query->where('fecha', '>=', $request->input('fechaDesde'));
+        }
+
+        if (!is_null($request->input('fechaHasta'))) {
+            $query->where('fecha', '<=', $request->input('fechaHasta'));
+        }
+
+        if (!is_null($request->input('aforoMin'))) {
+            $query->where('aforoDisponible', '>=', $request->input('aforoMin'));
+        }
+
+        if (!is_null($request->input('aforoMax'))) {
+            $query->where('aforoDisponible', '<=', $request->input('aforoMax'));
+        }
+
+        if (!is_null($request->input('agotado'))) {
+            $agotado = $request->input('agotado') ? 0 : 1;
+            $query->where('aforoDisponible', $agotado);
+        }
+
+        if (!is_null($request->input('categoria'))) {
+            $query->where('idCategoria', $request->input('categoria'));
+        }
+
+        if (!is_null($request->input('precioMin')) && $request->input('precioMin') != 0) {
+            $query->where('precio', '>=', $request->input('precioMin'));
+        }
+
+        if (!is_null($request->input('precioMax'))) {
+            $query->where('precio', '<=', $request->input('precioMax'));
+        }
+
+        if (!is_null($request->input('ciudad'))) {
+            $query->where('idCiudad', $request->input('ciudad'));
+        }
+
+        $query->orderBy('fecha', 'ASC');
+
+        $eventos = $query->get();
 
         return response()->json($eventos);
     }

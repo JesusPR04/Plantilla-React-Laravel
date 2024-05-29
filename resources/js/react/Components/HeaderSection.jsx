@@ -16,9 +16,9 @@ function HeaderSection({user}) {
         { name: 'Descubre en ', city: city, href: '', icon: mapaPin },
     ]
     const stats = [
-        { name: 'Eventos activos', value: '12' },
-        { name: 'Todos los eventos', value: '300+' },
-        { name: 'Organizadores', value: 'Más de 40' },
+        { name: 'Eventos activos', value: '0' },
+        { name: 'Todos los eventos', value: '0+' },
+        { name: 'Organizadores', value: 'Más de 0' },
         { name: 'Soporte', value: '24h' },
     ]
     return (

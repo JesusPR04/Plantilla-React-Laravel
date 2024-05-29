@@ -1,9 +1,9 @@
 import {useEffect, useState} from 'react'
 import HeaderSection from '../../Components/HeaderSection'
 import PrincipalFilter from '../../Components/PrincipalFilter'
-import EventList from '../../Components/EventList'
 import { fetchUserData } from '../../api/requests'
 import { Link } from "react-router-dom"
+import BuscadorEventos from '../BuscadorEventos/BuscadorEventos'
 
 function App() {
   const musicIco = (
@@ -69,15 +69,13 @@ function App() {
         </article>
         <hr className="w-full h-[2px] bg-[#eeedf2]" />
         <article>
-          <h2 className='text-center text-colorFuente text-5xl xl:text-6xl 2xl:text-6xl lg:text-6xl md:text-6xl font-bold tracking-tight uppercase mt-6'>Eventos en <span className="text-blue-500">{user.ciudad ? user.ciudad : 'Córdoba'}</span></h2>
-          <div className="flex flex-wrap gap-6 justify-evenly mx-6 pb-14">
-            <EventList />
-            <EventList />
-            <EventList />
-            <EventList />
-            <EventList />
-            <EventList />
-          </div>
+          <h2 
+            className='text-center text-colorFuente text-5xl xl:text-6xl 2xl:text-6xl
+             lg:text-6xl md:text-6xl font-bold tracking-tight uppercase mt-6'
+          >
+            Eventos en <span className="text-blue-500">{user.ciudad ? user.ciudad : 'Córdoba'}</span>
+          </h2>
+          <BuscadorEventos userCity={user.ciudad} />
         </article>
       </section>
     </main>
