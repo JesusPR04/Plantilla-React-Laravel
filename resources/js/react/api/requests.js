@@ -246,7 +246,7 @@ export const recogerPeticiones = async () => {
   }
 }
 
-export const descargarArchivo = async(archivo) => {
+export const descargarArchivo = async (archivo) => {
   const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
 
   if (!token) {
@@ -263,8 +263,21 @@ export const descargarArchivo = async(archivo) => {
       body: JSON.stringify(archivo)
     }
     const response = await fetch(url, headers);
-    const data = await response.json();
-    return data;
+    if(!response.ok){
+      throw new Error('No se pudo descargar el archivo');
+    }
+    const blob = await response.blob();
+    const enlace = window.URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = enlace;
+    link.setAttribute('download', archivo.documento.split('/').pop());
+    
+    document.body.appendChild(link);
+    link.click();
+    link.parentNode.removeChild(link);
+
+    return true;
   } catch (error) {
     console.log('Error fetching user data: ', error);
     throw error;

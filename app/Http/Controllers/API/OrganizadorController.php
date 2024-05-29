@@ -27,17 +27,16 @@ class OrganizadorController extends Controller
                 'errors' => $validarPeticion->errors()
             ], 401);
         }
-        $documento = $_FILES['documento'];
-        $nombreFichero = 'peticiones/' . time().'_'.$documento['name'];
-        // Ruta de destino
-        $rutaDestino = storage_path($nombreFichero);
-        // Mover el archivo a la ubicación deseada
-        if (move_uploaded_file($documento['tmp_name'], $rutaDestino)) {
+        $documento = $request->file('documento');
+        $nombreFichero = time() . '_' . $documento->getClientOriginalName();
+
+        // Guarda el documento en el Storage (en la carpeta 'documentos')
+        if($documento->storeAs('peticiones', $nombreFichero)){
 
             Peticiones::create([
                 'empresa' => $request->empresa,
                 'dni' => $request->dni,
-                'documento' => $nombreFichero,
+                'documento' => 'peticiones/' . $nombreFichero,
                 'comentario' => $request->comentario ?? null,
                 'idUsuario' => 1
             ]);
@@ -46,7 +45,7 @@ class OrganizadorController extends Controller
                 'success' => true,
                 'message' => 'Petición realizada correctamente'
             ], 200);
-        } else {
+        }else{
             return response()->json([
                 'success' => false,
                 'message' => 'Error al mover el archivo'
