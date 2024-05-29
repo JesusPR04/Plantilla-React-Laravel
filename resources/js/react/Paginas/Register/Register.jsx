@@ -219,7 +219,6 @@ const Register = () => {
         promesa.then((data) => setCiudades(data.ciudades));
     }, []);
 
-    //TODO: FALTA EL MANEJO DE ERRORES Y LA REDIRECCION
     return (
         <section className="bg-gray-100 flex justify-center items-center min-h-[calc(100vh-436px)]">
             <article className="flex justify-center">
@@ -380,7 +379,9 @@ const Register = () => {
                                     isSearchable
                                     noOptionsMessage={() => "Sin resultados"}
                                     classNames={{
-                                        control: () => "!text-sm !bg-gray-50 !border !border-gray-300 !text-colorFuente !sm:text-sm !rounded-lg !focus:ring-blue-500 !focus:border-blue-500 !w-full !p-0.5",
+                                        control: () => `!text-sm !bg-gray-50 !border  !text-colorFuente 
+                                        !sm:text-sm !rounded-lg !focus:ring-blue-500 
+                                        !focus:border-blue-500 !w-full !p-0.5 ${ciudad.estado ? "!border-red-500" : "!border-gray-300"}`,
                                         input: (state) => state.isFocused ? "!ring-0 !shadow-none" : "",
                                         menuList: () => '!bg-gray-50'
                                     }}
