@@ -33,7 +33,6 @@ const BuscadorEventos = () => {
             console.error(error);
             setError("Error fetching eventos");
         }
-        
     };
 
     const [eventos, setEventos] = useState([]);
@@ -68,7 +67,7 @@ const BuscadorEventos = () => {
             <div className="flex sm:px-16">
                 <button
                     className={`bg-blue-500 font-bold hover:bg-blue-700
-                     text-white py-2 px-4 rounded m-5 justify-start`}
+                    text-white py-2 px-4 rounded m-5 justify-start`}
                     onClick={openModal}
                 >
                     Aplica los filtros

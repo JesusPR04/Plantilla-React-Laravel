@@ -1,11 +1,20 @@
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import HeaderSection from '../../Components/HeaderSection'
 import PrincipalFilter from '../../Components/PrincipalFilter'
 import { fetchUserData } from '../../api/requests'
 import { Link } from "react-router-dom"
 import BuscadorEventos from '../BuscadorEventos/BuscadorEventos'
+import { getEventos } from "../../api/requests";
+import eventodefecto from "../../assets/eventodefecto.jpg";
+import { FaCalendarAlt } from "react-icons/fa";
+import { FaClock } from "react-icons/fa6";
+import { CiLocationOn } from "react-icons/ci";
+import { BsPeople } from "react-icons/bs";
+import { RiPriceTag3Line } from "react-icons/ri";
 
 function App() {
+  const [eventos, setEventos] = useState([]);
+
   const musicIco = (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
       <path strokeLinecap="round" strokeLinejoin="round" d="m9 9 10.5-3m0 6.553v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 1 1-.99-3.467l2.31-.66a2.25 2.25 0 0 0 1.632-2.163Zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 0 1-.99-3.467l2.31-.66A2.25 2.25 0 0 0 9 15.553Z" />
@@ -40,18 +49,36 @@ function App() {
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chef-hat"><path d="M17 21a1 1 0 0 0 1-1v-5.35c0-.457.316-.844.727-1.041a4 4 0 0 0-2.134-7.589 5 5 0 0 0-9.186 0 4 4 0 0 0-2.134 7.588c.411.198.727.585.727 1.041V20a1 1 0 0 0 1 1Z" /><path d="M6 17h12" /></svg>
   )
 
-  const token = localStorage.getItem('user-token') 
+
+  const token = localStorage.getItem('user-token')
   const [user, setUser] = useState({})
   useEffect(() => {
     if (token) {
-        fetchUserData().then(data => setUser(data))
+      fetchUserData().then(data => setUser(data))
     }
-}, [token])
+  }, [token])
+
+  useEffect(() => {
+    const fetchEventos = async () => {
+      console.log({user});
+      try {
+        const response = await fetch(
+          `http://localhost/api/getEventos?ciudad=`+user.ciudad_id+''
+        );        
+        const data = await response.json();
+        setEventos(data);
+      } catch (error) {
+        setError("Error fetching eventos");
+      }
+    };
+
+    fetchEventos();
+  }, [user]);
 
   return (
     <main className='min-h-[calc(100vh-436px)] bg-gray-100'>
       <header>
-        <HeaderSection user={user}/>
+        <HeaderSection user={user} />
       </header>
       <section className='mt-14'>
         <article>
@@ -69,13 +96,90 @@ function App() {
         </article>
         <hr className="w-full h-[2px] bg-[#eeedf2]" />
         <article>
-          <h2 
+          <h2
             className='text-center text-colorFuente text-5xl xl:text-6xl 2xl:text-6xl
-             lg:text-6xl md:text-6xl font-bold tracking-tight uppercase mt-6'
+            lg:text-6xl md:text-6xl font-bold tracking-tight uppercase my-6'
           >
             Eventos en <span className="text-blue-500">{user.ciudad ? user.ciudad : 'Córdoba'}</span>
           </h2>
-          <BuscadorEventos />
+          <div className={`grid grid-cols-1 px-4 py-10 sm:px-20 pt-0 md:grid-cols-2 lg:grid-cols-3 gap-6`}>
+                {eventos.map((evento) => (
+                    <div
+                        key={evento.id}
+                        className="relative group overflow-hidden rounded-lg"
+                    >
+                        <Link
+                            className="absolute inset-0 z-10"
+                            to={`/evento/${evento.id}`}
+                        >
+                            <span className="sr-only">Ver evento</span>
+                        </Link>
+                        <img
+                            alt={evento.nombre}
+                            className="object-cover w-full h-60 group-hover:scale-105 transition-transform"
+                            height={400}
+                            src={eventodefecto}
+                            style={{
+                                aspectRatio: "600/400",
+                                objectFit: "cover",
+                            }}
+                            width={600}
+                        />
+                        <div className="border p-4 rounded shadow bg-gray-100">
+                            <h3
+                                className="font-bold text-lg md:text-xl text-colorFuente 
+                        uppercase transition-colors group-hover:text-blue-500 md:group-hover:text-2xl group-hover:text-xl"
+                            >
+                                {evento.nombre}
+                            </h3>
+                            <p className="text-sm text-colorFuente line-clamp-2">
+                                {evento.descripcion}
+                            </p>
+                            <div className="grid gap-2 pt-4">
+                                <div className="flex items-center gap-2 text-sm">
+                                    <FaCalendarAlt className="w-4 h-4 text-blue-500" />
+                                    <span className="text-colorFuente font-semibold">
+                                        {evento.fecha}
+                                    </span>
+                                </div>
+                                <div className="flex items-center gap-2 text-sm">
+                                    <FaClock className="w-4 h-4 text-blue-500" />
+                                    <span className="text-colorFuente font-semibold">
+                                        {evento.hora}
+                                    </span>
+                                </div>
+                                <div className="flex items-center gap-2 text-sm">
+                                    <CiLocationOn className="w-4 h-4 text-blue-500" />
+                                    <span className="text-colorFuente font-semibold">
+                                        {evento.localizacion},{" "}
+                                        {evento.ciudad.nombre}
+                                    </span>
+                                </div>
+                                <div className="flex items-center gap-2 text-sm">
+                                    <BsPeople className="w-4 h-4 text-blue-500" />
+                                    <span className="text-colorFuente font-semibold">
+                                        Total: {evento.aforoTotal} | Disponible:{" "}
+                                        {evento.aforoDisponible}
+                                    </span>
+                                </div>
+                                <div className="flex items-center gap-2 text-sm">
+                                    <RiPriceTag3Line className="w-4 h-4 text-blue-500" />
+                                    <span className="text-colorFuente font-semibold">
+                                        {evento.precio} €
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+              </div>    
+              <Link
+                to="/buscadoreventos"
+                className="bg-blue-500 font-bold hover:bg-blue-700 text-white py-2 px-4 rounded m-5 justify-start"
+              >
+                Más eventos
+              </Link>      
+              
         </article>
       </section>
     </main>
