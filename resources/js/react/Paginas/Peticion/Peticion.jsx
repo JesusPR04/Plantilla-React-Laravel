@@ -180,11 +180,14 @@ const Peticion = () => {
                             focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
                                 />
                             </div>
-                            <input
-                                type="submit" value="Enviar"
-                                className="w-40 text-white bg-blue-500 hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center cursor-pointer col-span-2 justify-self-center sm:justify-self-end"
-                                onClick={() => enviarPeticion()}
-                            />
+                            <div className='col-span-1'></div>
+                            <div className='col-span-1 flex justify-end'>
+                                <input
+                                    type="submit" value="Enviar Solicitud"
+                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer"
+                                    onClick={() => enviarPeticion()}
+                                />
+                            </div>
                         </article>
                     </article>
                 ) :
