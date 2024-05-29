@@ -62,7 +62,7 @@ const BuscadorEventos = () => {
 
     return (
         <main className='min-h-[calc(100vh-436px)] bg-gray-100 text-center'>
-            <button className='bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded m-5' onClick={openModal}>Aplica los filtros</button>
+            <button className='bg-blue-500 font-bold hover:bg-blue-700 text-white py-2 px-4 rounded m-5' onClick={openModal}>Aplica los filtros</button>
             <ModalEventos
                 isOpen={modalIsOpen}
                 closeModal={closeModal}

@@ -61,7 +61,6 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
             bottom: 'auto',
             marginRight: '-50%',
             transform: 'translate(-50%, -50%)',
-            padding: '2rem',
             backgroundColor: 'white',
             borderRadius: '0.375rem',
             maxWidth: '600px',
@@ -80,24 +79,46 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
             contentLabel="Filtrar eventos"
             style={customStyles}
         >
-            <h1 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '1rem', textTransform: 'uppercase' }}>
-                Busca tus <span style={{ color: '#1e40af' }}>eventos</span>
-            </h1>
+            <div className='flex flex-row justify-between'>
+                <h1 
+                    style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '1rem', textTransform: 'uppercase' }}
+                    className='text-colorFuente'
+                >
+                    Busca tus <span className='text-blue-500'>eventos</span>
+                </h1>
+                <button
+                    onClick={() => closeModal(true)}
+                    type="button"
+                    className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm
+                     text-colorFuente rounded-lg hover:bg-[#eeedf2]
+                      focus:outline-none focus:ring-2 focus:ring-gray-200"
+                    aria-controls="navbar-search"
+                    aria-expanded="false"
+                >
+                    <span className="sr-only">Close main menu</span>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 256 256"
+                    >
+                        <path
+                            fill="#333333"
+                            d="M208.49 191.51a12 12 0 0 1-17 17L128 145l-63.51 63.49a12 12 0 0 1-17-17L111 128L47.51 64.49a12 12 0 0 1 17-17L128 111l63.51-63.52a12 12 0 0 1 17 17L145 128Z"
+                        />
+                    </svg>
+                </button>
+            </div>
+            
             <form onSubmit={handleSubmit}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                <div className='sm:gap-4' style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
                     <div>
-                        <label style={{ display: 'block', marginBottom: '0.5rem' }} htmlFor="start-date">
+                        <label className="block text-sm font-medium text-colorFuente" htmlFor="start-date">
                             Fecha desde
                         </label>
                         <input
-                            style={{
-                                width: '100%',
-                                padding: '0.5rem',
-                                borderRadius: '0.375rem',
-                                border: '1px solid #e2e8f0',
-                                backgroundColor: '#f7fafc',
-                                fontSize: '0.875rem',
-                            }}
+                            className="mt-1 block w-11/12 sm:w-full px-3 py-2 border bg-gray-50 border-gray-300 
+                            rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             id="start-date"
                             type="date"
                             value={fechaDesde}
@@ -105,18 +126,12 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
                         />
                     </div>
                     <div>
-                        <label style={{ display: 'block', marginBottom: '0.5rem' }} htmlFor="end-date">
+                        <label className="block text-sm font-medium text-colorFuente" htmlFor="end-date">
                             Fecha hasta
                         </label>
                         <input
-                            style={{
-                                width: '100%',
-                                padding: '0.5rem',
-                                borderRadius: '0.375rem',
-                                border: '1px solid #e2e8f0',
-                                backgroundColor: '#f7fafc',
-                                fontSize: '0.875rem',
-                            }}
+                            className="mt-1 block w-11/12 sm:w-full px-3 py-2 border bg-gray-50 border-gray-300 
+                            rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             id="end-date"
                             type="date"
                             value={fechaHasta}
@@ -126,11 +141,12 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginTop: '1rem' }}>
                     <div>
-                        <label style={{ display: 'block', marginBottom: '0.5rem' }} htmlFor="min-capacity">
+                        <label className="block text-sm font-medium text-colorFuente" htmlFor="min-capacity">
                             Aforo mínimo {aforoMin}
                         </label>
                         <input
-                            style={{ width: '100%' }}
+                            className="mt-1 block w-full px-3 py-2 border bg-gray-50 border-gray-300 
+                            rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             value={aforoMin}
                             onChange={(e) => setAforoMin(e.target.value)}
                             id="min-capacity"
@@ -141,11 +157,12 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
                         />
                     </div>
                     <div>
-                        <label style={{ display: 'block', marginBottom: '0.5rem' }} htmlFor="max-capacity">
+                        <label className="block text-sm font-medium text-colorFuente" htmlFor="max-capacity">
                             Aforo máximo {aforoMax}
                         </label>
                         <input
-                            style={{ width: '100%' }}
+                            className="mt-1 block w-full px-3 py-2 border bg-gray-50 border-gray-300 
+                            rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             value={aforoMax}
                             onChange={(e) => setAforoMax(e.target.value)}
                             id="max-capacity"
@@ -158,11 +175,12 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginTop: '1rem' }}>
                     <div>
-                        <label style={{ display: 'block', marginBottom: '0.5rem' }} htmlFor="min-price">
+                        <label className="block text-sm font-medium text-colorFuente" htmlFor="min-price">
                             Precio mínimo {precioMin}
                         </label>
                         <input
-                            style={{ width: '100%' }}
+                            className="mt-1 block w-full px-3 py-2 border bg-gray-50 border-gray-300 
+                            rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             value={precioMin}
                             onChange={handlePrecioMinChange}
                             id="min-price"
@@ -173,11 +191,12 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
                         />
                     </div>
                     <div>
-                        <label style={{ display: 'block', marginBottom: '0.5rem' }} htmlFor="max-price">
+                        <label className="block text-sm font-medium text-colorFuente" htmlFor="max-price">
                             Precio máximo {precioMax}
                         </label>
                         <input
-                            style={{ width: '100%' }}
+                            className="mt-1 block w-full px-3 py-2 border bg-gray-50 border-gray-300 
+                            rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             value={precioMax}
                             onChange={handlePrecioMaxChange}
                             id="max-price"
@@ -190,18 +209,12 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginTop: '1rem' }}>
                     <div>
-                        <label style={{ display: 'block', marginBottom: '0.5rem' }} htmlFor="city">
+                        <label className="block text-sm font-medium text-colorFuente" htmlFor="city">
                             Ciudad
                         </label>
                         <select
-                            style={{
-                                width: '100%',
-                                padding: '0.5rem',
-                                borderRadius: '0.375rem',
-                                border: '1px solid #e2e8f0',
-                                backgroundColor: '#f7fafc',
-                                fontSize: '0.875rem',
-                            }}
+                            className="mt-1 block w-full px-3 py-2 border bg-gray-50 border-gray-300 
+                            rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             id="city"
                             value={ciudad}
                             onChange={(e) => setCiudad(e.target.value)}
@@ -213,18 +226,12 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
                         </select>
                     </div>
                     <div>
-                        <label style={{ display: 'block', marginBottom: '0.5rem' }} htmlFor="genre">
+                        <label className="block text-sm font-medium text-colorFuente" htmlFor="genre">
                             Género
                         </label>
                         <select
-                            style={{
-                                width: '100%',
-                                padding: '0.5rem',
-                                borderRadius: '0.375rem',
-                                border: '1px solid #e2e8f0',
-                                backgroundColor: '#f7fafc',
-                                fontSize: '0.875rem',
-                            }}
+                            className="mt-1 block w-full px-3 py-2 border bg-gray-50 border-gray-300 
+                            rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             id="genre"
                             value={categoria}
                             onChange={(e) => setCategoria(e.target.value)}
@@ -236,19 +243,9 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
                         </select>
                     </div>
                 </div>
-                <div style={{ marginTop: '1rem' }}>
+                <div style={{ marginTop: '1rem' }} className='flex justify-end'>
                     <button
-                        style={{
-                            width: '100%',
-                            padding: '0.75rem',
-                            borderRadius: '0.375rem',
-                            backgroundColor: '#1e40af',
-                            color: 'white',
-                            fontSize: '1rem',
-                            fontWeight: 'medium',
-                            border: 'none',
-                            cursor: 'pointer',
-                        }}
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                         type="submit"
                     >
                         Buscar
