@@ -22,7 +22,7 @@ const Perfil = () => {
   }, []);
 
   if (!userData) {
-    return <div className="min-h-[calc(100vh-436px)] flex items-center justify-center">Loading...</div>;
+    return <div className="min-h-[calc(100vh-436px)] flex items-center justify-center">Cargando...</div>;
   }
 
   const handleEditProfile = () => {
@@ -60,7 +60,7 @@ const Perfil = () => {
             <div className="text-center">
               <h3 className="text-lg font-semibold uppercase">Rol</h3>
               <span className="bg-blue-200 text-blue-800 text-sm font-semibold px-4 py-1 rounded-full">
-                {userData.role === 'admin' ? 'Administrador' : 'Usuario'}
+                {userData.rol}
               </span>
             </div>
           </div>

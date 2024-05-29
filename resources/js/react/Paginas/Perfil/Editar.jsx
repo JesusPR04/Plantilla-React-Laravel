@@ -1,10 +1,7 @@
-// src/components/Editar.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { fetchUserData, updateUserData } from '../../api/requests';
-import { getCiudades } from '../../api/requests';
+import { fetchUserData, updateUserData, getCiudades } from '../../api/requests';
 import Select from "react-select";
-
 
 const Editar = () => {
     const navigate = useNavigate();
@@ -13,25 +10,43 @@ const Editar = () => {
         apellidos: '',
         email: '',
         telefono: '',
-        ciudad: '',
-        role: ''
+        ciudad: ''
     });
 
     const [ciudades, setCiudades] = useState([]);
-    const [userCity, setUserCity] = useState('')
+    const [userCity, setUserCity] = useState(null);
 
     useEffect(() => {
         const getUserData = async () => {
             try {
-                const data = await fetchUserData(); // Implementa la función fetchUserData para obtener los datos del usuario
+                const data = await fetchUserData();
                 setUserData(data);
-                setUserCity(ciudad => ciudad = data.ciudad); // Recoger la ciudad del usuario
+                return data.ciudad; // Devolver la ciudad del usuario
             } catch (error) {
                 console.error('Error fetching user data:', error);
             }
         };
 
-        getUserData();
+        const fetchCiudades = async () => {
+            try {
+                const data = await getCiudades();
+                setCiudades(data.ciudades);
+                return data.ciudades; // Devolver las ciudades
+            } catch (error) {
+                console.error('Error fetching ciudades:', error);
+            }
+        };
+
+        // Llamar a ambas funciones y esperar a que se resuelvan
+        Promise.all([getUserData(), fetchCiudades()]).then(([ciudadUsuario, ciudades]) => {
+            const ciudadSeleccionada = ciudades.find(ciudad => ciudad.nombre === ciudadUsuario);
+            if (ciudadSeleccionada) {
+                setUserCity({
+                    value: ciudadSeleccionada.id,
+                    label: ciudadSeleccionada.nombre
+                });
+            }
+        });
     }, []);
 
     const handleChange = (e) => {
@@ -41,34 +56,27 @@ const Editar = () => {
         });
     };
 
-    const cambiarCiudad = (e) => {
+    const cambiarCiudad = (selectedOption) => {
         setUserData({
             ...userData,
-            ciudad: e.label,
+            ciudad: selectedOption.label,
         });
+        setUserCity(selectedOption);
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Implementa la función updateUserData para enviar los datos actualizados del usuario al servidor
             await updateUserData(userData);
-            navigate('/perfil'); // Redirige al perfil después de la actualización exitosa
+            navigate('/perfil');
         } catch (error) {
             console.error('Error updating user data:', error);
-            // Aquí puedes manejar el error según tus necesidades
         }
     };
-
-    useEffect(() => {
-        let promesa = getCiudades();
-        promesa.then((data) => setCiudades(data.ciudades));
-    }, []);
 
     if (!userData) {
         return <div className="min-h-[calc(100vh-436px)] flex items-center justify-center">Cargando...</div>;
     }
-
 
     return (
         <div className="min-h-[calc(100vh-436px)] bg-gray-100 flex flex-col items-center p-6 text-colorFuente">
@@ -132,9 +140,7 @@ const Editar = () => {
                                     value: ciudad.id,
                                     label: ciudad.nombre,
                                 }))}
-                                onChange={(e) => {
-                                    cambiarCiudad(e.label);
-                                }}
+                                onChange={cambiarCiudad}
                                 value={userCity}
                                 placeholder="Ciudad"
                                 isSearchable
@@ -146,7 +152,14 @@ const Editar = () => {
                                 }}
                             />
                         </div>
-                        <div className='col-span-1'></div>
+                        <div className='flex justify-start col-span-1'>
+                            <button
+                                className='bg-red-500 hover hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
+                                onClick={() => navigate(-1)}
+                            >
+                                Cancelar
+                            </button>
+                        </div>
                         <div className="flex justify-end col-span-1">
                             <button
                                 type="submit"
