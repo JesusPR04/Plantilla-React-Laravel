@@ -62,6 +62,7 @@ Route::middleware('auth:sanctum')->get('/entradas', function (Request $request) 
 // Organizador
 Route::post('/organizador', [OrganizadorController::class, 'realizarPeticion'])->middleware('auth:sanctum'); //Realiza la petición para organizador
 Route::get('/organizador', [OrganizadorController::class, 'index'])->middleware('auth:sanctum'); //Comprueba si ya hay una petición de organizador
+Route::post('/comprobarSolicitud', [OrganizadorController::class, 'comprobarSolicitud'])->middleware('auth:sanctum'); //Comprueba el resultado de la solicitud
 
 // Admin
 Route::post('/admin', [AdminController::class, 'index'])->middleware('auth:sanctum'); //Comprueba el rol para acceder a la página
