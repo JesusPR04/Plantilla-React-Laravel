@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\User;
+use App\Mail\aceptarMail;
+use App\Mail\rechazarMail;
 use App\Models\Peticiones;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
@@ -70,7 +73,7 @@ class AdminController extends Controller
                         $peticion->estado = 'Aceptada';
                         $user->rol = 'Organizador';
                         if ($user->save() && $peticion->save()) {
-                            //Mail::to('jpc0016@alu.medac.es')->send(new aceptarMail()); DESCOMENTAR EN PRODUCCION
+                            Mail::to('jpc0016@alu.medac.es')->send(new aceptarMail()); 
                             return response()->json([
                                 'status' => true,
                                 'message' => 'Correo enviado correctamente'
@@ -91,7 +94,7 @@ class AdminController extends Controller
                     try {
                         $peticion->estado = 'Rechazada';
                         if ($peticion->save()) {
-                            //Mail::to('jpc0016@alu.medac.es')->send(new rechazarMail()); DESCOMENTAR EN PRODUCCION
+                            Mail::to('jpc0016@alu.medac.es')->send(new rechazarMail());
                             return response()->json([
                                 'status' => true,
                                 'message' => 'Correo enviado correctamente'
