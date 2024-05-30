@@ -158,7 +158,7 @@ function Header() {
                                         to="/crearEvento"
                                         className="block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500"
                                     >
-                                        Promociona tu eventos
+                                        Promociona tus eventos
                                     </Link>
                                 </li> 
                                 <li className={`${user.rol !== 'Organizador' && 'hidden'}`}>
