@@ -18,16 +18,16 @@ function CrearEvento() {
                 Patrocina tu
                 <span className='text-blue-500 uppercase'> evento</span>
             </h2>
-            <h2 className='pb-2 pt-6 font-semibold text-colorFuente text-center'>
+            <h2 className='px-14 sm:px-0 pb-2 pt-6 font-semibold text-colorFuente text-center'>
                 Aprobecha la <span className='text-blue-500'>oportunidad</span> para dar a conocer tu
                 <span className='text-blue-500 uppercase'> evento</span>
             </h2>
-            <h2 className='pb-2 pt-6 font-semibold text-colorFuente text-center'>
+            <h2 className='px-14 sm:px-0 pb-2 pt-6 font-semibold text-colorFuente text-center'>
                 ¡ <span className='text-blue-500'>Importante</span> todos los campos son <span
                     className="bg-blue-500 text-white font-semibold px-2 py-1 text-xs rounded-full inline-block"
                 > Requeridos</span> !
             </h2>
-            <section className='p-6 space-y-4 md:space-y-6 mx-auto max-w-xl md:max-w-3xl grid grid-cols-2 gap-x-8 justify-start items-end'>
+            <section className='pb-12 px-14 sm:px-0 space-y-4 md:space-y-6 mx-auto max-w-xl md:max-w-3xl grid grid-cols-2 gap-x-8 justify-start items-end'>
                 <div className="w-full col-span-2 sm:col-span-1">
                     <label
                         htmlFor="nombre"

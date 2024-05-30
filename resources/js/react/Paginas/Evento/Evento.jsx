@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
     getEventoById,
     fetchUserData,
@@ -11,6 +11,7 @@ const BASE_URL = "http://localhost:";
 
 const Evento = () => {
     const { id } = useParams();
+    const navigate = useNavigate()
     const [evento, setEvento] = useState(null);
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -51,7 +52,7 @@ const Evento = () => {
     const handleCompra = async () => {
         if (!user) {
             alert("Debes estar logueado para comprar entradas");
-            return;
+            return navigate('/login')
         }
 
         try {
@@ -61,6 +62,7 @@ const Evento = () => {
                 cantidad,
             });
             alert("Compra realizada con éxito");
+            navigate('/entradas')
         } catch (error) {
             console.error("Error comprando entrada:", error);
             alert("Error comprando entrada");
@@ -176,8 +178,7 @@ const Evento = () => {
                                     strokeWidth="2"
                                     strokeLinecap="round"
                                     strokeLinejoin="round"
-                                    class="lucide lucide-star"
-                                    className="cursor-pointer"
+                                    className="lucide lucide-star cursor-pointer"
                                 >
                                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                                 </svg>
