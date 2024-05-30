@@ -21,14 +21,23 @@ class OrganizadorController extends Controller
     public function index(Request $request)
     {
         $user = $request->user()->id;
-        $peticion = Peticiones::where('idUsuario', $user)->where('estado', 'En revision')->first();
-        if ($peticion === null && $request->user()->rol === 'Usuario') {
-            return response()->json([
-                'status' => true,
-            ], 200);
+        $peticion = Peticiones::where('idUsuario', $user)->first();
+        if ($peticion->estado === 'En revision') {
+            if ($request->user->rol === 'Usuario') {
+                return response()->json([
+                    'status' => true
+                    
+                ], 200);
+            }else{
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Ya eres un organizador'
+                ], 200);
+            }
         } else {
             return response()->json([
                 'status' => false,
+                
             ], 200);
         }
     }
