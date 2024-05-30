@@ -132,6 +132,7 @@ class EventoController extends Controller
             'hora' => 'required',
             'fecha' => 'required',
             'aforoTotal' => 'required',
+            'aforoDisponible' => 'required',
             'descripcion' => 'required',
             'idOrganizador' => 'required',
             'idCiudad' => 'required',
@@ -174,7 +175,11 @@ class EventoController extends Controller
             }
         }
 
-        return response()->json($evento, 201);
+        if ($evento) {
+            return response()->json('Evento creado correctamente', 201);
+        } else {
+            return response()->json('Error al crear el evento', 500);
+        }
     }
 
     public function update(Request $request, $id)

@@ -98,6 +98,25 @@ export const organizador = async (formData) => {
   }
 }
 
+export const crearEvento = async (formData) => {
+  const url = 'http://localhost/api/storeEvent'
+  const options = {
+    method: "Post",
+    body: formData
+  }
+  try {
+    const response = await fetch(url, options)
+    const data = response.json()
+    if (data.status) {
+      return data
+    } else {
+      return data
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const comprarEntrada = async ({ idUsuario, idEvento, cantidad }) => {
   const response = await fetch('http://localhost/api/entradas/comprar', {
     method: 'POST',
