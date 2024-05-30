@@ -21,14 +21,14 @@ class OrganizadorController extends Controller
     public function index(Request $request)
     {
         $user = $request->user()->id;
-        $peticion = Peticiones::where('idUsuario', $user)->first();
-        if ($peticion === null) {
+        $peticion = Peticiones::where('idUsuario', $user)->where('estado', 'En revision')->first();
+        if ($peticion === null && $request->user()->rol === 'Usuario') {
             return response()->json([
-                'status' => true
+                'status' => true,
             ], 200);
         } else {
             return response()->json([
-                'status' => false
+                'status' => false,
             ], 200);
         }
     }
@@ -78,13 +78,15 @@ class OrganizadorController extends Controller
 
     public function comprobarSolicitud(Request $request)
     {
-        $user = User::where('id', '=', $request->user()->id)->first();
+        $user = User::where('id', $request->user()->id)->first();
         if ($user->rol !== "Organizador") {
             if ($request->decision) {
                 try {
+                    $peticion = Peticiones::where('idUsuario', $user->id)->where('estado', 'En revision')->first();
+                    $peticion->estado = 'Aceptada';
                     $user->rol = 'Organizador';
-                    if ($user->save()) {
-                        Mail::to('jpc0016@alu.medac.es')->send(new aceptarMail());
+                    if ($user->save() && $peticion->save()) {
+                        //Mail::to('jpc0016@alu.medac.es')->send(new aceptarMail()); DESCOMENTAR EN PRODUCCION
                         return response()->json([
                             'status' => true,
                             'message' => 'Correo enviado correctamente'
@@ -92,7 +94,7 @@ class OrganizadorController extends Controller
                     }else{
                         return response()->json([
                             'status' => false,
-                            'message' => 'Error en la modificacion del usuario'
+                            'message' => 'Error en la modificacion de los datos'
                         ], 400);
                     }
                 } catch (\Throwable $th) {
@@ -103,7 +105,7 @@ class OrganizadorController extends Controller
                 }
             } else {
                 try {
-                    Mail::to('jpc0016@alu.medac.es')->send(new rechazarMail());
+                    //Mail::to('jpc0016@alu.medac.es')->send(new rechazarMail()); DESCOMENTAR EN PRODUCCION
                     return response()->json([
                         'status' => true,
                         'message' => 'Correo enviado correctamente'

@@ -193,6 +193,7 @@ const Peticion = () => {
                 ) :
                 (
                     <div>
+                        {/* FALTA MAQUETAR */}
                         <p>SU PETICIÓN ESTÁ SIENDO REVISADA</p>
                         <p>Recibirá noticias de nosotros cuando procesemos su solicitud</p>
                         <p>La información acerca de su petición será enviada por correo electrónico</p>
