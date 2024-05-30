@@ -13,10 +13,14 @@ class OrganizadorController extends Controller
 
     public function index(Request $request)
     {
-        $user = $request->user()->id;
-        $peticion = Peticiones::where('idUsuario', $user)->first();
-        if (isset($peticion)) {
-            if ($request->user()->rol === 'Usuario') {
+        if ($request->user()->rol === "Usuario") {
+            $user = $request->user()->id;
+            $peticion = Peticiones::where('idUsuario', $user)->first();
+            if (!isset($peticion)) {
+                return response()->json([
+                    'status' => true,
+                ], 200);
+            } else {
                 if ($peticion->estado === 'En revisión') {
                     return response()->json([
                         'status' => false,
@@ -26,12 +30,12 @@ class OrganizadorController extends Controller
                         'status' => true,
                     ], 200);
                 }
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Ya eres un organizador'
-                ], 200);
             }
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Ya eres un organizador'
+            ], 200);
         }
     }
 
@@ -69,18 +73,18 @@ class OrganizadorController extends Controller
                 ]);
 
                 return response()->json([
-                    'success' => true,
+                    'status' => true,
                     'message' => 'Petición realizada correctamente'
                 ], 200);
             } else {
                 return response()->json([
-                    'success' => false,
+                    'status' => false,
                     'message' => 'Error al mover el archivo'
                 ], 401);
             }
-        }else{
+        } else {
             return response()->json([
-                'success' => false,
+                'status' => false,
                 'message' => 'Ya tiene una petición a su nombre'
             ], 401);
         }

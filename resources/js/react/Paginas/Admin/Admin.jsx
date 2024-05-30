@@ -28,21 +28,21 @@ const Admin = () => {
     }
 
     const descargar = (documento) => {
-        descargarArchivo({"documento": documento})
-           .then(respuesta => console.log(respuesta))
-           .catch(error => console.log(error))
+        descargarArchivo({ "documento": documento })
+            .then(respuesta => console.log(respuesta))
+            .catch(error => console.log(error))
     }
 
     const aceptarSolicitud = (permiso) => {
-        comprobarSolicitud({...permiso, "decision": true})
-        .then(respuesta => console.log(respuesta))
-        .catch(error => console.log(error))
+        comprobarSolicitud({ ...permiso, "decision": true })
+            .then(respuesta => console.log(respuesta))
+            .catch(error => console.log(error))
     }
 
     const rechazarSolicitud = (permiso) => {
-        comprobarSolicitud({...permiso, "decision": false})
-        .then(respuesta => console.log(respuesta))
-        .catch(error => console.log(error))
+        comprobarSolicitud({ ...permiso, "decision": false })
+            .then(respuesta => console.log(respuesta))
+            .catch(error => console.log(error))
     }
 
     return (
@@ -72,9 +72,16 @@ const Admin = () => {
                                     <td>{permiso.dni}</td>
                                     <td>{permiso.comentario ?? 'No hay comentarios'}</td>
                                     <td>{permiso.estado}</td>
-                                    <td>{<FaDownload onClick={() => descargar(permiso.documento)}/>}</td>
-                                    <button onClick={()=> aceptarSolicitud(permiso)} className='m-2 border-2 border-black p-1'>Aceptar</button>
-                                    <button onClick={()=> rechazarSolicitud(permiso)} className='m-2 border-2 border-black p-1'>rechazar</button>
+                                    <td>{<FaDownload onClick={() => descargar(permiso.documento)} />}</td>
+                                    {permiso.estado === "Aceptada" || permiso.estado === "Rechazada" ?
+                                        (<></>) :
+                                        (
+                                            <div>
+                                                <button onClick={() => aceptarSolicitud(permiso)} className='m-2 border-2 border-black p-1'>Aceptar</button>
+                                                <button onClick={() => rechazarSolicitud(permiso)} className='m-2 border-2 border-black p-1'>rechazar</button>
+                                            </div>
+                                        )}
+
                                 </tr>
                             ))}
                         </table>
