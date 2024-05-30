@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ModalEventos from "../../Components/ModalEventos";
-import { getEventos } from "../../api/requests";
+import { getEventos, fetchUserData } from "../../api/requests";
 import { Link } from "react-router-dom";
 import concierto from "../../assets/concierto.jpg";
 import eventodefecto from "../../assets/eventodefecto.jpg";
@@ -13,6 +13,13 @@ import { RiPriceTag3Line } from "react-icons/ri";
 const BASE_URL = "http://localhost:";
 
 const BuscadorEventos = () => {
+    const token = localStorage.getItem('user-token')
+    const [user, setUser] = useState({})
+    useEffect(() => {
+        if (token) {
+            fetchUserData().then(data => setUser(data))
+        }
+    }, [token])
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const openModal = () => {
         setModalIsOpen(true);
@@ -91,17 +98,24 @@ const BuscadorEventos = () => {
                         >
                             <span className="sr-only">Ver evento</span>
                         </Link>
-                        <img
-                            alt={evento.nombre}
-                            className="object-cover w-full h-60 group-hover:scale-105 transition-transform"
-                            height={400}
-                            src={eventodefecto}
-                            style={{
-                                aspectRatio: "600/400",
-                                objectFit: "cover",
-                            }}
-                            width={600}
-                        />
+                        <div className="relative">
+                            <img
+                                alt={evento.nombre}
+                                className="object-cover w-full h-60 group-hover:scale-105 transition-transform"
+                                height={400}
+                                src={eventodefecto}
+                                style={{
+                                    aspectRatio: "600/400",
+                                    objectFit: "cover",
+                                }}
+                                width={600}
+                            />
+                            {user.id === evento.idOrganizador && (
+                                <span className="absolute top-2 left-2 bg-blue-500 text-white font-semibold px-2 py-1 text-xs rounded-full inline-block z-20">
+                                    Tu evento
+                                </span>
+                            )}
+                        </div>
                         <div className="border p-4 rounded shadow bg-gray-100">
                             <h3
                                 className="font-bold text-lg md:text-xl text-colorFuente 
