@@ -89,7 +89,8 @@ export const organizador = async (formData) => {
 
   try {
     const response = await fetch(url, options)
-    const data = response.json()
+    const data = await response.json()
+    console.log(data);
     if (data.status) {
       return data;
     }
@@ -107,11 +108,7 @@ export const crearEvento = async (formData) => {
   try {
     const response = await fetch(url, options)
     const data = response.json()
-    if (data.status) {
-      return data
-    } else {
-      return data
-    }
+    return data
   } catch (error) {
     console.log(error)
   }
@@ -284,7 +281,7 @@ export const descargarArchivo = async (archivo) => {
       body: JSON.stringify(archivo)
     }
     const response = await fetch(url, headers);
-    if(!response.ok){
+    if (!response.ok) {
       throw new Error('No se pudo descargar el archivo');
     }
     const blob = await response.blob();
@@ -328,4 +325,29 @@ export const permitirOrganizador = async () => {
     console.error('Error fetching user data:', error);
     throw error;
   }
+}
+
+export const comprobarSolicitud = async (request) => {
+  const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
+
+  if (!token) {
+    throw new Error('No token found');
+  }
+  try {
+    const url = 'http://localhost/api/comprobarSolicitud'
+    const headers = {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(request)
+    }
+    const response = await fetch(url, headers)
+    const data = await response.json();
+    return data
+  } catch (error) {
+    throw error
+  }
+
 }

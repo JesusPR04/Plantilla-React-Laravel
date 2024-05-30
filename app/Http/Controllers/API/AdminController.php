@@ -5,9 +5,9 @@ namespace App\Http\Controllers\API;
 use App\Models\Peticiones;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Response;
 
 class AdminController extends Controller
 {
@@ -57,6 +57,64 @@ class AdminController extends Controller
                 'status' => false,
                 'error' => 'Archivo no encontrado'
             ], 404);
+        }
+    }
+    public function comprobarSolicitud(Request $request)
+    {
+        if ($request->user()->rol === "Administrador") {
+            $user = User::where('id', $request->idUsuario)->first();
+            $peticion = Peticiones::where('idUsuario', $user->id)->where('estado', 'En revision')->first();
+            if ($user->rol !== "Organizador") {
+                if ($request->decision) {
+                    try {
+                        $peticion->estado = 'Aceptada';
+                        $user->rol = 'Organizador';
+                        if ($user->save() && $peticion->save()) {
+                            //Mail::to('jpc0016@alu.medac.es')->send(new aceptarMail()); DESCOMENTAR EN PRODUCCION
+                            return response()->json([
+                                'status' => true,
+                                'message' => 'Correo enviado correctamente'
+                            ], 200);
+                        } else {
+                            return response()->json([
+                                'status' => false,
+                                'message' => 'Error en la modificacion de los datos'
+                            ], 400);
+                        }
+                    } catch (\Throwable $th) {
+                        return response()->json([
+                            'status' => false,
+                            'message' => $th->getMessage()
+                        ], 500);
+                    }
+                } else {
+                    try {
+                        $peticion->estado = 'Rechazada';
+                        if ($peticion->save()) {
+                            //Mail::to('jpc0016@alu.medac.es')->send(new rechazarMail()); DESCOMENTAR EN PRODUCCION
+                            return response()->json([
+                                'status' => true,
+                                'message' => 'Correo enviado correctamente'
+                            ], 200);
+                        }else{
+                            return response()->json([
+                                'status' => false,
+                                'message' => 'Error en la modificacion de los datos'
+                            ], 400);
+                        }
+                    } catch (\Throwable $th) {
+                        return response()->json([
+                            'status' => false,
+                            'message' => $th->getMessage()
+                        ], 500);
+                    }
+                }
+            }
+        }else{
+            return response()->json([
+                'status' => false,
+                'message' => 'No tiene los permisos necesarios'
+            ], 400);
         }
     }
 }

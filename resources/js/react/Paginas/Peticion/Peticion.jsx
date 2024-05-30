@@ -17,6 +17,7 @@ const Peticion = () => {
     }, [])
 
     const comprobarRespuesta = (respuesta) => {
+        console.log(respuesta);
         if (respuesta?.message) {
             navigate('/')
         }
@@ -65,7 +66,14 @@ const Peticion = () => {
             })
         }
     }
-
+    const comprobar = (e) => {
+        if (e.status) {
+            navigate('/')
+        }
+        else{
+            alert(e.message)
+        }
+    }
     const enviarPeticion = () => {
         const formData = new FormData();
         formData.append('empresa', peticion.empresa);
@@ -74,7 +82,7 @@ const Peticion = () => {
         formData.append('comentario', peticion.comentarios);
 
         organizador(formData)
-            .then((response) => console.log(response))
+            .then((response) => comprobar(response))
             .catch((error) => console.log(error));
     }
 

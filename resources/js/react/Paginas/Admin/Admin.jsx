@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
-import { comprobarAcceso } from '../../api/requests'
+import { comprobarAcceso, comprobarSolicitud } from '../../api/requests'
 import { recogerPeticiones } from '../../api/requests';
 import { FaDownload } from "react-icons/fa";
 import { descargarArchivo } from '../../api/requests';
@@ -32,6 +32,19 @@ const Admin = () => {
            .then(respuesta => console.log(respuesta))
            .catch(error => console.log(error))
     }
+
+    const aceptarSolicitud = (permiso) => {
+        comprobarSolicitud({...permiso, "decision": true})
+        .then(respuesta => console.log(respuesta))
+        .catch(error => console.log(error))
+    }
+
+    const rechazarSolicitud = (permiso) => {
+        comprobarSolicitud({...permiso, "decision": false})
+        .then(respuesta => console.log(respuesta))
+        .catch(error => console.log(error))
+    }
+
     return (
         <div>
             {!autorizacion ?
@@ -60,6 +73,8 @@ const Admin = () => {
                                     <td>{permiso.comentario ?? 'No hay comentarios'}</td>
                                     <td>{permiso.estado}</td>
                                     <td>{<FaDownload onClick={() => descargar(permiso.documento)}/>}</td>
+                                    <button onClick={()=> aceptarSolicitud(permiso)} className='m-2 border-2 border-black p-1'>Aceptar</button>
+                                    <button onClick={()=> rechazarSolicitud(permiso)} className='m-2 border-2 border-black p-1'>rechazar</button>
                                 </tr>
                             ))}
                         </table>
