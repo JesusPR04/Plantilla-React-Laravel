@@ -145,7 +145,7 @@ function Header() {
                                 />
                             </div>
                             <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:space-x-4 rtl:space-x-reverse md:flex-row md:justify-center md:mt-4 mb-4 md:border-0 2xl:ml-12">
-                                <li className={`${user.rol !== 'Usuario' && 'hidden'}`}>
+                                <li className={`${user.rol === 'Administrador' && 'hidden'}`}>
                                     <Link
                                         to="/buscadoreventos"
                                         className="block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500"
@@ -158,9 +158,17 @@ function Header() {
                                         to="/crearEvento"
                                         className="block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500"
                                     >
-                                        Promociona tu Evento
+                                        Promociona tu eventos
                                     </Link>
                                 </li> 
+                                <li className={`${user.rol !== 'Organizador' && 'hidden'}`}>
+                                    <Link 
+                                        to="" 
+                                        className="block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500"
+                                    >
+                                        Mis eventos
+                                    </Link>
+                                </li>
                                 <li className={`${user.rol !== 'Usuario' && 'hidden'}`}>
                                     <Link
                                         to="/organizador"
@@ -194,7 +202,7 @@ function Header() {
                                     <div id="dropdownNavbar" className="z-10 hidden font-normal bg-[#f8f7fa] divide-y
                                      divide-gray-200 rounded-lg shadow w-44">
                                         <ul className="py-2 text-sm font-semibold text-colorFuente" aria-labelledby="dropdownLargeButton">
-                                            <li className={`${user.rol !== 'Usuario' && 'hidden'}`}>
+                                            <li className={`${user.rol === 'Administrador' && 'hidden'}`}>
                                                 <div className="flex flex-row px-4 py-2 justify-between">
                                                     <p>Tus puntos </p>
                                                     <div className="flex flex-row gap-2 items-center justify-center">
@@ -203,7 +211,7 @@ function Header() {
                                                     </div>
                                                 </div>
                                             </li>
-                                            <li className={`${user.rol !== 'Usuario' && 'hidden'}`}>
+                                            <li className={`${user.rol === 'Administrador' && 'hidden'}`}>
                                                 <div className="flex flex-row px-4 py-2 justify-between hover:text-blue-500 cursor-pointer">
                                                     <p>Favoritos </p>
                                                     <div className="flex flex-row gap-2 items-center justify-center">
@@ -224,17 +232,9 @@ function Header() {
                                                     </div>
                                                 </div>
                                             </li>
-                                            {user.rol === 'Usuario' ? (
-                                                <li>
-                                                    <Link to="/entradas" className="block px-4 py-2 hover:text-blue-500">Mis entradas</Link>
-                                                </li>
-                                            ) : user.rol === 'Organizador' ? (
-                                                <li>
-                                                    <Link to="" className="block px-4 py-2 hover:text-blue-500">Mis eventos</Link>
-                                                </li>
-                                            ) : (
-                                                <li></li>
-                                            )}
+                                            <li className={`${user.rol === 'Administrador' && 'hidden'}`}>
+                                                <Link to="/entradas" className="block px-4 py-2 hover:text-blue-500">Mis entradas</Link>
+                                            </li>
                                             <li>
                                                 <Link to="/perfil" className="block px-4 py-2 hover:text-blue-500">Perfil</Link>
                                             </li>
