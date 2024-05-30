@@ -77,8 +77,12 @@ export const getGenrers = async () => {
 }
 
 export const organizador = async (formData) => {
+  const token = localStorage.getItem('user-token');
   const url = 'http://localhost/api/organizador'
   const options = {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
     method: "Post",
     body: formData
   };
@@ -87,8 +91,6 @@ export const organizador = async (formData) => {
     const response = await fetch(url, options)
     const data = response.json()
     if (data.status) {
-      return data;
-    } else {
       return data;
     }
   } catch (error) {

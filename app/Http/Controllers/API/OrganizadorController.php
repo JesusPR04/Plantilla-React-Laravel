@@ -41,7 +41,8 @@ class OrganizadorController extends Controller
                 'message' => 'Error de validacion de la petición',
                 'errors' => $validarPeticion->errors()
             ], 401);
-        }
+        }        
+        
         $documento = $request->file('documento');
         $nombreFichero = time() . '_' . $documento->getClientOriginalName();
 
@@ -66,5 +67,9 @@ class OrganizadorController extends Controller
                 'message' => 'Error al mover el archivo'
             ], 401);
         }
+    }
+
+    public function rechazarSolicitud(){
+
     }
 }
