@@ -22,22 +22,20 @@ class OrganizadorController extends Controller
     {
         $user = $request->user()->id;
         $peticion = Peticiones::where('idUsuario', $user)->first();
-        if ($peticion->estado === 'En revision') {
-            if ($request->user->rol === 'Usuario') {
-                return response()->json([
-                    'status' => true
-                    
-                ], 200);
-            }else{
+        if ($request->user()->rol === 'Usuario') {
+            if (isset($peticion->estado) === 'En revision') {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Ya eres un organizador'
+                ], 200);
+            } else {
+                return response()->json([
+                    'status' => true,
                 ], 200);
             }
-        } else {
+        }else{
             return response()->json([
                 'status' => false,
-                
+                'message' => 'Ya eres un organizador'
             ], 200);
         }
     }

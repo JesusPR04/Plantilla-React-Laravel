@@ -17,6 +17,9 @@ const Peticion = () => {
     }, [])
 
     const comprobarRespuesta = (respuesta) => {
+        if (respuesta?.message) {
+            navigate('/')
+        }
         if (respuesta.status) {
             setAutorizacion(true)
         }
