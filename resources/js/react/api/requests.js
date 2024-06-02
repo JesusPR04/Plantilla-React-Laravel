@@ -384,3 +384,28 @@ export const comprobarSolicitud = async (request) => {
   }
 
 }
+
+export const comprobarFavorito = async (evento) => {
+  const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
+
+  if (!token) {
+    throw new Error('No token found');
+  }
+  
+  try {
+    const url = 'http://localhost/api/favorito'
+    const headers = {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(evento)
+    }
+    const response = await fetch(url, headers)
+    const data = await response.json();
+    return data
+  } catch (error) {
+    throw error
+  }
+}

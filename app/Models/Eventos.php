@@ -34,6 +34,12 @@ class Eventos extends Model
         'idCategoria' 
     ];
 
+    protected $hidden = [
+        'deleted_at',
+        'updated_at',
+        'created_at'
+    ];
+
     // Poder sacar el usuario que es el organizador del evento
     public function organizador()
     {

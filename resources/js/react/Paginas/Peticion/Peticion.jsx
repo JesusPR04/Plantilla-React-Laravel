@@ -4,7 +4,7 @@ import img from "../../assets/imgPeticion.jpg";
 import { organizador, permitirOrganizador } from '../../api/requests';
 import { useNavigate } from 'react-router-dom';
 import ClipLoader from "react-spinners/ClipLoader";
-import { toast } from 'react-toastify';
+import {ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 

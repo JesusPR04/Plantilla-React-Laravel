@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getEventoById, fetchUserData, comprarEntrada } from "../../api/requests";
+import { getEventoById, fetchUserData, comprarEntrada, comprobarFavorito } from "../../api/requests";
 import eventodefecto from "../../assets/eventodefecto.png";
 
 const BASE_URL = "http://localhost:";
@@ -11,6 +11,7 @@ const Evento = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [evento, setEvento] = useState(null);
+    const [favorito, setFavorito] = useState(false);
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -28,8 +29,16 @@ const Evento = () => {
                 setLoading(false);
             }
         };
+        const revisarFavorito = () =>{
+            comprobarFavorito({'id':id})
+            .then(respuesta => setFavorito(respuesta.status))
+            .catch(error => console.log(error))
+        }
 
         fetchEvento();
+        if (localStorage.getItem('user-token') !== null) {
+            revisarFavorito()
+        }
     }, [id]);
 
     useEffect(() => {
@@ -69,6 +78,11 @@ const Evento = () => {
             toast.error("Error comprando entrada");
         }
     };
+
+    /* const favorito = (id) => {
+        marcarFavorito({'id':id})
+        .then(response => console.log(response))
+    } */
 
     if (loading) {
         return <div className='min-h-[calc(100vh-436px)] text-xl sm:text-4xl pt-12 font-bold tracking-tight text-colorFuente uppercase text-center'>Cargando...</div>;
@@ -176,6 +190,7 @@ const Evento = () => {
                                 Comprar Entradas
                             </button>
                             <button 
+                            style={{backgroundColor: favorito ? 'yellow': '#93C5FD'}}
                                 className="bg-[#93C5FD] hover:bg-[#A5B4FC] text-colorFuente 
                                 font-bold py-2 px-4 rounded flex flex-row gap-3 justify-center xl:justify-start"
                             >

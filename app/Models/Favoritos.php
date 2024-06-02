@@ -18,6 +18,12 @@ class Favoritos extends Model
         'idEvento'
     ];
 
+    protected $hidden = [
+        'deleted_at',
+        'created_at',
+        'updated_at'
+    ];
+
     public function usuario(){
         return $this->belongsTo(User::class, 'idUsuario');
     }

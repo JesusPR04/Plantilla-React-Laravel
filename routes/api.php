@@ -6,6 +6,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\AdminController;
 use App\Http\Controllers\API\EventoController;
 use App\Http\Controllers\API\EntradaController;
+use App\Http\Controllers\API\FavoritosController;
 use App\Http\Controllers\API\UsuarioController;
 use App\Http\Controllers\API\OrganizadorController;
 use App\Models\Ciudades;
@@ -70,6 +71,9 @@ Route::post('/admin', [AdminController::class, 'index'])->middleware('auth:sanct
 Route::get('/peticiones', [AdminController::class, 'peticiones'])->middleware(('auth:sanctum')); //Recoge las peticiones para colaborador
 Route::post('/descargarArchivo', [AdminController::class, 'descargarArchivo'])->middleware(('auth:sanctum')); //Recoge las peticiones para colaborador
 Route::post('/comprobarSolicitud', [AdminController::class, 'comprobarSolicitud'])->middleware('auth:sanctum'); //Comprueba el resultado de la solicitud
+
+// Favoritos
+Route::post('/favorito', [FavoritosController::class, 'index'])->middleware('auth:sanctum'); //Comprueba el rol para acceder a la página
 
 Route::get('/prueba',function(){
     return response()->json([
