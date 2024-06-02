@@ -50,14 +50,9 @@ const Evento = () => {
 
     const handleCompra = async () => {
         if (!user) {
-<<<<<<< Updated upstream
-            alert("Debes estar logueado para comprar entradas");
-            return navigate('/login');
-=======
             toast.error("Debes estar logueado para comprar entradas");
             setTimeout(() => navigate('/login'), 3000); // 3 segundos de demora
             return;
->>>>>>> Stashed changes
         }
 
         try {
@@ -67,14 +62,8 @@ const Evento = () => {
                 cantidad,
                 metodoPago, // Añadir el método de pago
             });
-<<<<<<< Updated upstream
-            alert("Compra realizada con éxito");
-            navigate('/entradas');
-            navigate(0)
-=======
             toast.success("Compra realizada con éxito");
             setTimeout(() => navigate('/entradas'), 3000); // 3 segundos de demora
->>>>>>> Stashed changes
         } catch (error) {
             console.error("Error comprando entrada:", error);
             toast.error("Error comprando entrada");
