@@ -100,7 +100,7 @@ const Login = () => {
                     <img
                         src={imagen}
                         className="h-full w-full transform transition-transform 
-                      duration-5000 ease-out transform-origin-center"
+                        duration-5000 ease-out transform-origin-center"
                         onLoad={(e) => {
                             setTimeout(() => {
                                 e.target.classList.add("scale-150");

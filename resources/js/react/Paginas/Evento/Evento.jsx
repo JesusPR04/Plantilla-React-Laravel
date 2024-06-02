@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import {
-    getEventoById,
-    fetchUserData,
-    comprarEntrada,
-} from "../../api/requests";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { getEventoById, fetchUserData, comprarEntrada } from "../../api/requests";
 import eventodefecto from "../../assets/eventodefecto.png";
 
 const BASE_URL = "http://localhost:";
@@ -52,23 +50,34 @@ const Evento = () => {
 
     const handleCompra = async () => {
         if (!user) {
+<<<<<<< Updated upstream
             alert("Debes estar logueado para comprar entradas");
             return navigate('/login');
+=======
+            toast.error("Debes estar logueado para comprar entradas");
+            setTimeout(() => navigate('/login'), 3000); // 3 segundos de demora
+            return;
+>>>>>>> Stashed changes
         }
 
         try {
-            const data = await comprarEntrada({
+            await comprarEntrada({
                 idUsuario: user.id,
                 idEvento: id,
                 cantidad,
                 metodoPago, // Añadir el método de pago
             });
+<<<<<<< Updated upstream
             alert("Compra realizada con éxito");
             navigate('/entradas');
             navigate(0)
+=======
+            toast.success("Compra realizada con éxito");
+            setTimeout(() => navigate('/entradas'), 3000); // 3 segundos de demora
+>>>>>>> Stashed changes
         } catch (error) {
             console.error("Error comprando entrada:", error);
-            alert("Error comprando entrada");
+            toast.error("Error comprando entrada");
         }
     };
 
@@ -209,6 +218,7 @@ const Evento = () => {
                     </div>
                 </div>
             </div>
+            <ToastContainer />
         </section>
     );
 };
