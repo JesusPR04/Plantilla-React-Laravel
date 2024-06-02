@@ -1,7 +1,7 @@
 // src/components/Entradas.jsx
 import React, { useEffect, useState } from "react";
 import { getEntradas } from "../../api/requests";
-import eventodefecto from "../../assets/eventodefecto.jpg";
+import eventodefecto from "../../assets/eventodefecto.png";
 
 const BASE_URL = "http://localhost:";
 

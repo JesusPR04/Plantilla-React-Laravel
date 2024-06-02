@@ -5,7 +5,7 @@ import { fetchUserData } from "../../api/requests";
 import { Link } from "react-router-dom";
 import BuscadorEventos from "../BuscadorEventos/BuscadorEventos";
 import { getEventos } from "../../api/requests";
-import eventodefecto from "../../assets/eventodefecto.jpg";
+import eventodefecto from "../../assets/eventodefecto.png";
 import { FaCalendarAlt } from "react-icons/fa";
 import { FaClock } from "react-icons/fa6";
 import { CiLocationOn } from "react-icons/ci";

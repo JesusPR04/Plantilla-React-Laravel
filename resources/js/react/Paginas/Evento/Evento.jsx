@@ -5,7 +5,7 @@ import {
     fetchUserData,
     comprarEntrada,
 } from "../../api/requests";
-import eventodefecto from "../../assets/eventodefecto.jpg";
+import eventodefecto from "../../assets/eventodefecto.png";
 
 const BASE_URL = "http://localhost:";
 
