@@ -70,15 +70,15 @@ const Evento = () => {
     };
 
     if (loading) {
-        return <div>Cargando...</div>;
+        return <div className='min-h-[calc(100vh-436px)] text-xl sm:text-4xl pt-12 font-bold tracking-tight text-colorFuente uppercase text-center'>Cargando...</div>;
     }
 
     if (error) {
-        return <div>{error}</div>;
+        return <div className='min-h-[calc(100vh-436px)] text-xl sm:text-4xl pt-12 font-bold tracking-tight text-colorFuente uppercase text-center'>{error}</div>;
     }
 
     if (!evento) {
-        return <div>No se encontró el evento</div>;
+        return <div className='min-h-[calc(100vh-436px)] text-xl sm:text-4xl pt-12 font-bold tracking-tight text-colorFuente uppercase text-center'>No se encontró el evento</div>;
     }
 
     return (
