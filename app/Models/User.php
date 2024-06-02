@@ -54,6 +54,11 @@ class User extends Authenticatable
     public function tarjetas(){
         return $this->hasMany(Tarjetas::class);
     }
+
+    public function favoritos(){
+        return $this->hasMany(Favoritos::class);
+    }
+    
     // Sacar la peticion que ha hecho el usuario
     public function peticion()
     {

@@ -56,4 +56,8 @@ class Eventos extends Model
     {
         return $this->hasMany(Imagenes::class, 'idEvento');
     }
+    public function favoritos()
+    {
+        return $this->hasMany(Favoritos::class, 'idEvento');
+    }
 }
