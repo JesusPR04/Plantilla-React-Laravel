@@ -239,42 +239,42 @@ function App() {
                         <PrincipalFilter
                             icono={musicIco}
                             titulo={"Música"}
-                            ruta={""}
+                            ruta={"buscadoreventos/1"}
                         />
                         <PrincipalFilter
                             icono={partyIco}
                             titulo={"Vida nocturna"}
-                            ruta={""}
+                            ruta={"buscadoreventos/2"}
                         />
                         <PrincipalFilter
                             icono={performingArtsIco}
                             titulo={"Artes escénicas y visuales"}
-                            ruta={""}
+                            ruta={"buscadoreventos/3"}
                         />
                         <PrincipalFilter
                             icono={holidaysIco}
                             titulo={"Vacaciones"}
-                            ruta={""}
+                            ruta={"buscadoreventos/4"}
                         />
                         <PrincipalFilter
                             icono={healthIco}
                             titulo={"Salud"}
-                            ruta={""}
+                            ruta={"buscadoreventos/5"}
                         />
                         <PrincipalFilter
                             icono={gameIco}
                             titulo={"Aficiones"}
-                            ruta={""}
+                            ruta={"buscadoreventos/6"}
                         />
                         <PrincipalFilter
                             icono={businessIco}
                             titulo={"Negocios"}
-                            ruta={""}
+                            ruta={"buscadoreventos/7"}
                         />
                         <PrincipalFilter
                             icono={foodIco}
                             titulo={"Gastronomía"}
-                            ruta={""}
+                            ruta={"buscadoreventos/8"}
                         />
                     </div>
                 </article>
