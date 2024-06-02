@@ -114,6 +114,12 @@ class EventoController extends Controller
         return response()->json($eventos);
     }
 
+    public function getCountEvent()
+    {
+        $totalEvent = Eventos::count();
+        return response()->json($totalEvent);
+    }
+
 
     public function getEventoById(Request $request, $id)
     {

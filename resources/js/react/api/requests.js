@@ -76,6 +76,38 @@ export const getGenrers = async () => {
   }
 }
 
+export const getTotalEvents = async () => {
+  const url = 'http://localhost/api/totalEvent'
+  try {
+    const response = await fetch(url)
+    const data = response.json()
+    if (data.status) {
+      console.log(data)
+      return data
+    } else {
+      return data
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const getTotalOrganizers = async () => {
+  const url = 'http://localhost/api/totalOrganizers'
+  try {
+    const response = await fetch(url)
+    const data = response.json()
+    if (data.status) {
+      console.log(data)
+      return data
+    } else {
+      return data
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const organizador = async (formData) => {
   const token = localStorage.getItem('user-token');
   const url = 'http://localhost/api/organizador'

@@ -279,7 +279,7 @@ function App() {
                     </div>
                 </article>
                 <hr className="w-full h-[2px] bg-[#eeedf2]" />
-                <article className="pb-14">
+                <article className="pb-14" id="eventosTuCiudad">
                     <h2
                         className="text-center text-colorFuente text-5xl xl:text-6xl 2xl:text-6xl
             lg:text-6xl md:text-6xl font-bold tracking-tight uppercase mt-6"

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\User;
 use App\Models\Peticiones;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -37,6 +38,12 @@ class OrganizadorController extends Controller
                 'message' => 'Ya eres un organizador'
             ], 200);
         }
+    }
+
+    public function getCountOrganizers()
+    {
+        $totalOrganizers = User::where('rol', 'Organizador')->count();
+        return response()->json($totalOrganizers);
     }
 
     public function realizarPeticion(Request $request)

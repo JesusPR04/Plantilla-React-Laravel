@@ -45,6 +45,7 @@ Route::post('/login', [AuthController::class, 'loginUser']);
 
 // Evento
 Route::post('/storeEvent', [EventoController::class, 'store']);
+Route::get('/totalEvent', [EventoController::class, 'getCountEvent']);
 //TODO: Cambiar los post por la acción pertienente
 Route::post('/updateEvent/{id}', [EventoController::class, 'update']);
 Route::post('/deleteEvent/{id}', [EventoController::class, 'delete']);
@@ -60,6 +61,7 @@ Route::middleware('auth:sanctum')->get('/entradas', function (Request $request) 
 });
 
 // Organizador
+Route::get('/totalOrganizers', [OrganizadorController::class, 'getCountOrganizers']);
 Route::post('/organizador', [OrganizadorController::class, 'realizarPeticion'])->middleware('auth:sanctum'); //Realiza la petición para organizador
 Route::get('/organizador', [OrganizadorController::class, 'index'])->middleware('auth:sanctum'); //Comprueba si ya hay una petición de organizador
 

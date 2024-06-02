@@ -1,8 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import sectionImg from '../assets/sectionImg.jpg'
 import { Link } from 'react-router-dom'
+import { getTotalEvents, getTotalOrganizers } from '../api/requests'
 
 function HeaderSection({user}) {
+    const [totalEvents, setTotalEvents] = useState(0)
+    const [totalOrganizers, setTotalOrganizers] = useState(0)
+    useEffect(() => {
+        getTotalEvents().then(data => setTotalEvents(data))
+        getTotalOrganizers().then(data => setTotalOrganizers(data))
+    }, [])
+
     const mapaPin = (
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -11,14 +19,29 @@ function HeaderSection({user}) {
     )
     const city = user.ciudad ? user.ciudad : 'Córdoba'
 
+    const getHrefByUser = (user) => {
+        if (Object.keys(user).length === 0) {
+            return '/login'
+        } else if (user.rol !== 'Organizador') {
+            return '/organizador'
+        } else {
+            return '/crearEvento'
+        }
+    }
+    const handleCityLinkClick = () => {
+        const eventosTuCiudad = document.getElementById('eventosTuCiudad');
+        if (eventosTuCiudad) {
+            eventosTuCiudad.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
     const links = [
-        { name: 'Promociona tu evento', href: '', icon: '' },
-        { name: 'Descubre en ', city: city, href: '', icon: mapaPin },
+        { name: 'Promociona tu evento', href: getHrefByUser(user) },
+        { name: 'Descubre en ', city: city, onClick: handleCityLinkClick, icon: mapaPin },
     ]
     const stats = [
-        { name: 'Eventos activos', value: '0' },
-        { name: 'Todos los eventos', value: '0+' },
-        { name: 'Organizadores', value: 'Más de 0' },
+        { name: 'Eventos activos', value: totalEvents },
+        { name: 'Organizadores', value: `Contamos con ${totalOrganizers}` },
         { name: 'Soporte', value: '24h' },
     ]
     return (
@@ -62,7 +85,7 @@ function HeaderSection({user}) {
                 <div className="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none">
                     <div className="grid grid-cols-1 gap-x-8 gap-y-6 text-base font-semibold leading-7 text-white sm:grid-cols-2 md:flex lg:gap-x-10">
                         {links.map((link, index) => (
-                            <Link key={link.name} to={link.href}>
+                            <Link key={link.name} to={link.href} onClick={index === 1 ? handleCityLinkClick : null}>
                                 <div className='flex flex-wrap gap-2'>
                                     <p>
                                         {index === 1 ? (
@@ -70,7 +93,7 @@ function HeaderSection({user}) {
                                                 {link.name} <span className="text-blue-500">{link.city}</span>
                                             </>
                                         ) : (
-                                            link.name
+                                            link.name 
                                         )}
                                     </p>
                                     <span>{link.icon}</span>
