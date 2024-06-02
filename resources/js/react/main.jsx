@@ -57,7 +57,11 @@ const router = createBrowserRouter([
       element: <Peticion />,
     },
     {
-      path: "/buscadoreventos",
+      path: "/buscadoreventos/",
+      element: <BuscadorEventos />,
+    },
+    {
+      path: "/buscadoreventos/:categoria",
       element: <BuscadorEventos />,
     },
     {
