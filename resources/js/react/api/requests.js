@@ -146,13 +146,13 @@ export const crearEvento = async (formData) => {
   }
 }
 
-export const comprarEntrada = async ({ idUsuario, idEvento, cantidad }) => {
+export const comprarEntrada = async ({ idUsuario, idEvento, cantidad, metodoPago }) => {
   const response = await fetch('http://localhost/api/entradas/comprar', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ idUsuario, idEvento, cantidad })
+    body: JSON.stringify({ idUsuario, idEvento, cantidad, metodoPago })
   });
   if (!response.ok) {
     throw new Error('Error purchasing ticket');
@@ -160,6 +160,7 @@ export const comprarEntrada = async ({ idUsuario, idEvento, cantidad }) => {
   const data = await response.json();
   return data;
 };
+
 
 export const getEntradas = async (token) => {
   const response = await fetch('http://localhost/api/entradas', {

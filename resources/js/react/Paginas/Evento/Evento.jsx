@@ -11,12 +11,13 @@ const BASE_URL = "http://localhost:";
 
 const Evento = () => {
     const { id } = useParams();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [evento, setEvento] = useState(null);
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [cantidad, setCantidad] = useState(1); // Para manejar la cantidad de entradas a comprar
+    const [metodoPago, setMetodoPago] = useState('dinero'); // Añadir estado para el método de pago
 
     useEffect(() => {
         const fetchEvento = async () => {
@@ -52,7 +53,7 @@ const Evento = () => {
     const handleCompra = async () => {
         if (!user) {
             alert("Debes estar logueado para comprar entradas");
-            return navigate('/login')
+            return navigate('/login');
         }
 
         try {
@@ -60,9 +61,11 @@ const Evento = () => {
                 idUsuario: user.id,
                 idEvento: id,
                 cantidad,
+                metodoPago, // Añadir el método de pago
             });
             alert("Compra realizada con éxito");
-            navigate('/entradas')
+            navigate('/entradas');
+            navigate(0)
         } catch (error) {
             console.error("Error comprando entrada:", error);
             alert("Error comprando entrada");
@@ -80,6 +83,8 @@ const Evento = () => {
     if (!evento) {
         return <div className='min-h-[calc(100vh-436px)] text-xl sm:text-4xl pt-12 font-bold tracking-tight text-colorFuente uppercase text-center'>No se encontró el evento</div>;
     }
+
+    const precioEnPuntos = evento.precio * 3 * cantidad;
 
     return (
         <section className="bg-gray-100 min-h-[calc(100vh-436px)] py-12 md:py-16 lg:py-20">
@@ -157,6 +162,15 @@ const Evento = () => {
                                 className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
                                   focus:ring-blue-500 focus:border-blue-500 block p-2.5"
                             />
+                            <select
+                                value={metodoPago}
+                                onChange={(e) => setMetodoPago(e.target.value)}
+                                className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
+                                  focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+                            >
+                                <option value="dinero">Dinero</option>
+                                <option value="puntos">Puntos</option>
+                            </select>
                             <button
                                 onClick={handleCompra}
                                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -183,6 +197,14 @@ const Evento = () => {
                                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                                 </svg>
                             </button>
+                        </div>
+                        <div>
+                            <h3 className="text-lg font-medium text-colorFuente">
+                                Precio
+                            </h3>
+                            <p className="text-colorFuente">
+                                {evento.precio} € o {precioEnPuntos} puntos
+                            </p>
                         </div>
                     </div>
                 </div>

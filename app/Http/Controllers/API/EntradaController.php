@@ -1,5 +1,5 @@
 <?php
-// app/Http/Controllers/EntradaController.php
+
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
@@ -16,9 +16,23 @@ class EntradaController extends Controller
             'idUsuario' => 'required|exists:usuarios,id',
             'idEvento' => 'required|exists:eventos,id',
             'cantidad' => 'required|integer|min:1',
+            'metodoPago' => 'required|in:dinero,puntos', // Validar método de pago
         ]);
 
         $evento = Eventos::findOrFail($validated['idEvento']);
+        $user = User::findOrFail($validated['idUsuario']);
+
+        $puntosGanados = $evento->precio * $validated['cantidad'];
+        $costoEnPuntos = $puntosGanados * 3;
+
+        if ($validated['metodoPago'] === 'puntos') {
+            if ($user->puntos < $costoEnPuntos) {
+                return response()->json(['error' => 'No tienes suficientes puntos para completar esta compra.'], 400);
+            }
+            $user->puntos -= $costoEnPuntos;
+        } else {
+            $user->puntos += $puntosGanados;
+        }
 
         $entrada = Entradas::create([
             'idUsuario' => $validated['idUsuario'],
@@ -26,12 +40,6 @@ class EntradaController extends Controller
             'cantidad' => $validated['cantidad'],
         ]);
 
-        // Calcular puntos ganados
-        $puntosGanados = $evento->precio * $validated['cantidad']; // Ejemplo: 10 puntos por cada entrada
-
-        // Actualizar puntos del usuario
-        $user = User::findOrFail($validated['idUsuario']);
-        $user->puntos += $puntosGanados;
         $user->save();
 
         return response()->json($entrada, 201);
