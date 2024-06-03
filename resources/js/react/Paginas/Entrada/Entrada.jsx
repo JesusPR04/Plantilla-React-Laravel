@@ -39,7 +39,7 @@ const Entrada = () => {
     }
     if (loading) {
         return (
-            <div className="min-h-[calc(100vh-436px)] text-center mt-10 text-colorFuente text-2xl font-bold">
+            <div className="min-h-[calc(100vh-436px)] text-center mt-10 text-colorFuente text-xl sm:text-4xl font-bold uppercase">
                 Cargando...
             </div>
         );
@@ -55,7 +55,7 @@ const Entrada = () => {
 
     if (entradas.length === 0) {
         return (
-            <div className="min-h-[calc(100vh-436px)] text-center mt-10 text-colorFuente text-2xl font-bold">
+            <div className="min-h-[calc(100vh-436px)] text-center mt-10 text-colorFuente text-2xl font-bold uppercase">
                 No tienes entradas
             </div>
         );

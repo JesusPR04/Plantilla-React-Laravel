@@ -81,9 +81,14 @@ const Evento = () => {
     };
 
     const asignarFavorito = (id) => {
-        marcarFavorito({'id':id})
-        .then(response => setFavorito(response.estado))
-        .catch(error => navigate('/login'))
+        marcarFavorito({ 'id': id })
+            .then(() => {
+                // Después de marcar/desmarcar favorito, actualiza el estado del favorito
+                comprobarFavorito({ 'id': id })
+                    .then(respuesta => setFavorito(respuesta.status))
+                    .catch(error => console.log(error));
+            })
+            .catch(error => navigate('/login'));
     }
 
     if (loading) {
@@ -91,11 +96,11 @@ const Evento = () => {
     }
 
     if (error) {
-        return <div className='min-h-[calc(100vh-436px)] text-xl sm:text-4xl pt-12 font-bold tracking-tight text-colorFuente uppercase text-center'>{error}</div>;
+        return <div className='min-h-[calc(100vh-436px)] text-2xl pt-12 font-bold tracking-tight text-colorFuente uppercase text-center'>{error}</div>;
     }
 
     if (!evento) {
-        return <div className='min-h-[calc(100vh-436px)] text-xl sm:text-4xl pt-12 font-bold tracking-tight text-colorFuente uppercase text-center'>No se encontró el evento</div>;
+        return <div className='min-h-[calc(100vh-436px)] text-2xl pt-12 font-bold tracking-tight text-colorFuente uppercase text-center'>No se encontró el evento</div>;
     }
 
     const precioEnPuntos = evento.precio * 3 * cantidad;
@@ -106,15 +111,6 @@ const Evento = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <div className="w-full md:w-auto">
                         <ImageSlider />
-                        {/* <img
-                            src={
-                                evento.ruta
-                                    ? `${BASE_URL}${evento.ruta}`
-                                    : eventodefecto
-                            }
-                            alt={evento.nombre}
-                            className="w-full h-full object-cover mb-4"
-                        /> */}
                     </div>
                     <div className="space-y-6 border p-4 rounded shadow bg-gray-100">
                         <div>
@@ -168,7 +164,7 @@ const Evento = () => {
                                 {evento.descripcion}
                             </p>
                         </div>
-                        <div className="flex flex-col xl:flex-row gap-4">
+                        <div className="grid grid-cols-2 gap-4">
                             <input
                                 type="number"
                                 value={cantidad}
@@ -188,32 +184,38 @@ const Evento = () => {
                             </select>
                             <button
                                 onClick={handleCompra}
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded col-span-2 lg:col-span-1"
                             >
                                 Comprar Entradas
                             </button>
-                            <button 
-                            onClick={()=>asignarFavorito(evento.id)}
-                            style={{backgroundColor: favorito ? 'yellow': '#93C5FD'}}
-                                className="bg-[#93C5FD] hover:bg-[#A5B4FC] text-colorFuente 
-                                font-bold py-2 px-4 rounded flex flex-row gap-3 justify-center xl:justify-start"
-                            >
-                                <span>Añadir a Favoritos</span>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="lucide lucide-star cursor-pointer"
+                            {favorito ? (
+                                <button onClick={()=>asignarFavorito(evento.id)}
+                                 className="bg-red-500 hover:bg-red-700 text-white 
+                                 font-bold py-2 px-4 rounded"
+                                >Eliminar de favoritos</button>
+                            ) : (
+                                <button 
+                                    onClick={()=>asignarFavorito(evento.id)}
+                                    className="bg-[#93C5FD] hover:bg-[#A5B4FC] text-colorFuente 
+                                    font-bold py-2 px-4 rounded flex flex-row gap-3 justify-center xl:justify-start col-span-2 lg:col-span-1"
                                 >
-                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                                </svg>
-                            </button>
+                                    <span>Añadir a Favoritos</span>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="lucide lucide-star cursor-pointer"
+                                    >
+                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                    </svg>
+                                </button>
+                            )}
                         </div>
                         <div>
                             <h3 className="text-lg font-medium text-colorFuente">
