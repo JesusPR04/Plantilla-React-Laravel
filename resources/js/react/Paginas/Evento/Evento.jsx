@@ -85,8 +85,14 @@ const Evento = () => {
             .then(() => {
                 // Después de marcar/desmarcar favorito, actualiza el estado del favorito
                 comprobarFavorito({ 'id': id })
-                    .then(respuesta => setFavorito(respuesta.status))
-                    .catch(error => console.log(error));
+                    .then(respuesta => {
+                        setFavorito(respuesta.status)
+                        toast.success(respuesta.status ? "Evento añadido a favoritos con éxito" : "Evento eliminado de favoritos con éxito");
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        toast.error("Error");
+                    });
             })
             .catch(error => navigate('/login'));
     }
