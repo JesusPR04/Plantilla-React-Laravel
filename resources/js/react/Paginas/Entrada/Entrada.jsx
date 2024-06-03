@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { cancelarEntrada, getEntradas } from "../../api/requests";
 import eventodefecto from "../../assets/eventodefecto.png";
+import { ToastContainer, toast } from 'react-toastify';
 
 const BASE_URL = "http://localhost:";
 
@@ -10,33 +11,51 @@ const Entrada = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const fetchEntradas = async () => {
-            const token = localStorage.getItem("user-token"); // Asegúrate de tener el token almacenado en localStorage
-            if (token) {
-                try {
-                    const data = await getEntradas(token);
-                    setEntradas(data);
-                } catch (error) {
-                    setError("Error fetching entradas");
-                } finally {
-                    setLoading(false);
-                }
-            } else {
-                setError("Usuario no autenticado");
+    const fetchEntradas = async () => {
+        const token = localStorage.getItem("user-token"); // Asegúrate de tener el token almacenado en localStorage
+        if (token) {
+            try {
+                const data = await getEntradas(token);
+                setEntradas(data);
+            } catch (error) {
+                setError("Error fetching entradas");
+            } finally {
                 setLoading(false);
             }
-        };
+        } else {
+            setError("Usuario no autenticado");
+            setLoading(false);
+        }
+    };
 
+    useEffect(() => {
         fetchEntradas();
     }, []);
 
-    const cancelar = (id) =>{
+    /* const cancelar = (id) =>{
         cancelarEntrada(id)
-        .then(respuesta => console.log(respuesta))
-        .catch(error => console.log(error))
-
-    }
+        .then(respuesta => {
+            toast.success(respuesta.message)
+        })
+        .catch(error => {
+            console.log(error)
+            toast.error('Error al cancelar la entrada')
+        })
+    }  */
+    const cancelar = (id) => {
+        cancelarEntrada(id)
+            .then((respuesta) => {
+                // Eliminar la entrada del estado de entradas
+                setEntradas(prevEntradas => prevEntradas.filter(entrada => entrada.id !== id));
+                toast.success(respuesta.message); 
+                //TODO:SIGUE SIN QUITARSE LA ENTRADA
+            })
+            .catch((error) => {
+                console.log(error);
+                toast.error('Error al cancelar la entrada');
+            });
+    }; 
+    
     if (loading) {
         return (
             <div className="min-h-[calc(100vh-436px)] text-center mt-10 text-colorFuente text-xl sm:text-4xl font-bold uppercase">
@@ -144,6 +163,7 @@ const Entrada = () => {
                     ))}
                 </div>
             </div>
+            <ToastContainer />
         </section>
     );
 };

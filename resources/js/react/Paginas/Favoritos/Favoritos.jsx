@@ -37,7 +37,7 @@ const Favoritos = () => {
     return (
         <section className="bg-gray-100 min-h-[calc(100vh-436px)] py-12 md:py-16 lg:py-20">
             <h1 className="text-3xl md:text-4xl font-bold text-colorFuente mb-6 text-center uppercase">
-                    Tus <span className="text-blue-500">Favoritos</span>
+                    Tus eventos<span className="text-blue-500">Favoritos</span>
                 </h1>
             <div className="grid grid-cols-1 px-4 py-10 sm:px-20 pt-0 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {favoritos.map((evento) => (

@@ -3,7 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getEventoById, fetchUserData, comprarEntrada, comprobarFavorito, marcarFavorito } from "../../api/requests";
-import eventodefecto from "../../assets/eventodefecto.png";
 import ImageSlider from "../../Components/ImageSlider";
 
 const BASE_URL = "http://localhost:";
