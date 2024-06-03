@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getEventoById, fetchUserData, comprarEntrada, comprobarFavorito, marcarFavorito } from "../../api/requests";
 import eventodefecto from "../../assets/eventodefecto.png";
+import ImageSlider from "../../Components/ImageSlider";
 
 const BASE_URL = "http://localhost:";
 
@@ -102,9 +103,10 @@ const Evento = () => {
     return (
         <section className="bg-gray-100 min-h-[calc(100vh-436px)] py-12 md:py-16 lg:py-20">
             <div className="container mx-auto px-4 md:px-6">
-                <div className="grid md:grid-cols-2 gap-8">
-                    <div>
-                        <img
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div className="w-full md:w-auto">
+                        <ImageSlider />
+                        {/* <img
                             src={
                                 evento.ruta
                                     ? `${BASE_URL}${evento.ruta}`
@@ -112,7 +114,7 @@ const Evento = () => {
                             }
                             alt={evento.nombre}
                             className="w-full h-full object-cover mb-4"
-                        />
+                        /> */}
                     </div>
                     <div className="space-y-6 border p-4 rounded shadow bg-gray-100">
                         <div>
