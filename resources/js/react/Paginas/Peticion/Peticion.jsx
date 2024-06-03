@@ -28,7 +28,6 @@ const Peticion = () => {
     }, [navigate]);
 
     const comprobarRespuesta = (respuesta) => {
-        console.log(respuesta);
         if (respuesta?.message) {
             navigate('/');
         }
@@ -76,7 +75,7 @@ const Peticion = () => {
 
     const comprobar = (e) => {
         if (e.status) {
-            navigate('/');
+            navigate(0);
         } else {
             toast.error(e.message);
         }
