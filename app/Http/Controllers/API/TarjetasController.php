@@ -14,19 +14,11 @@ class TarjetasController extends Controller
      */
     public function index(Request $request)
     {
-        $tarjetas = Tarjetas::where('idUsuario', $request->user()->id);
+        $tarjetas = Tarjetas::where('idUsuario', $request->user()->id)->get();
         return response()->json([
             'status' => true,
             'tarjetas' => $tarjetas
         ], 200);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**

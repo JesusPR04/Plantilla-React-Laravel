@@ -16,7 +16,7 @@ class OrganizadorController extends Controller
     {
         if ($request->user()->rol === "Usuario") {
             $user = $request->user()->id;
-            $peticion = Peticiones::where('idUsuario', $user)->first();
+            $peticion = Peticiones::where('idUsuario', $user)->where('estado', 'En revisión')->first();
             if (!isset($peticion)) {
                 return response()->json([
                     'status' => true,

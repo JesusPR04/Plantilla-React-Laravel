@@ -1,17 +1,18 @@
 <?php
 
 use App\Models\Eventos;
+use App\Models\Ciudades;
+use App\Models\Entradas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\AdminController;
 use App\Http\Controllers\API\EventoController;
 use App\Http\Controllers\API\EntradaController;
-use App\Http\Controllers\API\FavoritosController;
 use App\Http\Controllers\API\UsuarioController;
+use App\Http\Controllers\API\TarjetasController;
+use App\Http\Controllers\API\FavoritosController;
 use App\Http\Controllers\API\OrganizadorController;
-use App\Models\Ciudades;
-use App\Models\Entradas;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,6 +84,13 @@ Route::post('/comprobarSolicitud', [AdminController::class, 'comprobarSolicitud'
 Route::post('/favorito', [FavoritosController::class, 'index'])->middleware('auth:sanctum');
 Route::post('/marcarFavorito', [FavoritosController::class, 'marcarFavorito'])->middleware('auth:sanctum');
 Route::post('/misFavoritos', [FavoritosController::class, 'misFavoritos'])->middleware('auth:sanctum');
+
+// Tarjetas
+Route::get('/tarjetas', [TarjetasController::class, 'index'])->middleware('auth:sanctum');
+Route::post('/tarjetas', [TarjetasController::class, 'store'])->middleware('auth:sanctum');
+Route::get('/tarjetas/{id}', [TarjetasController::class, 'show'])->middleware('auth:sanctum');
+Route::put('/tarjetas', [TarjetasController::class, 'update'])->middleware('auth:sanctum');
+Route::delete('/tarjetas/{id}', [TarjetasController::class, 'destroy'])->middleware('auth:sanctum');
 
 Route::get('/prueba',function(){
     return response()->json([

@@ -23,6 +23,7 @@ import Entrada from './Paginas/Entrada/Entrada.jsx'
 import CrearEvento from './Paginas/Evento/CrearEvento.jsx'
 import MisEventos from './Paginas/MisEventos/MisEventos.jsx'
 import Favoritos from './Paginas/Favoritos/Favoritos.jsx'
+import Tarjetas from './Paginas/Tarjetas/Tarjetas.jsx'
 
 
 function AppLayout() {
@@ -109,6 +110,10 @@ const router = createBrowserRouter([
     {
       path: "/favoritos",
       element: <Favoritos />,
+    },
+    {
+      path: "/tarjetas",
+      element: <Tarjetas />,
     }
     ]
   }

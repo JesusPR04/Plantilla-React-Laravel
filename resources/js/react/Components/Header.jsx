@@ -194,16 +194,16 @@ function Header() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <button
+                                    <button 
                                         id="dropdownNavbarLink"
                                         data-dropdown-toggle="dropdownNavbar"
                                         className="py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500
-                                         md:text-white md:rounded-md 
+                                         md:text-white md:rounded-md  hover:scale-105 duration-100
                                          md:bg-blue-500 md:hover:bg-blue-500 md:hover:text-white flex flex-row items-center"
                                     >
                                         <span className="capitalize">{user.nombre}</span>
                                         <svg
-                                            className="w-2.5 h-2.5 ms-2.5 hover:w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                            className="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                                         </svg>
                                     </button>
@@ -243,10 +243,55 @@ function Header() {
                                                 </Link>
                                             </li>
                                             <li className={`${user.rol === 'Administrador' && 'hidden'}`}>
-                                                <Link to="/entradas" className="block px-4 py-2 hover:text-blue-500">Mis entradas</Link>
+                                                <Link to='/entradas'>
+                                                    <div className="flex flex-row px-4 py-2 justify-between hover:text-blue-500 cursor-pointer">
+                                                        <p>Mis Entradas </p>
+                                                        <div className="flex flex-row gap-2 items-center justify-center">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                width="16"
+                                                                height="16"
+                                                                fill="currentColor"
+                                                                class="bi bi-ticket-detailed-fill"
+                                                                viewBox="0 0 16 16">
+                                                                <path d="M0 4.5A1.5 1.5 0 0 1 1.5 3h13A1.5 1.5 0 0 1 16 4.5V6a.5.5 0 0 1-.5.5 1.5 1.5 0 0 0 0 3 .5.5 0 0 1 .5.5v1.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 11.5V10a.5.5 0 0 1 .5-.5 1.5 1.5 0 1 0 0-3A.5.5 0 0 1 0 6zm4 1a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7a.5.5 0 0 0-.5.5m0 5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7a.5.5 0 0 0-.5.5M4 8a1 1 0 0 0 1 1h6a1 1 0 1 0 0-2H5a1 1 0 0 0-1 1" />
+                                                            </svg>
+                                                        </div>
+                                                    </div>
+                                                </Link>
+                                            </li>
+                                            <li className={`${user.rol === 'Administrador' && 'hidden'}`}>
+                                                <Link to='/tarjetas'>
+                                                    <div className="flex flex-row px-4 py-2 justify-between hover:text-blue-500 cursor-pointer">
+                                                        <p>Mis Tarjetas </p>
+                                                        <div className="flex flex-row gap-2 items-center justify-center">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                width="18"
+                                                                height="18"
+                                                                fill="currentColor"
+                                                                class="bi bi-credit-card-2-front-fill"
+                                                                viewBox="0 0 16 16">
+                                                                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2.5 1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm0 3a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm3 0a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm3 0a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm3 0a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1z" />
+                                                            </svg>
+                                                        </div>
+                                                    </div>
+                                                </Link>
                                             </li>
                                             <li>
-                                                <Link to="/perfil" className="block px-4 py-2 hover:text-blue-500">Perfil</Link>
+                                                <Link to='/perfil'>
+                                                    <div className="flex flex-row px-4 py-2 justify-between hover:text-blue-500 cursor-pointer">
+                                                        <p>Perfil </p>
+                                                        <div className="flex flex-row gap-2 items-center justify-center">
+                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                width="18"
+                                                                height="18"
+                                                                fill="currentColor"
+                                                                class="bi bi-person-fill"
+                                                                viewBox="0 0 16 16">
+                                                                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                                                            </svg>
+                                                        </div>
+                                                    </div>
+                                                </Link>
                                             </li>
                                         </ul>
                                         <div className="py-1">
@@ -255,7 +300,7 @@ function Header() {
                                                 navigate('/')
                                                 navigate(0)
                                             }}
-                                                className="block px-4 py-2 text-sm font-semibold hover:text-blue-500"
+                                                className="block px-4 py-2 text-sm font-semibold hover:text-red-700 text-red-500"
                                             >
                                                 Cerrar sesión
                                             </button>

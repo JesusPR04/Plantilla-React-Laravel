@@ -152,7 +152,7 @@ export const comprarEntrada = async ({ idUsuario, idEvento, cantidad, metodoPago
   if (!token) {
     throw new Error('No token found');
   }
-  
+
   const response = await fetch('http://localhost/api/entradas/comprar', {
     method: 'POST',
     headers: {
@@ -499,6 +499,30 @@ export const cancelarEntrada = async (id) => {
 
   try {
     const url = `http://localhost/api/cancelarEntrada/${id}`
+    const headers = {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+    }
+    const response = await fetch(url, headers)
+    const data = await response.json();
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const getTarjetas = async () => {
+  const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
+
+  if (!token) {
+    throw new Error('No token found');
+  }
+
+  try {
+    const url = `http://localhost/api/tarjetas`
     const headers = {
       method: 'GET',
       headers: {
