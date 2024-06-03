@@ -38,6 +38,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'updated_at',
+        'created_at'
     ];
 
     /**
@@ -51,14 +53,16 @@ class User extends Authenticatable
     ];
 
     // Sacar las tarjetas a partir del usuario
-    public function tarjetas(){
+    public function tarjetas()
+    {
         return $this->hasMany(Tarjetas::class);
     }
 
-    public function favoritos(){
+    public function favoritos()
+    {
         return $this->hasMany(Favoritos::class);
     }
-    
+
     // Sacar la peticion que ha hecho el usuario
     public function peticion()
     {

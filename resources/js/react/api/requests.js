@@ -147,9 +147,16 @@ export const crearEvento = async (formData) => {
 }
 
 export const comprarEntrada = async ({ idUsuario, idEvento, cantidad, metodoPago }) => {
+  const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
+
+  if (!token) {
+    throw new Error('No token found');
+  }
+  
   const response = await fetch('http://localhost/api/entradas/comprar', {
     method: 'POST',
     headers: {
+      'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ idUsuario, idEvento, cantidad, metodoPago })
@@ -391,7 +398,7 @@ export const comprobarFavorito = async (evento) => {
   if (!token) {
     throw new Error('No token found');
   }
-  
+
   try {
     const url = 'http://localhost/api/favorito'
     const headers = {
@@ -401,6 +408,103 @@ export const comprobarFavorito = async (evento) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(evento)
+    }
+    const response = await fetch(url, headers)
+    const data = await response.json();
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const marcarFavorito = async (evento) => {
+  const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
+
+  if (!token) {
+    throw new Error('No token found');
+  }
+
+  try {
+    const url = 'http://localhost/api/marcarFavorito'
+    const headers = {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(evento)
+    }
+    const response = await fetch(url, headers)
+    const data = await response.json();
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const getMisEventos = async () => {
+  const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
+
+  if (!token) {
+    throw new Error('No token found');
+  }
+
+  const response = await fetch('http://localhost/api/miseventos', {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Accept': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    const errorMessage = await response.text();
+    throw new Error(`Error: ${errorMessage}`);
+  }
+
+  return await response.json();
+};
+
+export const getMisFavoritos = async (evento) => {
+  const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
+
+  if (!token) {
+    throw new Error('No token found');
+  }
+
+  try {
+    const url = 'http://localhost/api/misFavoritos'
+    const headers = {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(evento)
+    }
+    const response = await fetch(url, headers)
+    const data = await response.json();
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const cancelarEntrada = async (id) => {
+  const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
+
+  if (!token) {
+    throw new Error('No token found');
+  }
+
+  try {
+    const url = `http://localhost/api/cancelarEntrada/${id}`
+    const headers = {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
     }
     const response = await fetch(url, headers)
     const data = await response.json();

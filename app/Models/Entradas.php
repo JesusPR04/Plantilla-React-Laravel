@@ -16,6 +16,10 @@ class Entradas extends Model
         'fechaCompra'
     ];
 
+    protected $hidden = [
+        'updated_at',
+        'created_at'
+    ];
     public function evento()
     {
         return $this->belongsTo(Eventos::class, 'idEvento');

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Eventos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
@@ -54,7 +55,8 @@ Route::get('/getEventos', [EventoController::class, 'getEventos']);
 Route::get('/evento/{id}', [EventoController::class, 'getEventoById']);
 
 //Entrada
-Route::post('/entradas/comprar', [EntradaController::class, 'comprar']);
+Route::post('/entradas/comprar', [EntradaController::class, 'comprar'])->middleware('auth:sanctum');
+Route::get('/cancelarEntrada/{id}', [EntradaController::class, 'cancelarEntrada'])->middleware('auth:sanctum');
 Route::middleware('auth:sanctum')->get('/entradas', function (Request $request) {
     $user = $request->user();
     $entradas = Entradas::where('idUsuario', $user->id)->with('evento')->get();
@@ -65,6 +67,11 @@ Route::middleware('auth:sanctum')->get('/entradas', function (Request $request) 
 Route::get('/totalOrganizers', [OrganizadorController::class, 'getCountOrganizers']);
 Route::post('/organizador', [OrganizadorController::class, 'realizarPeticion'])->middleware('auth:sanctum'); //Realiza la petición para organizador
 Route::get('/organizador', [OrganizadorController::class, 'index'])->middleware('auth:sanctum'); //Comprueba si ya hay una petición de organizador
+Route::middleware('auth:sanctum')->get('/miseventos', function (Request $request) {
+    $user = $request->user();
+    $eventos = Eventos::where('idOrganizador', $user->id)->get();
+    return response()->json($eventos);
+});
 
 // Admin
 Route::post('/admin', [AdminController::class, 'index'])->middleware('auth:sanctum'); //Comprueba el rol para acceder a la página
@@ -73,7 +80,9 @@ Route::post('/descargarArchivo', [AdminController::class, 'descargarArchivo'])->
 Route::post('/comprobarSolicitud', [AdminController::class, 'comprobarSolicitud'])->middleware('auth:sanctum'); //Comprueba el resultado de la solicitud
 
 // Favoritos
-Route::post('/favorito', [FavoritosController::class, 'index'])->middleware('auth:sanctum'); //Comprueba el rol para acceder a la página
+Route::post('/favorito', [FavoritosController::class, 'index'])->middleware('auth:sanctum');
+Route::post('/marcarFavorito', [FavoritosController::class, 'marcarFavorito'])->middleware('auth:sanctum');
+Route::post('/misFavoritos', [FavoritosController::class, 'misFavoritos'])->middleware('auth:sanctum');
 
 Route::get('/prueba',function(){
     return response()->json([

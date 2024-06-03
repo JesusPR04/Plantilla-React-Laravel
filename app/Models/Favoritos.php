@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Favoritos extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $table = "favoritos";
     protected $fillable = [
@@ -19,7 +19,6 @@ class Favoritos extends Model
     ];
 
     protected $hidden = [
-        'deleted_at',
         'created_at',
         'updated_at'
     ];

@@ -22,6 +22,11 @@ class Imagenes extends Model
         'idEvento'
     ];
 
+    protected $hidden = [
+        'updated_at',
+        'created_at'
+    ];
+
     // Relación con Evento
     public function evento()
     {

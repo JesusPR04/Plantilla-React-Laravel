@@ -31,7 +31,6 @@ class Peticiones extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        
     ];
     // Sacar el usuario que ha hecho la peticion
     public function usuario()

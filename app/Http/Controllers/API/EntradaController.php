@@ -20,7 +20,7 @@ class EntradaController extends Controller
         ]);
 
         $evento = Eventos::findOrFail($validated['idEvento']);
-        $user = User::findOrFail($validated['idUsuario']);
+        $user = $request->user();
 
         $puntosGanados = $evento->precio * $validated['cantidad'];
         $costoEnPuntos = $puntosGanados * 3;
@@ -43,5 +43,21 @@ class EntradaController extends Controller
         $user->save();
 
         return response()->json($entrada, 201);
+    }
+
+    public function cancelarEntrada(Request $request, $id){
+        $evento = Entradas::where('idEvento', $id)->where('idUsuario', $request->user()->id)->first();
+        if(isset($evento)){
+            $evento->delete();
+            return response()->json([
+                'status' => true,
+                'message' => 'Entrada eliminada correctamente'
+            ], 200);
+        }else{
+            return response()->json([
+                'status' => false,
+                'message' => 'No se pudo encontrar la entrada'
+            ], 400);
+        }
     }
 }

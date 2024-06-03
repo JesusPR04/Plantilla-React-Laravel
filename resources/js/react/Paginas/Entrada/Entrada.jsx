@@ -1,6 +1,6 @@
 // src/components/Entradas.jsx
 import React, { useEffect, useState } from "react";
-import { getEntradas } from "../../api/requests";
+import { cancelarEntrada, getEntradas } from "../../api/requests";
 import eventodefecto from "../../assets/eventodefecto.png";
 
 const BASE_URL = "http://localhost:";
@@ -31,6 +31,12 @@ const Entrada = () => {
         fetchEntradas();
     }, []);
 
+    const cancelar = (id) =>{
+        cancelarEntrada(id)
+        .then(respuesta => console.log(respuesta))
+        .catch(error => console.log(error))
+
+    }
     if (loading) {
         return (
             <div className="min-h-[calc(100vh-436px)] text-center mt-10 text-colorFuente text-2xl font-bold">
@@ -111,6 +117,7 @@ const Entrada = () => {
                                 <button
                                     className="bg-red-500 hover hover:bg-red-700 text-white 
                                     font-bold py-2 px-4 rounded mt-4 flex gap-3"
+                                    onClick={() => cancelar(entrada.idEvento)}
                                 >
                                     Cancelar
                                     <svg

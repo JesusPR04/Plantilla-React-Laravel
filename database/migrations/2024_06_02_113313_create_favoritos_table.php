@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('idUsuario');
             $table->unsignedBigInteger('idEvento');
-            $table->softDeletes();
             $table->timestamps();
             $table->foreign('idUsuario')->references('id')->on('usuarios');
             $table->foreign('idEvento')->references('id')->on('eventos');

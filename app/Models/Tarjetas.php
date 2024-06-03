@@ -26,6 +26,11 @@ class Tarjetas extends Model
         'cvv',
         'idUsuario'
     ];
+
+    protected $hidden = [
+        'updated_at',
+        'created_at'
+    ];
     
     // Sacar el usuario al cual le pertenece la tarjeta
 

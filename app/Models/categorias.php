@@ -15,6 +15,10 @@ class Categorias extends Model
         'nombre'
     ];
 
+    protected $hidden = [
+        'updated_at',
+        'created_at'
+    ];
     // Sacar todos los eventos que haya en la categoria
     public function eventos(){
         return $this->hasMany(Eventos::class);
