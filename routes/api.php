@@ -61,6 +61,11 @@ Route::get('/cancelarEntrada/{id}', [EntradaController::class, 'cancelarEntrada'
 Route::middleware('auth:sanctum')->get('/entradas', function (Request $request) {
     $user = $request->user();
     $entradas = Entradas::where('idUsuario', $user->id)->with('evento')->get();
+    foreach ($entradas as $entrada) {
+        $evento = $entrada->evento;
+        $imagenes = Eventos::with('imagenes')->find($evento->id);
+        $entrada->evento->imagenes = $imagenes->imagenes;
+    }  
     return response()->json($entradas);
 });
 
@@ -70,7 +75,7 @@ Route::post('/organizador', [OrganizadorController::class, 'realizarPeticion'])-
 Route::get('/organizador', [OrganizadorController::class, 'index'])->middleware('auth:sanctum'); //Comprueba si ya hay una petición de organizador
 Route::middleware('auth:sanctum')->get('/miseventos', function (Request $request) {
     $user = $request->user();
-    $eventos = Eventos::where('idOrganizador', $user->id)->get();
+    $eventos = Eventos::with(['imagenes', 'ciudad'])->where('idOrganizador', $user->id)->get();
     return response()->json($eventos);
 });
 

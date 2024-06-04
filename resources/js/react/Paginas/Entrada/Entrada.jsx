@@ -123,7 +123,7 @@ const Entrada = () => {
                                         alt={evento.nombre}
                                         className="object-cover w-full h-60 group-hover:scale-105 transition-transform"
                                         height={400}
-                                        src={eventodefecto}
+                                        src={evento.imagenes.length !== 0 ? `../../../../../public/${evento.imagenes[0].ruta}` : eventodefecto}
                                         style={{
                                             aspectRatio: "600/400",
                                             objectFit: "cover",
@@ -208,8 +208,8 @@ const Entrada = () => {
                             <div className="mb-4">
                                 <img
                                     src={
-                                        entrada.evento.ruta
-                                            ? `${BASE_URL}${entrada.evento.ruta}`
+                                        entrada.evento.imagenes.length !== 0 ? 
+                                            `../../../../../public/${entrada.evento.imagenes[0].ruta}` 
                                             : eventodefecto
                                     }
                                     alt={entrada.evento.nombre}
