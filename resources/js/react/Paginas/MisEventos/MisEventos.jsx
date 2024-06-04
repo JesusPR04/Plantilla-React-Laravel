@@ -6,7 +6,7 @@ import { CiLocationOn } from "react-icons/ci";
 import { BsPeople } from "react-icons/bs";
 import { RiPriceTag3Line } from "react-icons/ri";
 import { getMisEventos } from "../../api/requests";
-import img from '../../assets/aQueEsperas.jpg';
+import img from '../../assets/misEventos.jpg';
 
 const MisEventos = () => {
     const [eventos, setEventos] = useState([])
