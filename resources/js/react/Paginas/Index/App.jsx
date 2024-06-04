@@ -191,7 +191,6 @@ function App() {
     if (token) {
         useEffect(() => {
             const fetchEventos = async () => {
-                console.log({ user });
                 try {
                     const response = await fetch(
                         `http://localhost/api/getEventos?ciudad=` +

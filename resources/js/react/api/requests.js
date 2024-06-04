@@ -36,11 +36,7 @@ export const register = async (name, surname, email, city, telephone, password) 
   try {
     const response = await fetch(url, options)
     const data = response.json()
-    if (data.status) {
-      return data;
-    } else {
-      return data;
-    }
+    return data;
   } catch (error) {
     console.log(error)
   }
@@ -51,11 +47,7 @@ export const getCiudades = async () => {
   try {
     const response = await fetch(url)
     const data = response.json()
-    if (data.status) {
-      return data;
-    } else {
-      return data;
-    }
+    return data;
   } catch (error) {
     console.log(error)
   }
@@ -66,11 +58,7 @@ export const getGenrers = async () => {
   try {
     const response = await fetch(url)
     const data = response.json()
-    if (data.status) {
-      return data;
-    } else {
-      return data;
-    }
+    return data;
   } catch (error) {
     console.log(error)
   }
@@ -81,12 +69,7 @@ export const getTotalEvents = async () => {
   try {
     const response = await fetch(url)
     const data = response.json()
-    if (data.status) {
-      console.log(data)
-      return data
-    } else {
-      return data
-    }
+    return data
   } catch (error) {
     console.log(error)
   }
@@ -97,12 +80,7 @@ export const getTotalOrganizers = async () => {
   try {
     const response = await fetch(url)
     const data = response.json()
-    if (data.status) {
-      console.log(data)
-      return data
-    } else {
-      return data
-    }
+    return data
   } catch (error) {
     console.log(error)
   }
@@ -122,10 +100,7 @@ export const organizador = async (formData) => {
   try {
     const response = await fetch(url, options)
     const data = await response.json()
-    console.log(data);
-    if (data.status) {
-      return data;
-    }
+    return data;
   } catch (error) {
     console.log(error)
   }
