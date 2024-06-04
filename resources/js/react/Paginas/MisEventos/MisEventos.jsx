@@ -6,6 +6,7 @@ import { CiLocationOn } from "react-icons/ci";
 import { BsPeople } from "react-icons/bs";
 import { RiPriceTag3Line } from "react-icons/ri";
 import { getMisEventos } from "../../api/requests";
+import img from '../../assets/aQueEsperas.jpg';
 
 const MisEventos = () => {
     const [eventos, setEventos] = useState([])
@@ -34,26 +35,28 @@ const MisEventos = () => {
                     <span className="text-blue-500 uppercase">EVENTO</span>
                 </p>
                 <p className="px-14 sm:px-0 pb-2 pt-6 font-semibold text-colorFuente text-center">
-                    Recibirá noticias de nosotros cuando procesemos su solicitud
+                    No esperes más y da a conocer tus <span className="text-blue-500 uppercase">EVENTOS</span>
                 </p>
                 <p className="px-14 sm:px-0 pb-2 pt-2 font-semibold text-colorFuente text-center">
-                    La información acerca de su petición será enviada por{" "}
-                    <span className="text-blue-500 uppercase font-bold">
-                        correo electrónico
-                    </span>
+                    Si tienes algún problema no dudes en{" "}
+                    <Link to='/ayuda' className="text-blue-500 hover:underline cursor-pointer font-bold">
+                        contactar
+                    </Link> con nosotros
                 </p>
                 <div className="flex justify-center pt-6">
                     <img
-                        src={""}
-                        alt="Revisión"
+                        src={img}
+                        alt="Promociona tu evento"
                         className="mb-4 rounded-lg shadow-lg w-96 h-52"
                     />
                 </div>
                 <div className="flex justify-center items-center pt-6">
-                    {/* <ClipLoader color={"#3B82F6"} loading={true} size={40} /> */}
-                    <p className="text-blue-500 font-bold ml-4">
-                        Estamos revisando su solicitud
-                    </p>
+                    <Link
+                        to='/crearEvento'
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        Promociona tu Evento
+                    </Link>
                 </div>
             </div>
         )
