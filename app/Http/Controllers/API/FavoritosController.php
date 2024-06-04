@@ -58,7 +58,7 @@ class FavoritosController extends Controller
         $favoritos = Favoritos::where('idUsuario', $request->user()->id)->get();
 
         foreach ($favoritos as $favorito) {
-            $evento = Eventos::where('id', $favorito->idEvento)->first();
+            $evento = Eventos::where('id', $favorito->idEvento)->with('imagenes')->first();
             array_push($eventos, $evento);
         }
         return response()->json([
