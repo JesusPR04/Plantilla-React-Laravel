@@ -35,10 +35,13 @@ const Favoritos = () => {
 
     // Si hay eventos favoritos, muestra la lista de eventos
     return (
-        <section className="bg-gray-100 min-h-[calc(100vh-436px)] py-12 md:py-16 lg:py-20">
-            <h1 className="text-3xl md:text-4xl font-bold text-colorFuente mb-6 text-center uppercase">
-                    Tus eventos<span className="text-blue-500">Favoritos</span>
-                </h1>
+        <section className="bg-gray-100 text-center min-h-[calc(100vh-436px)] py-12">
+            <p className='text-3xl sm:text-4xl pt-3 font-bold tracking-tight text-colorFuente uppercase'>
+                TUS EVENTOS <span className='text-blue-500 uppercase'>FAVORITOS</span>
+            </p>
+            <p className='px-14 sm:px-0 pt-6 pb-6 font-semibold text-colorFuente text-center'>
+                ¡ Aquí podrás encontrar todos tus eventos favoritos cuando quieras !
+            </p>
             <div className="grid grid-cols-1 px-4 py-10 sm:px-20 pt-0 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {favoritos.map((evento) => (
                     <div key={evento.id} className="relative group overflow-hidden rounded-lg">

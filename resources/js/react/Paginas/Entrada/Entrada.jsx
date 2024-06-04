@@ -96,11 +96,11 @@ const Entrada = () => {
 
     if (entradas.length === 0) {
         return (
-            <div className='text-center min-h-[calc(100vh-436px)]'>
-                <p className='text-3xl sm:text-4xl pt-3 font-bold tracking-tight text-colorFuente uppercase'>
+            <div className='bg-gray-100 text-center min-h-[calc(100vh-436px)] py-12'>
+                <p className='text-3xl sm:text-4xl font-bold tracking-tight text-colorFuente uppercase'>
                     NO TIENE <span className='text-blue-500 uppercase'>ENTRADAS</span>
                 </p>
-                <p className='px-14 sm:px-0 pb-2 pt-6 font-semibold text-colorFuente text-center'>
+                <p className='px-14 sm:px-0 pt-6 pb-2 font-semibold text-colorFuente text-center'>
                     Para solucionar esto le dejamos una serie de eventos que pueden interesarle
                 </p>
                 <article className="pb-14" id="eventosTuCiudad">
