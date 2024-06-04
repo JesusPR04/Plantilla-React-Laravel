@@ -5,8 +5,9 @@ import { fetchUserData } from "../api/requests";
 
 function Header() {
     const [user, setUser] = useState({})
-    const [openMenu, setOpenMenu] = useState(false);
-    const token = localStorage.getItem('user-token');
+    const [openMenu, setOpenMenu] = useState(false)
+    const [nombre, setNombre] = useState({nombre:''})
+    const token = localStorage.getItem('user-token')
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -14,6 +15,13 @@ function Header() {
             fetchUserData().then(data => setUser(data))
         }
     }, [token])
+
+    const buscarPorNombre = (e) =>{
+        setNombre({
+            ...nombre, 
+            nombre: e.target.value
+        })
+    }
 
     return (
         <>
@@ -61,6 +69,7 @@ function Header() {
                             p-2 ps-10 text-sm text-colorFuente border border-[#eeedf2] 
                             rounded-2xl bg-[#f8f7fa] focus:ring-blue-500 focus:border-blue-500"
                                     placeholder="Buscar eventos"
+                                    onChange={(e) => buscarPorNombre(e)}
                                 />
                             </div>
 
