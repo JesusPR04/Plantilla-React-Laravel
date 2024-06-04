@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Ayuda = () => {
+
+    const token = localStorage.getItem('user-token')
+    console.log(token);
     return (
         <div className="bg-gray-100 text-colorFuente rounded shadow p-3">
             <div className="card flex-col items-center justify-center max-w-5xl mx-auto py-10">
@@ -16,7 +19,7 @@ const Ayuda = () => {
                         En nuestra empresa, la calidad y la excelencia son nuestros pilares fundamentales. Trabajamos con los mejores proveedores y utilizamos las últimas tecnologías para garantizar que cada evento sea un éxito. Además, nos enorgullece ofrecer un servicio al cliente excepcional, brindando atención personalizada y soluciones rápidas a cualquier consulta o solicitud.
                     </p>
                     <p className="text-colorFuente mb-4">
-                        Si estás buscando una empresa de eventos confiable y creativa, no busques más. Permítenos hacer realidad tus sueños y crear momentos inolvidables juntos. Contáctanos hoy mismo para comenzar a planificar tu próximo evento o <Link to="/register" className='hover:text-blue-700 text-blue-500'>regístrate</Link> y empieza a crear eventos desde ya¡.
+                        Si estás buscando una empresa de eventos confiable y creativa, no busques más. Permítenos hacer realidad tus sueños y crear momentos inolvidables juntos. ¡Contáctanos hoy mismo para comenzar a planificar tu próximo evento <Link className={`${token && 'hidden'} text-blue-500 hover:text-blue-700 font-semibold`}><span className='text-colorFuente font-normal'>o</span> registrate</Link> y empieza a crear eventos desde ya!
                     </p>
                 </div>
                 <div>

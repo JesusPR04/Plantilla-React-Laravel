@@ -307,7 +307,7 @@ function CrearEvento() {
                         type="number"
                         name="precio"
                         id="precio"
-                        //min={0}
+                        min={0}
                         style={{borderColor: nombre.estado ? 'red': '#D3D3D3'}}
                         className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
                                   focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
