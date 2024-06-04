@@ -73,7 +73,7 @@ class EventoController extends Controller
         if (!is_null($request->input('fechaDesde'))) {
             $query->where('fecha', '>=', $request->input('fechaDesde'));
         }
-
+        //$users->where('name', 'like', '%' . $name . '%');
         if (!is_null($request->input('fechaHasta'))) {
             $query->where('fecha', '<=', $request->input('fechaHasta'));
         }
@@ -105,6 +105,10 @@ class EventoController extends Controller
 
         if (!is_null($request->input('ciudad'))) {
             $query->where('idCiudad', $request->input('ciudad'));
+        }
+
+        if (!is_null($request->input('nombre'))) {
+            $query->where('nombre', 'like', '%' . $request->input('nombre') . '%');
         }
 
         $query->orderBy('fecha', 'ASC');
