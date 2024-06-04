@@ -24,16 +24,16 @@ function Footer() {
                         <h2 className="mb-6 text-sm font-semibold uppercase text-white">Buscar eventos</h2>
                         <ul className="text-gray-400 font-medium">
                             <li className="mb-4">
-                                <Link to="" className="hover:underline">Que hacer en Córdoba</Link>
+                                <Link to="/buscadoreventos/null/3" className="hover:underline">Que hacer en Córdoba</Link>
                             </li>
                             <li className="mb-4">
-                                <Link to="" className="hover:underline">Que hacer en Madrid</Link>
+                                <Link to="/buscadoreventos/null/45" className="hover:underline">Que hacer en Madrid</Link>
                             </li>
                             <li className="mb-4">
-                                <Link to="" className="hover:underline">Que hacer en Barcelona</Link>
+                                <Link to="/buscadoreventos/null/31" className="hover:underline">Que hacer en Barcelona</Link>
                             </li>
                             <li className="mb-4">
-                                <Link to="" className="hover:underline">Que hacer en Sevilla</Link>
+                                <Link to="/buscadoreventos/null/8" className="hover:underline">Que hacer en Sevilla</Link>
                             </li>
                         </ul>
                     </div>

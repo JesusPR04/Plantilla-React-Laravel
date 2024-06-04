@@ -238,42 +238,50 @@ function App() {
                         <PrincipalFilter
                             icono={musicIco}
                             titulo={"Música"}
-                            ruta={"buscadoreventos/1"}
+                            ruta={"buscadoreventos"}
+                            categoria={1}
                         />
                         <PrincipalFilter
                             icono={partyIco}
                             titulo={"Vida nocturna"}
-                            ruta={"buscadoreventos/2"}
+                            ruta={"buscadoreventos"}
+                            categoria={2}
                         />
                         <PrincipalFilter
                             icono={performingArtsIco}
                             titulo={"Artes escénicas y visuales"}
-                            ruta={"buscadoreventos/3"}
+                            ruta={"buscadoreventos"}
+                            categoria={3}
                         />
                         <PrincipalFilter
                             icono={holidaysIco}
                             titulo={"Vacaciones"}
-                            ruta={"buscadoreventos/4"}
+                            ruta={"buscadoreventos"}
+                            categoria={4}
                         />
                         <PrincipalFilter
                             icono={healthIco}
                             titulo={"Salud"}
-                            ruta={"buscadoreventos/5"}
+                            ruta={"buscadoreventos"}
+                            categoria={5}
                         />
                         <PrincipalFilter
                             icono={gameIco}
                             titulo={"Aficiones"}
-                            ruta={"buscadoreventos/6"}
+                            ruta={"buscadoreventos"}
+                            categoria={6}
                         />
                         <PrincipalFilter
                             icono={businessIco}
                             titulo={"Negocios"}
-                            ruta={"buscadoreventos/7"}
+                            ruta={"buscadoreventos"}
+                            categoria={7}
                         />
                         <PrincipalFilter
                             icono={foodIco}
                             titulo={"Gastronomía"}
-                            ruta={"buscadoreventos/8"}
+                            ruta={"buscadoreventos"}
+                            categoria={8}
                         />
                     </div>
                 </article>
