@@ -61,11 +61,12 @@ const MisEventos = () => {
             </div>
         )
     }
+
     return (
         <section className="bg-gray-100 min-h-[calc(100vh-436px)] py-12 md:py-16 lg:py-20">
             <h1 className="text-3xl md:text-4xl font-bold text-colorFuente mb-6 text-center uppercase">
                     Tus <span className="text-blue-500">eventos</span>
-                </h1>
+            </h1>
             <div className="grid grid-cols-1 px-4 py-10 sm:px-20 pt-0 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {eventos.map((evento) => (
                     <div key={evento.id} className="relative group overflow-hidden rounded-lg">
@@ -75,7 +76,7 @@ const MisEventos = () => {
                         <div className="relative">
                             <img
                                 className="object-cover w-full h-60 group-hover:scale-105 transition-transform"
-                                src={evento.imagen || eventodefecto}
+                                src={evento.imagenes.length !== 0 ? `../../../../../public/${evento.imagenes[0].ruta}` : eventodefecto}
                                 style={{ aspectRatio: "600/400", objectFit: "cover" }}
                                 width={600}
                                 height={400}

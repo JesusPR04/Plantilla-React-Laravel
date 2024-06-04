@@ -4,22 +4,14 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import '../Css/Slider.css';
 
-import img1 from '../assets/concierto.jpg';
-import img2 from '../assets/imgPeticion.jpg';
-import img3 from '../assets/sectionImg.jpg';
-
-const ImageSlider = () => {
+const ImageSlider = ({eventoImagenes}) => {
     const [nav1, setNav1] = useState(null);
     const [nav2, setNav2] = useState(null);
     const [nav3, setNav3] = useState(null); // For mobile slider
-
-    const images = [
-        img1,
-        img2,
-        img3,
-    ];
+    const [countImages, setCountImages] = useState(0);
 
     useEffect(() => {
+        setCountImages(eventoImagenes.length);
         setNav1(nav1);
         setNav2(nav2);
         setNav3(nav3); // For mobile slider
@@ -35,23 +27,23 @@ const ImageSlider = () => {
                     arrows={false}
                     className="main-slider"
                 >
-                    {images.map((src, index) => (
+                    {eventoImagenes.map((imagen, index) => (
                         <div key={index}>
-                            <img src={src} alt={`Slide ${index}`} />
+                            <img src={`../../../../public/${imagen.ruta}`} alt={`Slide ${index}`} />
                         </div>
                     ))}
                 </Slider>
                 <Slider
                     asNavFor={nav1}
                     ref={slider => (setNav2(slider))}
-                    slidesToShow={3}
+                    slidesToShow={countImages}
                     swipeToSlide={true}
                     focusOnSelect={true}
                     className="thumbnail-slider"
                 >
-                    {images.map((src, index) => (
+                    {eventoImagenes.map((imagen, index) => (
                         <div key={index}>
-                            <img src={src} alt={`Thumbnail ${index}`} />
+                            <img src={`../../../../public/${imagen.ruta}`} alt={`Thumbnail ${index}`} />
                         </div>
                     ))}
                 </Slider>
@@ -65,9 +57,9 @@ const ImageSlider = () => {
                     className="main-slider"
                     dots={true}
                 >
-                    {images.map((src, index) => (
+                    {eventoImagenes.map((imagen, index) => (
                         <div key={index}>
-                            <img src={src} alt={`Slide ${index}`} />
+                            <img src={`../../../../public/${imagen.ruta}`} alt={`Slide ${index}`} />
                         </div>
                     ))}
                 </Slider>

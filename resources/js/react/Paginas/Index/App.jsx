@@ -308,7 +308,7 @@ function App() {
                                         alt={evento.nombre}
                                         className="object-cover w-full h-60 group-hover:scale-105 transition-transform"
                                         height={400}
-                                        src={eventodefecto}
+                                        src={evento.imagenes.length !== 0 ? `../../../../../public/${evento.imagenes[0].ruta}` : eventodefecto}
                                         style={{
                                             aspectRatio: "600/400",
                                             objectFit: "cover",
