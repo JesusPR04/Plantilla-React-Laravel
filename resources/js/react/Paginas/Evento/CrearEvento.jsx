@@ -28,14 +28,14 @@ function CrearEvento() {
         hora: '',
         fecha: '',
         localizacion: '',
-        idOrganizador: 0,
-        idCiudad: 0,
-        aforoTotal: 0,
-        aforoDisponible: 0,
-        idCategoria: 0,
+        idOrganizador: '',
+        idCiudad: '',
+        aforoTotal: '',
+        aforoDisponible: '',
+        idCategoria: '',
         descripcion: '',
-        precio: 0,
-        imagenes: [],
+        precio: '',
+        imagenes: '',
     });
 
     useEffect(() => {
@@ -87,15 +87,39 @@ function CrearEvento() {
 
         crearEvento(data)
             .then(response => {
-                toast.success('Evento creado con éxito');
-                navigate('/misEventos')
+                //toast.success('Evento creado con éxito');
+                console.log(formData);
+                console.log(response);
+                comprobarEstado(response)
+                //navigate('/misEventos')
             })
             .catch(err => {
                 toast.error('Error al crear el evento');
                 console.error(err);
             });
     }
-
+    const [nombre, setNombre] = useState({ estado: false })
+    const [hora, setHora] = useState({ estado: false })
+    const [fecha, setFecha] = useState({ estado: false })
+    const [localizacion, setLocalizacion] = useState({ estado: false })
+    const [ciudad1, setCiudad] = useState({ estado: false })
+    const [categoria, setCategoria] = useState({ estado: false })
+    const [aforoTotal, setAforoTotal] = useState({ estado: false })
+    const [aforoDisponible, setAforoDisponible] = useState({ estado: false })
+    const [precio, setPrecio] = useState({ estado: false })
+    const [descripcion, setDescripcion] = useState({ estado: false })
+    const comprobarEstado = (respuesta) => {
+        if (respuesta?.nombre) { setNombre({...nombre, estado: true}) }else{setNombre({...nombre, estado: false})}
+        if (respuesta?.hora) { setHora({...hora, estado: true}) }else{setHora({...nombre, estado: false})}
+        if (respuesta?.fecha) { setLocalizacion({...fecha, estado: true}) }else{setLocalizacion({...nombre, estado: false})}
+        if (respuesta?.localizacion) { setFecha({...localizacion, estado: true}) }else{setFecha({...nombre, estado: false})}
+        if (respuesta?.idCiudad) { setCiudad({...ciudad1, estado: true}) }else{setCiudad({...nombre, estado: false})}
+        if (respuesta?.idCategoria) { setCategoria({...categoria, estado: true}) }else{setCategoria({...nombre, estado: false})}
+        if (respuesta?.aforoTotal) { setAforoTotal({...aforoTotal, estado: true}) }else{setAforoTotal({...nombre, estado: false})}
+        if (respuesta?.aforoDisponible) { setAforoDisponible({...aforoDisponible, estado: true}) }else{setAforoDisponible({...nombre, estado: false})}
+        if (respuesta?.precio) { setPrecio({...precio, estado: true}) }else{setPrecio({...nombre, estado: false})}
+        if (respuesta?.descripcion) { setDescripcion({...descripcion, estado: true}) }else{setDescripcion({...nombre, estado: false})}
+    }
     return (
         <main className='min-h-[calc(100vh-436px)] bg-gray-100'>
             <ToastContainer />
@@ -124,6 +148,7 @@ function CrearEvento() {
                         type="text"
                         name="nombre"
                         id="nombre"
+                        style={{borderColor: nombre.estado ? 'red': '#D3D3D3'}}
                         className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
                                   focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         placeholder="Nombre del evento"
@@ -140,9 +165,10 @@ function CrearEvento() {
                         Hora
                     </label>
                     <input
-                        type="text"
+                        type="time"
                         name="hora"
                         id="hora"
+                        style={{borderColor: hora.estado ? 'red': '#D3D3D3'}}
                         className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
                                   focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         placeholder="Hora del evento"
@@ -159,6 +185,7 @@ function CrearEvento() {
                         Fecha
                     </label>
                     <input
+                    style={{borderColor: fecha.estado ? 'red': '#D3D3D3'}}
                         className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
                         focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         id="fecha"
@@ -179,6 +206,7 @@ function CrearEvento() {
                         type="text"
                         name="localizacion"
                         id="localizacion"
+                        style={{borderColor: localizacion.estado ? 'red': '#D3D3D3'}}
                         className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
                                   focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         placeholder="Localización del evento"
@@ -206,7 +234,7 @@ function CrearEvento() {
                         classNames={{
                             control: () => `!text-sm !bg-gray-50 !border  !text-colorFuente 
                                         !sm:text-sm !rounded-lg !focus:ring-blue-500 
-                                        !focus:border-blue-500 !w-full !p-0.5`,
+                                        !focus:border-blue-500 !w-full !p-0.5 ${ciudad1.estado ? "!border-red-500" : "!border-gray-300"}`,
                             input: (state) => state.isFocused ? "!ring-0 !shadow-none" : "",
                             menuList: () => '!bg-gray-50'
                         }}
@@ -228,7 +256,7 @@ function CrearEvento() {
                         classNames={{
                             control: () => `!text-sm !bg-gray-50 !border  !text-colorFuente 
                                         !sm:text-sm !rounded-lg !focus:ring-blue-500 
-                                        !focus:border-blue-500 !w-full !p-0.5`,
+                                        !focus:border-blue-500 !w-full !p-0.5 ${categoria.estado ? "!border-red-500" : "!border-gray-300"}`,
                             input: (state) => state.isFocused ? "!ring-0 !shadow-none" : "",
                             menuList: () => '!bg-gray-50'
                         }}
@@ -279,6 +307,8 @@ function CrearEvento() {
                         type="number"
                         name="precio"
                         id="precio"
+                        //min={0}
+                        style={{borderColor: nombre.estado ? 'red': '#D3D3D3'}}
                         className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
                                   focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         placeholder="Precio del evento"
@@ -292,12 +322,13 @@ function CrearEvento() {
                         htmlFor="imagenes"
                         className="block mb-2 text-sm font-medium text-colorFuente"
                     >
-                        Imágenes
+                        Imágenes <span className='text-red-500 font-bold'>*</span>
                     </label>
                     <input
                         type="file"
                         name="imagenes"
                         id="imagenes"
+                        style={{borderColor: nombre.estado ? 'red': '#D3D3D3'}}
                         className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
                         focus:ring-blue-500 focus:border-blue-500 block w-full"
                         onChange={handleFileChange}
@@ -314,6 +345,7 @@ function CrearEvento() {
                     </label>
                     <textarea
                         name='descripcion' id='descripcion' cols={50} rows={5}
+                        style={{borderColor: nombre.estado ? 'red': '#D3D3D3'}}
                         placeholder='Aporte información esenciál para su evento...'
                         className='bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
                         focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
@@ -321,8 +353,10 @@ function CrearEvento() {
                         onChange={handleChange}
                     />
                 </div>
-                <div className='col-span-1'></div>
-                <div className='col-span-1 flex justify-end'>
+                <div className='col-span-2 sm:col-span-1'>
+                    <p className='font-semibold'><span className='text-red-500 font-bold'>*</span> La primera foto será la elegida como portada</p>
+                </div>
+                <div className='col-span-2 sm:col-span-1 flex justify-end'>
                     <input
                         type="submit" value="Crear Evento"
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer"

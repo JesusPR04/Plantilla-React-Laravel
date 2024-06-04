@@ -138,14 +138,16 @@ class EventoController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nombre' => 'required',
-            'precio' => 'required',
-            'hora' => 'required',
-            'fecha' => 'required',
-            'aforoTotal' => 'required',
-            'aforoDisponible' => 'required',
-            'descripcion' => 'required',
-            'idOrganizador' => 'required',
-            'idCiudad' => 'required',
+            'precio' => 'required|integer|min:0',
+            'hora' => 'required|regex:/\d{2}\:\d{2}/',
+            'fecha' => 'required|regex:/\d{4}\-\d{2}\-\d{2}/',
+            'aforoTotal' => 'required|integer|min:0',
+            'aforoDisponible' => 'required|integer|min:0',
+            'descripcion' => 'required|string',
+            'idOrganizador' => 'required|integer',
+            'idCiudad' => 'required|integer',
+            'idCategoria' => 'required|integer',
+            'localizacion' => 'required|string',
             'imagenes.*' => 'required|image|mimes:jpeg,png,jpg,gif' // Valida cada imagen individualmente
         ]);
 

@@ -35,7 +35,7 @@ const MisEventos = () => {
                     <span className="text-blue-500 uppercase">EVENTO</span>
                 </p>
                 <p className="px-14 sm:px-0 pb-2 pt-6 font-semibold text-colorFuente text-center">
-                    No esperes más y da a conocer tus <span className="text-blue-500 uppercase">EVENTOS</span>
+                    No esperes más y da a conocer tus <span className="text-blue-500 uppercase font-bold">EVENTOS</span>
                 </p>
                 <p className="px-14 sm:px-0 pb-2 pt-2 font-semibold text-colorFuente text-center">
                     Si tienes algún problema no dudes en{" "}
