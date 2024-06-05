@@ -230,7 +230,7 @@ export const getEventoById = async (id) => {
   }
 };
 
-export const comprobarAcceso = async () => {
+export const comprobarAccesoAdmin = async () => {
   const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
 
   if (!token) {
@@ -510,5 +510,53 @@ export const getTarjetas = async () => {
     return data
   } catch (error) {
     throw error
+  }
+}
+export const eliminarEvento = async (id) => {
+  const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
+
+  if (!token) {
+    throw new Error('No token found');
+  }
+
+  try {
+    const url = `http://localhost/api/deleteEvent/${id}`
+    const headers = {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+    }
+    const response = await fetch(url, headers)
+    const data = await response.json();
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+export const comprobarAccesoEventos = async () => {
+  const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
+
+  if (!token) {
+    throw new Error('No token found');
+  }
+
+  try {
+    const url = 'http://localhost/api/eventos'
+    const headers = {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+    }
+    const response = await fetch(url, headers);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    throw error;
   }
 }

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import eventodefecto from "../../assets/eventodefecto.png";
 import { FaCalendarAlt, FaClock } from "react-icons/fa";
 import { CiLocationOn } from "react-icons/ci";
 import { BsPeople } from "react-icons/bs";
 import { RiPriceTag3Line } from "react-icons/ri";
-import { fetchUserData, getMisFavoritos } from '../../api/requests';
+import { comprobarAccesoEventos, fetchUserData, getMisFavoritos } from '../../api/requests';
+import { ToastContainer, toast } from 'react-toastify';
 
 const Favoritos = () => {
     const [favoritos, setFavoritos] = useState([]);
@@ -13,18 +14,38 @@ const Favoritos = () => {
     const [ciudad, setCiudad] = useState(0)
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState(null);
+    const [permiso, setPermiso] = useState(false)
+    const navigate = useNavigate()
 
     useEffect(() => {
-        getMisFavoritos()
-            .then(respuesta => {
-                setFavoritos(respuesta.favoritos);
-                setLoading(false); // Cambia el estado de carga a falso cuando se completa la obtención de los favoritos
+        comprobarAccesoEventos()
+            .then((respuesta) => {
+                if (!respuesta.status) {
+                    toast.error(respuesta.message)
+                    setTimeout(() => { navigate('/') }, 2000)
+                } else {
+                    setPermiso(true)
+                }
             })
             .catch(error => {
-                console.error("Error obteniendo favoritos:", error);
-                setLoading(false); // Cambia el estado de carga a falso en caso de error
-            });
-    }, []);
+                toast.error(error.message)
+                setTimeout(() => { navigate('/') }, 2000)
+            })
+    }, [])
+
+    useEffect(() => {
+        if (permiso) {
+            getMisFavoritos()
+                .then(respuesta => {
+                    setFavoritos(respuesta.favoritos);
+                    setLoading(false); // Cambia el estado de carga a falso cuando se completa la obtención de los favoritos
+                })
+                .catch(error => {
+                    console.error("Error obteniendo favoritos:", error);
+                    setLoading(false); // Cambia el estado de carga a falso en caso de error
+                });
+        }
+    }, [permiso]);
 
     useEffect(() => {
         fetchUserData()
@@ -51,8 +72,11 @@ const Favoritos = () => {
         fetchEventos();
     }, [ciudad]);
     // Muestra un indicador de carga si loading es verdadero
-    if (loading) {
-        return <div className='min-h-[calc(100vh-436px)] text-xl sm:text-4xl pt-12 font-bold tracking-tight text-colorFuente uppercase text-center'>Cargando...</div>;
+    if (loading && !permiso) {
+        return <div className='min-h-[calc(100vh-436px)] text-xl sm:text-4xl pt-12 font-bold tracking-tight text-colorFuente uppercase text-center'>
+            <ToastContainer className='text-base normal-case text-black text-start'/>
+            Cargando...
+        </div>;
     }
 
     // Si no hay eventos favoritos, muestra un mensaje indicando que no hay favoritos

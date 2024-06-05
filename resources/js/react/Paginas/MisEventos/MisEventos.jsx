@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import eventodefecto from "../../assets/eventodefecto.png";
 import { FaCalendarAlt, FaClock } from "react-icons/fa";
 import { CiLocationOn } from "react-icons/ci";
 import { BsPeople } from "react-icons/bs";
 import { RiPriceTag3Line } from "react-icons/ri";
-import { getMisEventos } from "../../api/requests";
+import { comprobarAccesoEventos, eliminarEvento, getMisEventos } from "../../api/requests";
 import img from '../../assets/misEventos.jpg';
 import { fetchUserData } from "../../api/requests";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const MisEventos = () => {
     const token = localStorage.getItem('user-token');
     const [eventos, setEventos] = useState([])
+    const [permiso, setPermiso] = useState(false)
     const [loading, setLoading] = useState(true)
     const [user, setUser] = useState(null);
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (token) {
@@ -21,14 +25,44 @@ const MisEventos = () => {
         }
     }, [token]);
 
-    useEffect(() => {
-        getMisEventos().then((respuesta) => {
-            setEventos(respuesta)
-            setLoading(false)
+    useEffect(() => {    
+        comprobarAccesoEventos()
+        .then((respuesta) => {
+            if (!respuesta.status) {
+                toast.error(respuesta.message)
+                setTimeout(() => {navigate('/')}, 2000)
+            }else{
+                setPermiso(true)
+            }
+        })
+        .catch(error => {
+            toast.error(error.message)
+            setTimeout(() => {navigate('/')}, 2000)
         })
     }, [])
 
-    if (loading) {
+    useEffect(() => {
+        getMisEventos()
+        .then((respuesta) => {
+            setEventos(respuesta)
+            setLoading(false)
+        })
+    }, [permiso])
+
+    const borrarEvento = (id) => {
+        eliminarEvento(id)
+        .then(respuesta => comprobarRespuesta(respuesta))
+        .catch(error => toast.error(error))
+    }
+    const comprobarRespuesta = (respuesta) =>{
+        if (respuesta.status) {
+            toast.success(respuesta.message)
+            setTimeout(()=> {navigate(0)}, 2000)
+        }else{
+            toast.error(respuesta.message)
+        }
+    }
+    if (loading && !permiso) {
         return (
             <div className="min-h-[calc(100vh-436px)] text-center mt-10 text-colorFuente text-xl sm:text-4xl font-bold uppercase">
                 Cargando...
@@ -36,9 +70,10 @@ const MisEventos = () => {
         )
     }
 
-    if (eventos.length === 0) {
+    if (eventos.length === 0 && permiso) {
         return (
             <div className="text-center p-10 min-h-[calc(100vh-436px)]">
+                <ToastContainer />
                 <p className="text-3xl sm:text-4xl pt-3 font-bold tracking-tight text-colorFuente uppercase">
                     PROMOCIONA TU {" "}
                     <span className="text-blue-500 uppercase">EVENTO</span>
@@ -73,6 +108,7 @@ const MisEventos = () => {
 
     return (
         <section className="bg-gray-100 min-h-[calc(100vh-436px)] py-12">
+            <ToastContainer />
             <h1 className="text-3xl md:text-4xl font-bold text-colorFuente mb-6 text-center uppercase">
                     Tus <span className="text-blue-500">eventos</span>
             </h1>
@@ -126,12 +162,14 @@ const MisEventos = () => {
                                 </div>
                                 {user && user.id === evento.idOrganizador && (
                                     <div className="flex justify-end items-center gap-2">
-                                        <Link to="" className=" bg-blue-500 text-white font-semibold px-2 py-1 text-xs rounded-full inline-block z-20 cursor-pointer">
+                                        <Link to="" className=" bg-blue-500 text-white font-semibold px-2 py-1 text-xs rounded-full inline-block z-20 cursor-pointer hover:scale-105 duration-100">
                                             Editar
                                         </Link>
-                                        <Link className=" bg-red-500 text-white font-semibold px-2 py-1 text-xs rounded-full inline-block z-20 cursor-pointer">
+                                        <button onClick={()=> borrarEvento(evento.id)} 
+                                        className=" bg-red-500 text-white font-semibold px-2 py-1
+                                        text-xs rounded-full inline-block z-20 cursor-pointer hover:scale-105 duration-100">
                                             Eliminar
-                                        </Link>
+                                        </button>
                                     </div>
                                 )}
                             </div>

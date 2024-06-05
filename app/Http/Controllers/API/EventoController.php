@@ -12,6 +12,21 @@ use Illuminate\Validation\Rules\File;
 
 class EventoController extends Controller
 {
+    public function index(Request $request){
+        $user = $request->user();
+        if ($user->rol === 'Usuario') {
+            return response()->json([
+               'status' => false,
+               'message' => 'No tienes permisos para acceder a este recurso'
+            ], 403);
+        }else{
+            return response()->json([
+                'status' => true,
+                'message' => 'Acceso concedido a mis eventos'
+             ], 200);
+        }
+
+    }
     public function getEventos(Request $request)
     {
         /* $query = "SELECT e.* , i.ruta FROM eventos e
@@ -91,7 +106,7 @@ class EventoController extends Controller
             $query->where('aforoDisponible', $agotado);
         }
 
-        if (!is_null($request->input('categoria')) && !$request->input('categoria')=='null') {
+        if (!is_null($request->input('categoria')) && !$request->input('categoria') == 'null') {
             $query->where('idCategoria', $request->input('categoria'));
         }
 
@@ -156,7 +171,7 @@ class EventoController extends Controller
             'ciudad' => 'required|integer',
             'categoria' => 'required|integer',
             'localizacion' => 'required|string',
-            'imagenes.*' => ['required', File::image()->types(['jpeg', 'jpg','png', 'gif'])->max(15 * 1024)] // Valida cada imagen individualmente
+            'imagenes.*' => ['required', File::image()->types(['jpeg', 'jpg', 'png', 'gif'])->max(15 * 1024)] // Valida cada imagen individualmente
         ], $mensajes);
 
         if ($validator->fails()) {
@@ -206,7 +221,7 @@ class EventoController extends Controller
         } else {
             return response()->json([
                 'status' => false,
-               'message' => 'Error al crear el evento'
+                'message' => 'Error al crear el evento'
             ], 500);
         }
     }
@@ -285,23 +300,37 @@ class EventoController extends Controller
         return response()->json($evento);
     }
 
-    public function delete($id)
+    public function delete(Request $request, $id)
     {
         // Verificar si el ID es válido
         if (!is_numeric($id) || $id <= 0) {
-            return response()->json(["message" => "ID de evento no válido"], 400);
+            return response()->json([
+                'status' => false,
+                "message" => "ID de evento no válido"
+            ], 400);
         }
 
         // Buscar el evento a eliminar
-        $evento = Eventos::find($id);
+        $evento = Eventos::where('id', $id)->where('idOrganizador', $request->user()->id)->first();
 
         if (is_null($evento)) {
-            return response()->json(["message" => "Evento no encontrado"], 404);
+            return response()->json([
+                'status' => false,
+                "message" => "Evento no encontrado"
+            ], 404);
         }
 
         // Eliminar el evento
-        $evento->delete();
-
-        return response()->json(["message" => "Evento eliminado correctamente"], 200);
+        if ($evento->delete()) {
+            return response()->json([
+                'status' => true,
+                "message" => "Evento borrado correctamente"
+            ], 200);
+        }else{
+            return response()->json([
+                'status' => false,
+                "message" => "Error al borrar el evento"
+            ], 400);
+        }
     }
 }
