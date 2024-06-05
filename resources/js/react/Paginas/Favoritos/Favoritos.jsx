@@ -71,7 +71,7 @@ const Favoritos = () => {
                     {eventos.map((evento) => (
                         <div
                             key={evento.id}
-                            className="relative group overflow-hidden rounded-lg"
+                            className="relative group overflow-hidden rounded-lg shadow bg-gray-100"
                         >
                             <Link
                                 className="absolute inset-0 z-10"
@@ -97,7 +97,7 @@ const Favoritos = () => {
                                     </span>
                                 )}
                             </div>
-                            <div className="border p-4 rounded shadow bg-gray-100">
+                            <div className="p-4">
                                 <h3
                                     className="font-bold text-lg md:text-xl text-colorFuente 
                 uppercase transition-colors group-hover:text-blue-500 md:group-hover:text-2xl group-hover:text-xl"
@@ -169,7 +169,7 @@ const Favoritos = () => {
             </p>
             <div className="grid grid-cols-1 px-4 py-10 sm:px-20 pt-0 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {favoritos.map((evento) => (
-                    <div key={evento.id} className="relative group overflow-hidden rounded-lg">
+                    <div key={evento.id} className="relative group overflow-hidden rounded-lg shadow bg-gray-100">
                         <Link className="absolute inset-0 z-10" to={`/evento/${evento.id}`}>
                             <span className="sr-only">Ver evento</span>
                         </Link>
@@ -187,7 +187,7 @@ const Favoritos = () => {
                                 </span>
                             )}
                         </div>
-                        <div className="border p-4 rounded shadow bg-gray-100">
+                        <div className="p-4">
                             <h3 className="font-bold text-lg md:text-xl text-colorFuente uppercase transition-colors group-hover:text-blue-500 md:group-hover:text-2xl group-hover:text-xl">
                                 {evento.nombre}
                             </h3>

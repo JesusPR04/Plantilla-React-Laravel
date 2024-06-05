@@ -303,7 +303,7 @@ function App() {
                         {eventos.map((evento) => (
                             <div
                                 key={evento.id}
-                                className="relative group overflow-hidden rounded-lg"
+                                className="relative group overflow-hidden rounded-lg shadow bg-gray-100"
                             >
                                 <Link
                                     className="absolute inset-0 z-10"
@@ -329,7 +329,7 @@ function App() {
                                         </span>
                                     )}
                                 </div>
-                                <div className="border p-4 rounded shadow bg-gray-100">
+                                <div className="p-4">
                                     <h3
                                         className="font-bold text-lg md:text-xl text-colorFuente 
                         uppercase transition-colors group-hover:text-blue-500 md:group-hover:text-2xl group-hover:text-xl"
