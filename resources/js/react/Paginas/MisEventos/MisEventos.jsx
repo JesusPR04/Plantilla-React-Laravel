@@ -124,6 +124,16 @@ const MisEventos = () => {
                                     <RiPriceTag3Line className="w-4 h-4 text-blue-500" />
                                     <span className="text-colorFuente font-semibold">{evento.precio} €</span>
                                 </div>
+                                {user && user.id === evento.idOrganizador && (
+                                    <div className="flex justify-end items-center gap-2">
+                                        <Link to="" className=" bg-blue-500 text-white font-semibold px-2 py-1 text-xs rounded-full inline-block z-20 cursor-pointer">
+                                            Editar
+                                        </Link>
+                                        <Link className=" bg-red-500 text-white font-semibold px-2 py-1 text-xs rounded-full inline-block z-20 cursor-pointer">
+                                            Eliminar
+                                        </Link>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
