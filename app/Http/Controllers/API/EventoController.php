@@ -91,7 +91,7 @@ class EventoController extends Controller
             $query->where('aforoDisponible', $agotado);
         }
 
-        if (!is_null($request->input('categoria'))) {
+        if (!is_null($request->input('categoria')) && !$request->input('categoria')=='null') {
             $query->where('idCategoria', $request->input('categoria'));
         }
 

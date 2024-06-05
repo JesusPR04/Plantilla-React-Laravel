@@ -10,7 +10,7 @@ import { BsPeople } from "react-icons/bs";
 import { RiPriceTag3Line } from "react-icons/ri";
 
 const BuscadorEventos = () => {
-    const { categoria } = useParams();
+    const { categoria, ciudad } = useParams();
     const token = localStorage.getItem('user-token');
     const [user, setUser] = useState(null);
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -42,10 +42,11 @@ const BuscadorEventos = () => {
     useEffect(() => {
         const fetchEventos = async () => {
             try {
-                const filters = categoria ? { categoria } : {};
-                const queryString = new URLSearchParams(filters).toString();
-                const response = await fetch(`http://localhost/api/getEventos?${queryString}`);
-                const data = await response.json();
+                const filters = {};
+                if (categoria) filters.categoria = categoria;
+                if (ciudad) filters.ciudad = ciudad;
+
+                const data = await getEventos(filters);
                 setEventos(data);
             } catch (error) {
                 setError("Error fetching eventos");
@@ -55,8 +56,7 @@ const BuscadorEventos = () => {
         };
 
         fetchEventos();
-    }, [categoria]);
-
+    }, [categoria, ciudad]);
     if (loading) {
         return <div className='min-h-[calc(100vh-436px)] text-xl sm:text-4xl pt-12 font-bold tracking-tight text-colorFuente uppercase text-center'>Cargando...</div>;
     }
