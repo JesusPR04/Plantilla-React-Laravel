@@ -75,7 +75,7 @@ Route::post('/organizador', [OrganizadorController::class, 'realizarPeticion'])-
 Route::get('/organizador', [OrganizadorController::class, 'index'])->middleware('auth:sanctum'); //Comprueba si ya hay una petición de organizador
 Route::middleware('auth:sanctum')->get('/miseventos', function (Request $request) {
     $user = $request->user();
-    $eventos = Eventos::with(['imagenes', 'ciudad'])->where('idOrganizador', $user->id)->get();
+    $eventos = Eventos::with(['imagenes', 'ciudad', 'categoria'])->where('idOrganizador', $user->id)->get();
     return response()->json($eventos);
 });
 
