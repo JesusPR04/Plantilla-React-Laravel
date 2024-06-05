@@ -6,9 +6,9 @@ use App\Models\Eventos;
 use App\Models\Imagenes;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\File;
 
 class EventoController extends Controller
 {
@@ -136,6 +136,14 @@ class EventoController extends Controller
     }
     public function store(Request $request)
     {
+        $mensajes = [
+            'required' => 'El campo :attribute es obligatorio',
+            'regex' => 'El formato del campo :attribute no es correcto',
+            'integer' => 'El campo :attribute debe ser numérico',
+            'min' => 'El minimo del campo :attribute es 0',
+            'mimes' => 'El formato de las imagenes debe ser jpeg, png, jpg o gif',
+            'image' => 'El campo :attribute debe ser una imagen'
+        ];
         $validator = Validator::make($request->all(), [
             'nombre' => 'required',
             'precio' => 'required|integer|min:0',
@@ -145,14 +153,17 @@ class EventoController extends Controller
             'aforoDisponible' => 'required|integer|min:0',
             'descripcion' => 'required|string',
             'idOrganizador' => 'required|integer',
-            'idCiudad' => 'required|integer',
-            'idCategoria' => 'required|integer',
+            'ciudad' => 'required|integer',
+            'categoria' => 'required|integer',
             'localizacion' => 'required|string',
-            'imagenes.*' => 'required|image|mimes:jpeg,png,jpg,gif' // Valida cada imagen individualmente
-        ]);
+            'imagenes.*' => ['required', File::image()->types(['jpeg', 'jpg','png', 'gif'])->max(15 * 1024)] // Valida cada imagen individualmente
+        ], $mensajes);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
+            return response()->json([
+                'status' => false,
+                'message' => $validator->errors()
+            ], 400);
         }
 
         $evento = new Eventos();
@@ -162,11 +173,11 @@ class EventoController extends Controller
         $evento->localizacion = $request->localizacion;
         $evento->aforoTotal = $request->aforoTotal;
         $evento->aforoDisponible = $request->aforoDisponible;
-        $evento->idCategoria = $request->idCategoria;
+        $evento->idCategoria = $request->categoria;
         $evento->descripcion = $request->descripcion;
         $evento->precio = $request->precio;
         $evento->idOrganizador = $request->idOrganizador;
-        $evento->idCiudad = $request->idCiudad;
+        $evento->idCiudad = $request->ciudad;
 
         $evento->save();
 
@@ -188,9 +199,15 @@ class EventoController extends Controller
         }
 
         if ($evento) {
-            return response()->json('Evento creado correctamente', 201);
+            return response()->json([
+                'status' => true,
+                'message' => 'Evento creado correctamente'
+            ], 201);
         } else {
-            return response()->json('Error al crear el evento', 500);
+            return response()->json([
+                'status' => false,
+               'message' => 'Error al crear el evento'
+            ], 500);
         }
     }
 
