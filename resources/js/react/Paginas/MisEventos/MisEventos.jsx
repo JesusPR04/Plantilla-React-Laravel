@@ -18,7 +18,6 @@ const MisEventos = () => {
     const [permiso, setPermiso] = useState(false)
     const [loading, setLoading] = useState(true)
     const [user, setUser] = useState(null);
-    const navigate = useNavigate()
 
     useEffect(() => {
         if (token) {
