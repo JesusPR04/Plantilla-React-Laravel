@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import ModalEventos from "../../Components/ModalEventos";
 import { getEventos, fetchUserData } from "../../api/requests";
 import { Link } from "react-router-dom";
@@ -26,6 +26,7 @@ const BuscadorEventos = () => {
 
     const openModal = () => setModalIsOpen(true);
     const closeModal = () => setModalIsOpen(false);
+    const locate = useLocation();
 
     const applyFilters = async (filters) => {
         try {
@@ -36,6 +37,19 @@ const BuscadorEventos = () => {
         } catch (error) {
             console.error(error);
             setError("Error fetching eventos");
+        }
+    };
+
+    const buscarPorNombre = async () => {
+        try {
+            const response = await fetch(`http://localhost/api/getEventos${locate.search}`);
+            const data = await response.json();
+            setEventos(data);
+        } catch (error) {
+            console.error(error);
+            setError("Error fetching eventos");
+        }finally {
+            setLoading(false);
         }
     };
 
@@ -54,8 +68,12 @@ const BuscadorEventos = () => {
                 setLoading(false);
             }
         };
+        if (locate.search) {
+            buscarPorNombre()
+        }else{
+            fetchEventos();
+        }
 
-        fetchEventos();
     }, [categoria, ciudad]);
     if (loading) {
         return <div className='min-h-[calc(100vh-436px)] text-xl sm:text-4xl pt-12 font-bold tracking-tight text-colorFuente uppercase text-center'>Cargando...</div>;
@@ -129,7 +147,7 @@ const BuscadorEventos = () => {
                                 </div>
                                 <div className="flex items-center gap-2 text-sm">
                                     <RiPriceTag3Line className="w-4 h-4 text-blue-500" />
-                                    <span className="text-colorFuente font-semibold">{evento.precio} €</span>
+                                    <span className="text-colorFuente font-semibold">{evento.precio === 0 ? 'Gratis' : evento.precio+" €"}</span>
                                 </div>
                             </div>
                         </div>

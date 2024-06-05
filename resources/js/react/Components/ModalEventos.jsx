@@ -13,6 +13,7 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
     const [aforoMin, setAforoMin] = useState(0);
     const [aforoMax, setAforoMax] = useState(100000);
     const [ciudad, setCiudad] = useState('');
+    const [nombre, setNombre] = useState('');
 
     const [ciudades, setCiudades] = useState([]);
     const [genrers, setGenrers] = useState([]);
@@ -35,6 +36,7 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
             aforoMin,
             aforoMax,
             ciudad,
+            nombre
         });
         closeModal();
     };
@@ -80,7 +82,7 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
             style={customStyles}
         >
             <div className='flex flex-row justify-between'>
-                <h1 
+                <h1
                     style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '1rem', textTransform: 'uppercase' }}
                     className='text-colorFuente'
                 >
@@ -109,8 +111,23 @@ const ModalEventos = ({ isOpen, closeModal, applyFilters }) => {
                     </svg>
                 </button>
             </div>
-            
+
             <form onSubmit={handleSubmit}>
+                <div className='sm:gap-4' style={{ display: 'grid', gridTemplateColumns: '1fr' }}>
+                    <div>
+                        <label className="block text-sm font-medium text-colorFuente" htmlFor="end-date">
+                            Nombre
+                        </label>
+                        <input
+                            type="text"
+                            id="search-navbar"
+                            className="mt-1 mb-2 block w-11/12 sm:w-full px-3 py-2 border bg-gray-50 border-gray-300 
+                            rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            placeholder="Nombre del evento"
+                            onChange={(e) => setNombre(e.target.value)}
+                        />
+                    </div>
+                </div>
                 <div className='sm:gap-4' style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
                     <div>
                         <label className="block text-sm font-medium text-colorFuente" htmlFor="start-date">

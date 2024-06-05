@@ -6,7 +6,7 @@ import { fetchUserData } from "../api/requests";
 function Header() {
     const [user, setUser] = useState({})
     const [openMenu, setOpenMenu] = useState(false)
-    const [nombre, setNombre] = useState({nombre:''})
+    const [nombre, setNombre] = useState('')
     const token = localStorage.getItem('user-token')
     const navigate = useNavigate()
 
@@ -16,11 +16,13 @@ function Header() {
         }
     }, [token])
 
-    const buscarPorNombre = (e) =>{
-        setNombre({
-            ...nombre, 
-            nombre: e.target.value
-        })
+    const cambiarNombreBusqueda = (e) =>{
+        setNombre(() => e.target.value)
+    }
+    const buscarEventos = (e) => {
+        if (e.key === 'Enter') {
+            navigate('/buscadoreventos?nombre=' + nombre)
+        }
     }
 
     return (
@@ -69,7 +71,8 @@ function Header() {
                             p-2 ps-10 text-sm text-colorFuente border border-[#eeedf2] 
                             rounded-2xl bg-[#f8f7fa] focus:ring-blue-500 focus:border-blue-500"
                                     placeholder="Buscar eventos"
-                                    onChange={(e) => buscarPorNombre(e)}
+                                    onChange={(e) => cambiarNombreBusqueda(e)}
+                                    onKeyDown={(e)=> buscarEventos(e)}
                                 />
                             </div>
 
@@ -151,6 +154,8 @@ function Header() {
                                     id="search-navbar"
                                     className="block w-full p-2 ps-10 text-sm text-colorFuente border border-[#eeedf2] rounded-2xl bg-[#f8f7fa] focus:ring-blue-500 focus:border-blue-500 "
                                     placeholder="Buscar eventos"
+                                    onChange={(e) => cambiarNombreBusqueda(e)}
+                                    onKeyDown={(e)=> buscarEventos(e)}
                                 />
                             </div>
                             <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:space-x-4 rtl:space-x-reverse md:flex-row md:justify-center md:mt-4 mb-4 md:border-0 2xl:ml-12">
@@ -364,6 +369,8 @@ function Header() {
                                 p-2 ps-10 text-sm text-colorFuente border border-[#eeedf2] 
                                 rounded-2xl bg-[#f8f7fa] focus:ring-blue-500 focus:border-blue-500"
                                     placeholder="Buscar eventos"
+                                    onChange={(e) => cambiarNombreBusqueda(e)}
+                                    onKeyDown={(e)=> buscarEventos(e)}
                                 />
                             </div>
 
@@ -445,6 +452,8 @@ function Header() {
                                     id="search-navbar"
                                     className="block w-full p-2 ps-10 text-sm text-colorFuente border border-[#eeedf2] rounded-2xl bg-[#f8f7fa] focus:ring-blue-500 focus:border-blue-500 "
                                     placeholder="Buscar eventos"
+                                    onChange={(e) => cambiarNombreBusqueda(e)}
+                                    onKeyDown={(e)=> buscarEventos(e)}
                                 />
                             </div>
                             <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:space-x-4 rtl:space-x-reverse md:flex-row md:justify-center md:mt-4 mb-4 md:border-0 2xl:ml-12">

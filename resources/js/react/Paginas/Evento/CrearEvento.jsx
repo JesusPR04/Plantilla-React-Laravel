@@ -35,7 +35,7 @@ function CrearEvento() {
         idCategoria: '',
         descripcion: '',
         precio: '',
-        imagenes: '',
+        imagenes: [],
     });
 
     useEffect(() => {
@@ -79,6 +79,12 @@ function CrearEvento() {
     };
 
     function enviarEvento() {
+        if (formData.imagenes.length === 0) {
+            setImagenes({ ...imagenes, estado: true });
+            toast.error('Debe subir al menos una imagen');
+        }else{
+            setImagenes({ ...imagenes, estado: false });
+        }
         const data = new FormData();
         data.append('nombre', formData.nombre);
         data.append('hora', formData.hora);
@@ -129,7 +135,7 @@ function CrearEvento() {
             if (respuesta?.message?.aforoTotal) { setAforoTotal({ ...aforoTotal, estado: true }); toast.error(respuesta.message.aforoTotal[0]); } else { setAforoTotal({ ...aforoTotal, estado: false }) }
             if (respuesta?.message?.aforoDisponible) { setAforoDisponible({ ...aforoDisponible, estado: true }); toast.error(respuesta.message.aforoDisponible[0]); } else { setAforoDisponible({ ...aforoDisponible, estado: false }) }
             if (respuesta?.message?.precio) { setPrecio({ ...precio, estado: true }); toast.error(respuesta.message.precio[0]); } else { setPrecio({ ...precio, estado: false }) }
-            if (respuesta?.message?.imagenes) { setPrecio({ ...imagenes, estado: true }); toast.error(respuesta.message.imagenes[0]); } else { setImagenes({ ...imagenes, estado: false }) }
+            if (respuesta?.message?.imagenes) { setPrecio({ ...imagenes, estado: true }); toast.error(respuesta.message.imagenes[0]); }
             if (respuesta?.message?.descripcion) { setDescripcion({ ...descripcion, estado: true }); toast.error(respuesta.message.descripcion[0]); } else { setDescripcion({ ...descripcion, estado: false }) }
         }
     }
@@ -343,7 +349,7 @@ function CrearEvento() {
                         name="imagenes"
                         id="imagenes"
                         accept="image/png, image/jpeg, image/jpg"
-                        style={{ borderColor: nombre.estado ? 'red' : '#D3D3D3' }}
+                        style={{ borderColor: imagenes.estado ? 'red' : '#D3D3D3' }}
                         className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
                         focus:ring-blue-500 focus:border-blue-500 block w-full"
                         onChange={handleFileChange}
@@ -360,7 +366,7 @@ function CrearEvento() {
                     </label>
                     <textarea
                         name='descripcion' id='descripcion' cols={50} rows={5}
-                        style={{ borderColor: nombre.estado ? 'red' : '#D3D3D3' }}
+                        style={{ borderColor: descripcion.estado ? 'red' : '#D3D3D3' }}
                         placeholder='Aporte información esenciál para su evento...'
                         className='bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
                         focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'

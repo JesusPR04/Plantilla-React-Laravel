@@ -30,10 +30,10 @@ const Evento = () => {
                 setLoading(false);
             }
         };
-        const revisarFavorito = () =>{
-            comprobarFavorito({'id':id})
-            .then(respuesta => setFavorito(respuesta.status))
-            .catch(error => console.log(error))
+        const revisarFavorito = () => {
+            comprobarFavorito({ 'id': id })
+                .then(respuesta => setFavorito(respuesta.status))
+                .catch(error => console.log(error))
         }
 
         fetchEvento();
@@ -119,9 +119,9 @@ const Evento = () => {
                         {evento.imagenes.length > 1 ? (
                             <ImageSlider eventoImagenes={evento.imagenes} />
                         ) : (
-                            <img 
-                                src={evento.imagenes.length !== 0 ? `../../../../../public/${evento.imagenes[0].ruta}` : imagenDefecto} 
-                                alt="Imagen del evento" 
+                            <img
+                                src={evento.imagenes.length !== 0 ? `../../../../../public/${evento.imagenes[0].ruta}` : imagenDefecto}
+                                alt="Imagen del evento"
                                 className=" h-full w-full rounded"
                             />
                         )}
@@ -178,67 +178,135 @@ const Evento = () => {
                                 {evento.descripcion}
                             </p>
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
-                            <input
-                                type="number"
-                                value={cantidad}
-                                onChange={(e) => setCantidad(e.target.value)}
-                                min="1"
-                                className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
-                                  focus:ring-blue-500 focus:border-blue-500 block p-2.5"
-                            />
-                            <select
-                                value={metodoPago}
-                                onChange={(e) => setMetodoPago(e.target.value)}
-                                className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
-                                  focus:ring-blue-500 focus:border-blue-500 block p-2.5"
-                            >
-                                <option value="dinero">Dinero</option>
-                                <option value="puntos">Puntos</option>
-                            </select>
-                            <button
-                                onClick={handleCompra}
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded col-span-2 lg:col-span-1"
-                            >
-                                Comprar Entradas
-                            </button>
-                            {favorito ? (
-                                <button onClick={()=>asignarFavorito(evento.id)}
-                                 className="bg-red-500 hover:bg-red-700 text-white 
+                        {evento.precio === 0 ?
+                            (
+                                <div>
+                                    <h3 className="text-lg font-medium text-colorFuente">
+                                        Entradas <span className="text-red-500 font-bold">*</span>
+                                    </h3>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <input
+                                            type="number"
+                                            value={cantidad}
+                                            onChange={(e) => setCantidad(e.target.value)}
+                                            min={1}
+                                            max={5}
+                                            className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
+                                  focus:ring-blue-500 focus:border-blue-500 block p-2.5 col-span-2"
+                                        />
+                                        <button
+                                            onClick={handleCompra}
+                                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded col-span-2 lg:col-span-1"
+                                        >
+                                            Comprar Entradas
+                                        </button>
+                                        {favorito ? (
+                                            <button onClick={() => asignarFavorito(evento.id)}
+                                                className="bg-red-500 hover:bg-red-700 text-white 
                                  font-bold py-2 px-4 rounded"
-                                >Eliminar de favoritos</button>
-                            ) : (
-                                <button 
-                                    onClick={()=>asignarFavorito(evento.id)}
-                                    className="bg-[#93C5FD] hover:bg-[#A5B4FC] text-colorFuente 
-                                    font-bold py-2 px-4 rounded flex flex-row gap-3 justify-center xl:justify-start col-span-2 lg:col-span-1"
-                                >
-                                    <span>Añadir a Favoritos</span>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        className="lucide lucide-star cursor-pointer"
-                                    >
-                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                                    </svg>
-                                </button>
-                            )}
-                        </div>
-                        <div>
-                            <h3 className="text-lg font-medium text-colorFuente">
-                                Precio
-                            </h3>
-                            <p className="text-colorFuente">
-                                {evento.precio} € o {precioEnPuntos} puntos
-                            </p>
-                        </div>
+                                            >Eliminar de favoritos</button>
+                                        ) : (
+                                            <button
+                                                onClick={() => asignarFavorito(evento.id)}
+                                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded col-span-2 flex justify-center gap-2
+                                                shadow-lg transition duration-300 transform hover:scale-105 lg:col-span-1"
+                                            >
+                                                <span>Añadir a Favoritos</span>
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="24"
+                                                    height="24"
+                                                    viewBox="0 0 24 24"
+                                                    fill="yellow"
+                                                    stroke="yellow"
+                                                    strokeWidth="2"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    className="lucide lucide-star"
+                                                >
+                                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                                                </svg>
+                                            </button>
+
+                                        )}
+                                    </div>
+                                    <div>
+                                        <h3 className="text-lg font-medium text-colorFuente">
+                                            Precio
+                                        </h3>
+                                        <p className="text-colorFuente">
+                                            {evento.precio} € o {precioEnPuntos} puntos
+                                        </p>
+                                    </div>
+                                </div>
+                            )
+                            :
+                            (
+                                <div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <input
+                                            type="number"
+                                            value={cantidad}
+                                            onChange={(e) => setCantidad(e.target.value)}
+                                            min="1"
+                                            className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
+                                  focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+                                        />
+                                        <select
+                                            value={metodoPago}
+                                            onChange={(e) => setMetodoPago(e.target.value)}
+                                            className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
+                                  focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+                                        >
+                                            <option value="dinero">Dinero</option>
+                                            <option value="puntos">Puntos</option>
+                                        </select>
+                                        <button
+                                            onClick={handleCompra}
+                                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded col-span-2 lg:col-span-1"
+                                        >
+                                            Comprar Entradas
+                                        </button>
+                                        {favorito ? (
+                                            <button onClick={() => asignarFavorito(evento.id)}
+                                                className="bg-red-500 hover:bg-red-700 text-white 
+                                 font-bold py-2 px-4 rounded"
+                                            >Eliminar de favoritos</button>
+                                        ) : (
+                                            <button
+                                                onClick={() => asignarFavorito(evento.id)}
+                                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded col-span-2 flex justify-center gap-2
+                                                shadow-lg transition duration-300 transform hover:scale-105 lg:col-span-1"
+                                            >
+                                                <span>Añadir a Favoritos</span>
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="24"
+                                                    height="24"
+                                                    viewBox="0 0 24 24"
+                                                    fill="yellow"
+                                                    stroke="yellow"
+                                                    strokeWidth="2"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    className="lucide lucide-star"
+                                                >
+                                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                                                </svg>
+                                            </button>
+                                        )}
+                                    </div>
+                                    <div>
+                                        <h3 className="text-lg font-medium text-colorFuente">
+                                            Precio
+                                        </h3>
+                                        <p className="text-colorFuente">
+                                            {evento.precio} € o {precioEnPuntos} puntos
+                                        </p>
+                                    </div>
+                                </div>)
+                        }
+                        <p> <span className="text-red-500 font-bold">*</span> Solo podrás comprar como máximo 5 entradas</p>
                     </div>
                 </div>
             </div>
