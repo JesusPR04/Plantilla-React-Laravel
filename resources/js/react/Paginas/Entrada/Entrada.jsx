@@ -14,6 +14,7 @@ import { RiPriceTag3Line } from "react-icons/ri";
 const BASE_URL = "http://localhost:";
 
 const Entrada = () => {
+    const [user, setUser] = useState(null);
     const [entradas, setEntradas] = useState([])
     const [eventos, setEventos] = useState([]);
     const [loading, setLoading] = useState(true)
@@ -58,7 +59,10 @@ const Entrada = () => {
 
     useEffect(() => {
         fetchUserData()
-            .then(respuesta => setCiudad(respuesta.ciudad_id))
+            .then(respuesta => {
+                setCiudad(respuesta.ciudad_id)
+                setUser(respuesta)
+            })
             .catch(error => console.log(error))
 
         const fetchEventos = async () => {
@@ -110,10 +114,10 @@ const Entrada = () => {
                         {eventos.map((evento) => (
                             <div
                                 key={evento.id}
-                                className="relative group overflow-hidden rounded-lg"
+                                className="relative group overflow-hidden rounded-lg shadow bg-gray-100"
                             >
                                 <Link
-                                    className="absolute inset-0 z-10"
+                                    className="absolute inset-0 z-1"
                                     to={`/evento/${evento.id}`}
                                 >
                                     <span className="sr-only">Ver evento</span>
@@ -130,8 +134,13 @@ const Entrada = () => {
                                         }}
                                         width={600}
                                     />
+                                    {user && user.id === evento.idOrganizador && (
+                                        <span className="absolute top-2 left-2 bg-blue-500 text-white font-semibold px-2 py-1 text-xs rounded-full inline-block z-20">
+                                            Tu evento
+                                        </span>
+                                    )}
                                 </div>
-                                <div className="border p-4 rounded shadow bg-gray-100">
+                                <div className="p-4">
                                     <h3
                                         className="font-bold text-lg md:text-xl text-colorFuente 
                         uppercase transition-colors group-hover:text-blue-500 md:group-hover:text-2xl group-hover:text-xl"

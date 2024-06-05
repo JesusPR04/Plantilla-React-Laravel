@@ -79,7 +79,7 @@ const MisEventos = () => {
             <div className="grid grid-cols-1 px-4 py-10 sm:px-20 pt-0 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {eventos.map((evento) => (
                     <div key={evento.id} className="relative group overflow-hidden rounded-lg shadow bg-gray-100">
-                        <Link className="absolute inset-0 z-10" to={`/evento/${evento.id}`}>
+                        <Link className="absolute inset-0 z-1" to={`/evento/${evento.id}`}>
                             <span className="sr-only">Ver evento</span>
                         </Link>
                         <div className="relative">
