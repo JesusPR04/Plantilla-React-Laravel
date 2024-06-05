@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getCiudades, getGenrers, fetchUserData, crearEvento } from '../../api/requests';
+import { getCiudades, getGenrers, fetchUserData, crearEvento, comprobarAccesoEventos } from '../../api/requests';
 import Select from 'react-select';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 function CrearEvento() {
     const token = localStorage.getItem('user-token');
     const [idUser, setIdUser] = useState(0);
+    const [permiso, setPermiso] = useState(false);
     const navigate = useNavigate()
     useEffect(() => {
         if (token) {
@@ -18,10 +19,26 @@ function CrearEvento() {
     const [ciudades, setCiudades] = useState([]);
     const [genrers, setGenrers] = useState([]);
 
+    useEffect(() => {    
+        comprobarAccesoEventos()
+        .then((respuesta) => {
+            if (!respuesta.status) {
+                toast.error(respuesta.message)
+                setTimeout(() => {navigate('/')}, 2000)
+            }else{
+                setPermiso(true)
+            }
+        })
+        .catch(error => {
+            toast.error(error.message)
+            setTimeout(() => {navigate('/')}, 2000)
+        })
+    }, [])
+
     useEffect(() => {
         getCiudades().then((data) => setCiudades(data.ciudades));
         getGenrers().then((data) => setGenrers(data.categorias));
-    }, []);
+    }, [permiso]);
 
     const [formData, setFormData] = useState({
         nombre: '',
@@ -139,7 +156,14 @@ function CrearEvento() {
             if (respuesta?.message?.descripcion) { setDescripcion({ ...descripcion, estado: true }); toast.error(respuesta.message.descripcion[0]); } else { setDescripcion({ ...descripcion, estado: false }) }
         }
     }
-
+    if (!permiso) {
+        return (
+            <div className="min-h-[calc(100vh-436px)] text-center mt-10 text-colorFuente text-xl sm:text-4xl font-bold uppercase">
+                <ToastContainer className='text-base normal-case text-black text-start'/>
+                Cargando...
+            </div>
+        )
+    }
     return (
         <main className='min-h-[calc(100vh-436px)] bg-gray-100'>
             <ToastContainer />

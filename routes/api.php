@@ -47,7 +47,8 @@ Route::post('/register', [AuthController::class, 'createUser']);
 Route::post('/login', [AuthController::class, 'loginUser']);
 
 // Evento
-Route::post('/storeEvent', [EventoController::class, 'store']);
+Route::post('/eventos', [EventoController::class, 'index'])->middleware('auth:sanctum');
+Route::post('/storeEvent', [EventoController::class, 'store'])->middleware('auth:sanctum');
 Route::get('/totalEvent', [EventoController::class, 'getCountEvent']);
 //TODO: Cambiar los post por la acción pertienente
 Route::put('/updateEvent/{id}', [EventoController::class, 'update']);
