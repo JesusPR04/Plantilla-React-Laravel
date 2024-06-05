@@ -72,7 +72,7 @@ const MisEventos = () => {
     }
 
     return (
-        <section className="bg-gray-100 min-h-[calc(100vh-436px)] py-12 md:py-16 lg:py-20">
+        <section className="bg-gray-100 min-h-[calc(100vh-436px)] py-12">
             <h1 className="text-3xl md:text-4xl font-bold text-colorFuente mb-6 text-center uppercase">
                     Tus <span className="text-blue-500">eventos</span>
             </h1>
