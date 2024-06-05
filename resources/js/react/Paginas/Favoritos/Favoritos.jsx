@@ -12,6 +12,7 @@ const Favoritos = () => {
     const [eventos, setEventos] = useState([]);
     const [ciudad, setCiudad] = useState(0)
     const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
         getMisFavoritos()
@@ -27,7 +28,10 @@ const Favoritos = () => {
 
     useEffect(() => {
         fetchUserData()
-            .then(respuesta => setCiudad(respuesta.ciudad_id))
+            .then(respuesta => {
+                setCiudad(respuesta.ciudad_id)
+                setUser(respuesta)
+            })
             .catch(error => console.log(error))
 
         const fetchEventos = async () => {
@@ -87,6 +91,11 @@ const Favoritos = () => {
                                     }}
                                     width={600}
                                 />
+                                {user && user.id === evento.idOrganizador && (
+                                    <span className="absolute top-2 left-2 bg-blue-500 text-white font-semibold px-2 py-1 text-xs rounded-full inline-block z-20">
+                                        Tu evento
+                                    </span>
+                                )}
                             </div>
                             <div className="border p-4 rounded shadow bg-gray-100">
                                 <h3
@@ -172,6 +181,11 @@ const Favoritos = () => {
                                 width={600}
                                 height={400}
                             />
+                            {user && user.id === evento.idOrganizador && (
+                                <span className="absolute top-2 left-2 bg-blue-500 text-white font-semibold px-2 py-1 text-xs rounded-full inline-block z-20">
+                                    Tu evento
+                                </span>
+                            )}
                         </div>
                         <div className="border p-4 rounded shadow bg-gray-100">
                             <h3 className="font-bold text-lg md:text-xl text-colorFuente uppercase transition-colors group-hover:text-blue-500 md:group-hover:text-2xl group-hover:text-xl">

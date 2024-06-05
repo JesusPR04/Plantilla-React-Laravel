@@ -7,10 +7,19 @@ import { BsPeople } from "react-icons/bs";
 import { RiPriceTag3Line } from "react-icons/ri";
 import { getMisEventos } from "../../api/requests";
 import img from '../../assets/misEventos.jpg';
+import { fetchUserData } from "../../api/requests";
 
 const MisEventos = () => {
+    const token = localStorage.getItem('user-token');
     const [eventos, setEventos] = useState([])
     const [loading, setLoading] = useState(true)
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        if (token) {
+            fetchUserData().then(data => setUser(data)).catch(console.error);
+        }
+    }, [token]);
 
     useEffect(() => {
         getMisEventos().then((respuesta) => {
@@ -63,7 +72,7 @@ const MisEventos = () => {
     }
 
     return (
-        <section className="bg-gray-100 min-h-[calc(100vh-436px)] py-12 md:py-16 lg:py-20">
+        <section className="bg-gray-100 min-h-[calc(100vh-436px)] py-12">
             <h1 className="text-3xl md:text-4xl font-bold text-colorFuente mb-6 text-center uppercase">
                     Tus <span className="text-blue-500">eventos</span>
             </h1>
@@ -81,6 +90,11 @@ const MisEventos = () => {
                                 width={600}
                                 height={400}
                             />
+                            {user && user.id === evento.idOrganizador && (
+                                <span className="absolute top-2 left-2 bg-blue-500 text-white font-semibold px-2 py-1 text-xs rounded-full inline-block z-20">
+                                    Tu evento
+                                </span>
+                            )}
                         </div>
                         <div className="border p-4 rounded shadow bg-gray-100">
                             <h3 className="font-bold text-lg md:text-xl text-colorFuente uppercase transition-colors group-hover:text-blue-500 md:group-hover:text-2xl group-hover:text-xl">
