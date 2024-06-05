@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import eventodefecto from "../../assets/eventodefecto.png";
 import { FaCalendarAlt, FaClock } from "react-icons/fa";
 import { CiLocationOn } from "react-icons/ci";
@@ -10,6 +10,7 @@ import img from '../../assets/misEventos.jpg';
 import { fetchUserData } from "../../api/requests";
 
 const MisEventos = () => {
+    const navigate = useNavigate()
     const token = localStorage.getItem('user-token');
     const [eventos, setEventos] = useState([])
     const [loading, setLoading] = useState(true)
@@ -114,7 +115,7 @@ const MisEventos = () => {
                                 </div>
                                 <div className="flex items-center gap-2 text-sm">
                                     <CiLocationOn className="w-4 h-4 text-blue-500" />
-                                    <span className="text-colorFuente font-semibold">{evento.localizacion}</span>
+                                    <span className="text-colorFuente font-semibold">{evento.localizacion}, {evento.ciudad.nombre}</span>
                                 </div>
                                 <div className="flex items-center gap-2 text-sm">
                                     <BsPeople className="w-4 h-4 text-blue-500" />
@@ -126,9 +127,10 @@ const MisEventos = () => {
                                 </div>
                                 {user && user.id === evento.idOrganizador && (
                                     <div className="flex justify-end items-center gap-2">
-                                        <Link to="" className=" bg-blue-500 text-white font-semibold px-2 py-1 text-xs rounded-full inline-block z-20 cursor-pointer">
+                                        <button onClick={() => navigate('/editarEvento', { state: { evento } })}  
+                                        className=" bg-blue-500 text-white font-semibold px-2 py-1 text-xs rounded-full inline-block z-20 cursor-pointer">
                                             Editar
-                                        </Link>
+                                        </button>
                                         <Link className=" bg-red-500 text-white font-semibold px-2 py-1 text-xs rounded-full inline-block z-20 cursor-pointer">
                                             Eliminar
                                         </Link>

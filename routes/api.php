@@ -50,7 +50,7 @@ Route::post('/login', [AuthController::class, 'loginUser']);
 Route::post('/storeEvent', [EventoController::class, 'store']);
 Route::get('/totalEvent', [EventoController::class, 'getCountEvent']);
 //TODO: Cambiar los post por la acción pertienente
-Route::post('/updateEvent/{id}', [EventoController::class, 'update']);
+Route::put('/updateEvent/{id}', [EventoController::class, 'update']);
 Route::post('/deleteEvent/{id}', [EventoController::class, 'delete']);
 Route::get('/getEventos', [EventoController::class, 'getEventos']);
 Route::get('/evento/{id}', [EventoController::class, 'getEventoById']);

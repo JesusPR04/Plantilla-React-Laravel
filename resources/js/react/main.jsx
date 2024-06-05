@@ -24,6 +24,7 @@ import CrearEvento from './Paginas/Evento/CrearEvento.jsx'
 import MisEventos from './Paginas/MisEventos/MisEventos.jsx'
 import Favoritos from './Paginas/Favoritos/Favoritos.jsx'
 import Tarjetas from './Paginas/Tarjetas/Tarjetas.jsx'
+import EditarEvento from './Paginas/Evento/EditarEvento.jsx'
 
 
 function AppLayout() {
@@ -102,6 +103,10 @@ const router = createBrowserRouter([
     {
       path: "/crearEvento",
       element: <CrearEvento />,
+    },
+    {
+      path: '/editarEvento',
+      element: <EditarEvento />
     },
     {
       path: "/misEventos",
