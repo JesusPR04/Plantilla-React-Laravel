@@ -20,7 +20,7 @@ class ciudadesSeeder extends Seeder
             "Santa Cruz de Tenerife", "Santander", "Albacete", "Ciudad Real", "Cuenca", "Guadalajara",
             "Toledo", "Ávila", "Burgos", "León", "Palencia", "Salamanca", "Segovia", "Soria", "Valladolid",
             "Zamora","Barcelona", "Gerona", "Lérida", "Tarragona", "Alicante", "Castellón", "Valencia", 
-            "Badajoz", "Cáceres","La Coruña", "Lugo", "Orense", "Pontevedra", "Logroño", "Madrid", "Murcia",
+            "Badajoz", "Cáceres","La Coruña", "Lugo", "Orense", "Pontevedra", "Madrid", "Murcia",
             "Pamplona","Vitoria", "Bilbao", "San Sebastián", "Logroño", "Ceuta", "Melilla"
         ];
         for ($i=0; $i < count($ciudades); $i++) { 
