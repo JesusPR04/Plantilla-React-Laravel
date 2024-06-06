@@ -2,8 +2,7 @@
 export default {
   content: [
     "./index.html",
-    "./resources/js/react/**/*.jsx",
-    "./node_modules/flowbite/**/*.js"
+    "./resources/js/react/**/*.jsx"
   ],
   theme: {
     extend: {
@@ -13,6 +12,6 @@ export default {
     },
     // Azul background-blue-500 y hover background-blue-700
   },
-  plugins: [require('flowbite/plugin')],
+  plugins: [],
 }
 
