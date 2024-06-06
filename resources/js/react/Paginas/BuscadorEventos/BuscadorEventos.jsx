@@ -8,6 +8,7 @@ import { FaCalendarAlt, FaClock } from "react-icons/fa";
 import { CiLocationOn } from "react-icons/ci";
 import { BsPeople } from "react-icons/bs";
 import { RiPriceTag3Line } from "react-icons/ri";
+import { PATH_API } from "../../api/env";
 
 const BuscadorEventos = () => {
     const { categoria, ciudad } = useParams();
@@ -31,7 +32,7 @@ const BuscadorEventos = () => {
     const applyFilters = async (filters) => {
         try {
             const queryString = new URLSearchParams(filters).toString();
-            const response = await fetch(`http://localhost/api/getEventos?${queryString}`);
+            const response = await fetch(`${PATH_API}/getEventos?${queryString}`);
             const data = await response.json();
             setEventos(data);
         } catch (error) {
@@ -42,7 +43,7 @@ const BuscadorEventos = () => {
 
     const buscarPorNombre = async () => {
         try {
-            const response = await fetch(`http://localhost/api/getEventos${locate.search}`);
+            const response = await fetch(`${PATH_API}/getEventos${locate.search}`);
             const data = await response.json();
             setEventos(data);
         } catch (error) {

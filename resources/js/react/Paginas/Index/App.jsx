@@ -3,14 +3,13 @@ import HeaderSection from "../../Components/HeaderSection";
 import PrincipalFilter from "../../Components/PrincipalFilter";
 import { fetchUserData } from "../../api/requests";
 import { Link } from "react-router-dom";
-import BuscadorEventos from "../BuscadorEventos/BuscadorEventos";
-import { getEventos } from "../../api/requests";
 import eventodefecto from "../../assets/eventodefecto.png";
 import { FaCalendarAlt } from "react-icons/fa";
 import { FaClock } from "react-icons/fa6";
 import { CiLocationOn } from "react-icons/ci";
 import { BsPeople } from "react-icons/bs";
 import { RiPriceTag3Line } from "react-icons/ri";
+import { PATH_API } from "../../api/env";
 
 function App() {
     const [eventos, setEventos] = useState([]);
@@ -193,7 +192,7 @@ function App() {
             const fetchEventos = async () => {
                 try {
                     const response = await fetch(
-                        `http://localhost/api/getEventos?ciudad=` +
+                        `${PATH_API}/getEventos?ciudad=` +
                             user.ciudad_id +
                             ""
                     );
@@ -211,7 +210,7 @@ function App() {
             const fetchEventos = async () => {
                 try {
                     const response = await fetch(
-                        `http://localhost/api/getEventos?ciudad=3`
+                        `${PATH_API}/getEventos?ciudad=3`
                     );
                     const data = await response.json();
                     setEventos(data);

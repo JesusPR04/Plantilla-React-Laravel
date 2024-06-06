@@ -2,9 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Ayuda = () => {
-
     const token = localStorage.getItem('user-token')
-    console.log(token);
+    
     return (
         <div className="bg-gray-100 text-colorFuente rounded shadow p-3">
             <div className="card flex-col items-center justify-center max-w-5xl mx-auto py-10">
