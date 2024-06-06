@@ -501,17 +501,18 @@ export const getTarjetas = async () => {
   try {
     const url = `${PATH_API}/tarjetas`
     const headers = {
-      method: 'GET',
+      method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
       },
     }
-    const response = await fetch(url, headers)
+    const response = await fetch('/api/tarjetas');
     const data = await response.json();
-    return data
+    return data.tarjetas;
   } catch (error) {
-    throw error
+    console.error('Error fetching tarjetas:', error);
+    return [];
   }
 }
 export const eliminarEvento = async (id) => {
