@@ -7,7 +7,9 @@
         @viteReactRefresh
         @vite('resources/js/app.js')
         <!-- Favicon -->
-        <link rel="shortcut icon" href="{{ Vite::asset('favicon.ico') }}" type="image/x-icon">  
+        {{-- <link rel="shortcut icon" href="{{ Vite::asset('') }}" type="image/x-icon">   --}}
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
     </head>
     <body>
        <div id='root'></div>
