@@ -497,17 +497,16 @@ export const getTarjetas = async () => {
   if (!token) {
     throw new Error('No token found');
   }
-
   try {
     const url = `${PATH_API}/tarjetas`
     const headers = {
-      method: 'POST',
+      method: 'get',
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
       },
     }
-    const response = await fetch('/api/tarjetas');
+    const response = await fetch(url,headers);
     const data = await response.json();
     return data.tarjetas;
   } catch (error) {
@@ -515,6 +514,72 @@ export const getTarjetas = async () => {
     return [];
   }
 }
+
+export const añadirTarjeta = async (formData) => {
+  const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
+
+  if (!token) {
+    throw new Error('No token found');
+  }
+  const url = `${PATH_API}/tarjetas`
+  const options = {
+    method: "Post",
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formData)
+  }
+  try {
+    const response = await fetch(url, options)
+    const data = response.json()
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const editarTarjeta = async (formData) => {
+  const url = `${PATH_API}/tarjetas`
+  const options = {
+    method: "Put",
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: formData
+  }
+  try {
+    const response = await fetch(url, options)
+    const data = response.json()
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const borrarTarjeta = async (id) => {
+  const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
+  if (!token) {
+    throw new Error('No token found');
+  }
+  try {
+    const url = `${PATH_API}/tarjetas/${id}`
+    const headers = {
+      method: 'Delete',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+    }
+    const response = await fetch(url, headers)
+    const data = await response.json();
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
 export const eliminarEvento = async (id) => {
   const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
 
