@@ -207,7 +207,7 @@ export const updateUserData = async (userData) => {
   }
 };
 
-export const getEventos = async (filters = {}) => {
+/* export const getEventos = async (filters = {}) => {
   const queryString = new URLSearchParams(filters).toString();
   const url = `${PATH_API}/getEventos?${queryString}`;
   try {
@@ -216,6 +216,27 @@ export const getEventos = async (filters = {}) => {
     return data;
   } catch (error) {
     console.error(error);
+    throw error;
+  }
+}; */
+
+export const getEventos = async (filters = {}) => {
+  const queryString = new URLSearchParams(filters).toString();
+  const url = `${PATH_API}/getEventos?${queryString}`;
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const contentType = response.headers.get("content-type");
+    if (contentType && contentType.indexOf("application/json") !== -1) {
+      const data = await response.json();
+      return data;
+    } else {
+      throw new Error("Received non-JSON response");
+    }
+  } catch (error) {
+    console.error('Error fetching eventos:', error);
     throw error;
   }
 };
