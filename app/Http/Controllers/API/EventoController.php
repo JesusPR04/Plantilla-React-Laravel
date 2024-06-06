@@ -203,8 +203,8 @@ class EventoController extends Controller
                 $uuid = Str::uuid(); // Genera un UUID único
                 // Nombre de la imagen idEvento más id único aleatorio más la extensión de la imagen
                 $imageName = 'Event' . $evento->id . '_' . $uuid . '.' . $image->getClientOriginalExtension();
-                // Guarda la imagen en la carpeta 'public/images'
-                $image->move(public_path('images'), $imageName);
+                // Guarda la imagen en la carpeta 
+                $image->move(resource_path('js/react/assets/images'), $imageName);
 
                 $imagen = new Imagenes();
                 $imagen->ruta = 'images/' . $imageName; // Guarda la ruta de la imagen
@@ -226,6 +226,7 @@ class EventoController extends Controller
         }
     }
 
+    //TODO: CAMBIAR EL DIRECTORIO DE ACTUALIZAR Y BORRAR IMAGENES
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
