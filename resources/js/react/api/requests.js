@@ -171,7 +171,7 @@ export const fetchUserData = async () => {
   }
 
   try {
-    const response = await fetch('http://localhost/api/user', { // Asegúrate de usar la URL correcta
+    const response = await fetch(`${PATH_API}/user`, { // Asegúrate de usar la URL correcta
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',

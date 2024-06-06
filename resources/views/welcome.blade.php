@@ -9,9 +9,11 @@
 
         <!-- Favicon -->
         {{-- <link rel="shortcut icon" href="{{ Vite::asset('../resources/js/react/assets/favicon.ico') }}" type="image/x-icon"> --}}
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
 
     </head>
     <body>
        <div id='root'></div>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     </body>
 </html>
