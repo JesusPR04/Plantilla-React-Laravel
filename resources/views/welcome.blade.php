@@ -10,6 +10,7 @@
         {{-- <link rel="shortcut icon" href="{{ Vite::asset('../resources/js/react/assets/favicon.ico') }}" type="image/x-icon"> --}}
     </head>
     <body>
+        <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
        <div id='root'></div>
     </body>
 </html>
