@@ -1,0 +1,1 @@
+export const PATH_API = 'https://proyecto2.medacarena.com.es/api'

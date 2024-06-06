@@ -1,4 +1,4 @@
-/* import PATH_URL from '.env' */
+import { PATH_API } from './env.js'
 
 export const login = async (email, password) => {
   try {
@@ -67,7 +67,7 @@ export const getGenrers = async () => {
 }
 
 export const getTotalEvents = async () => {
-  const url = `${PATH_URL}/api/totalEvent`
+  const url = `${PATH_API}/totalEvent`
   try {
     const response = await fetch(url)
     const data = response.json()
