@@ -4,22 +4,26 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import '../Css/Slider.css';
 
-const ImageSlider = ({eventoImagenes}) => {
+const ImageSlider = ({ eventoImagenes }) => {
     const [nav1, setNav1] = useState(null);
     const [nav2, setNav2] = useState(null);
-    const [nav3, setNav3] = useState(null); // For mobile slider
+    const [nav3, setNav3] = useState(null);
     const [countImages, setCountImages] = useState(0);
 
     useEffect(() => {
         setCountImages(eventoImagenes.length);
         setNav1(nav1);
         setNav2(nav2);
-        setNav3(nav3); // For mobile slider
-    }, [nav1, nav2, nav3]);
+        setNav3(nav3);
+    }, [nav1, nav2, nav3, eventoImagenes]);
+
+    const importImage = (ruta) => {
+        return new URL(`../assets/${ruta}`, import.meta.url).href;
+    };
 
     return (
         <div className="slider-container">
-            {/* Desktop Slider */}
+            {/* Slider de ordenador */}
             <div className="desktop-slider">
                 <Slider
                     asNavFor={nav2}
@@ -29,7 +33,7 @@ const ImageSlider = ({eventoImagenes}) => {
                 >
                     {eventoImagenes.map((imagen, index) => (
                         <div key={index}>
-                            <img src={`../../../../public/${imagen.ruta}`} alt={`Slide ${index}`} />
+                            <img src={importImage(imagen.ruta)} alt={`Slide ${index}`} />
                         </div>
                     ))}
                 </Slider>
@@ -43,13 +47,12 @@ const ImageSlider = ({eventoImagenes}) => {
                 >
                     {eventoImagenes.map((imagen, index) => (
                         <div key={index}>
-                            <img src={`../../../../public/${imagen.ruta}`} alt={`Thumbnail ${index}`} />
+                            <img src={importImage(imagen.ruta)} alt={`Thumbnail ${index}`} />
                         </div>
                     ))}
                 </Slider>
             </div>
-
-            {/* Mobile Slider */}
+            {/* Slider de movil */}
             <div className="mobile-slider">
                 <Slider
                     ref={slider => (setNav3(slider))}
@@ -59,7 +62,7 @@ const ImageSlider = ({eventoImagenes}) => {
                 >
                     {eventoImagenes.map((imagen, index) => (
                         <div key={index}>
-                            <img src={`../../../../public/${imagen.ruta}`} alt={`Slide ${index}`} />
+                            <img src={importImage(imagen.ruta)} alt={`Slide ${index}`} />
                         </div>
                     ))}
                 </Slider>

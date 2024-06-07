@@ -72,6 +72,11 @@ const Favoritos = () => {
 
         fetchEventos();
     }, [ciudad]);
+
+    const importImage = (ruta) => {
+        return new URL(`../../assets/${ruta}`, import.meta.url).href;
+    };
+
     // Muestra un indicador de carga si loading es verdadero
     if (loading && !permiso) {
         return <div className='min-h-[calc(100vh-436px)] text-xl sm:text-4xl pt-12 font-bold tracking-tight text-colorFuente uppercase text-center'>
@@ -109,7 +114,7 @@ const Favoritos = () => {
                                     alt={evento.nombre}
                                     className="object-cover w-full h-60 group-hover:scale-105 duration-100 transition-transform"
                                     height={400}
-                                    src={evento.imagenes.length !== 0 ? `../../../../../public/${evento.imagenes[0].ruta}` : eventodefecto}
+                                    src={evento.imagenes.length !== 0 ? importImage(evento.imagenes[0].ruta) : eventodefecto}
                                     style={{
                                         aspectRatio: "600/400",
                                         objectFit: "cover",
@@ -201,7 +206,7 @@ const Favoritos = () => {
                         <div className="relative">
                             <img
                                 className="object-cover w-full h-60 group-hover:scale-105 transition-transform duration-100"
-                                src={evento.imagenes.length !== 0 ? `../../../../../public/${evento.imagenes[0].ruta}` : eventodefecto}
+                                src={evento.imagenes.length !== 0 ? importImage(evento.imagenes[0].ruta) : eventodefecto}
                                 style={{ aspectRatio: "600/400", objectFit: "cover" }}
                                 width={600}
                                 height={400}

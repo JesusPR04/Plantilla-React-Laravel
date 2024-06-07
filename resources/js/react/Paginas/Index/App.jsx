@@ -193,8 +193,8 @@ function App() {
                 try {
                     const response = await fetch(
                         `${PATH_API}/getEventos?ciudad=` +
-                            user.ciudad_id +
-                            ""
+                        user.ciudad_id +
+                        ""
                     );
                     const data = await response.json();
                     setEventos(data);
@@ -222,6 +222,10 @@ function App() {
             fetchEventos();
         }, []);
     }
+
+    const importImage = (ruta) => {
+        return new URL(`../../assets/${ruta}`, import.meta.url).href;
+    };
 
     return (
         <main className="min-h-[calc(100vh-436px)] bg-gray-100">
@@ -315,7 +319,7 @@ function App() {
                                         alt={evento.nombre}
                                         className="object-cover w-full h-60 group-hover:scale-105 transition-transform"
                                         height={400}
-                                        src={evento.imagenes.length !== 0 ? `../../assets/${evento.imagenes[0].ruta}` :  eventodefecto}
+                                        src={evento.imagenes.length !== 0 ? importImage(evento.imagenes[0].ruta) : eventodefecto}
                                         style={{
                                             aspectRatio: "600/400",
                                             objectFit: "cover",
@@ -369,7 +373,7 @@ function App() {
                                         <div className="flex items-center gap-2 text-sm">
                                             <RiPriceTag3Line className="w-4 h-4 text-blue-500" />
                                             <span className="text-colorFuente font-semibold">
-                                                {evento.precio} €
+                                                {evento.precio === 0 ? 'Gratis' : evento.precio + " €"}
                                             </span>
                                         </div>
                                     </div>

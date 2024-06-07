@@ -11,6 +11,7 @@ import { CiLocationOn } from "react-icons/ci";
 import { BsPeople } from "react-icons/bs";
 import { RiPriceTag3Line } from "react-icons/ri";
 import { PATH_API } from "../../api/env";
+import img from '../../assets/images/Event6_25163dd9-4ff9-4230-9ba6-7c3d2275e06c.jpg'
 
 const Entrada = () => {
     const [user, setUser] = useState(null);
@@ -81,6 +82,10 @@ const Entrada = () => {
         fetchEventos();
     }, [ciudad]);
 
+    const importImage = (ruta) => {
+        return new URL(`../../assets/${ruta}`, import.meta.url).href;
+    };
+
     if (loading) {
         return (
             <div className="min-h-[calc(100vh-436px)] text-center mt-10 text-colorFuente text-xl sm:text-4xl font-bold uppercase">
@@ -115,6 +120,7 @@ const Entrada = () => {
                                 key={evento.id}
                                 className="relative group overflow-hidden rounded-lg shadow bg-gray-100"
                             >
+                                
                                 <Link
                                     className="absolute inset-0 z-1"
                                     to={`/evento/${evento.id}`}
@@ -126,7 +132,7 @@ const Entrada = () => {
                                         alt={evento.nombre}
                                         className="object-cover w-full h-60 group-hover:scale-105 transition-transform"
                                         height={400}
-                                        src={evento.imagenes.length !== 0 ? `../../../../../public/${evento.imagenes[0].ruta}` : eventodefecto}
+                                        src={evento.imagenes.length !== 0 ? importImage(evento.imagenes[0].ruta) : eventodefecto}
                                         style={{
                                             aspectRatio: "600/400",
                                             objectFit: "cover",
@@ -217,7 +223,7 @@ const Entrada = () => {
                                 <img
                                     src={
                                         entrada.evento.imagenes.length !== 0 ? 
-                                            `../../../../../public/${entrada.evento.imagenes[0].ruta}` 
+                                            importImage(entrada.evento.imagenes[0].ruta)
                                             : eventodefecto
                                     }
                                     alt={entrada.evento.nombre}

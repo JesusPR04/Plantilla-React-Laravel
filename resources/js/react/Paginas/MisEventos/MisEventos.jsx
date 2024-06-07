@@ -69,6 +69,9 @@ const MisEventos = () => {
             </div>
         )
     }
+    const importImage = (ruta) => {
+        return new URL(`../../assets/${ruta}`, import.meta.url).href;
+    };
 
     if (eventos.length === 0 && permiso) {
         return (
@@ -121,7 +124,7 @@ const MisEventos = () => {
                         <div className="relative">
                             <img
                                 className="object-cover w-full h-60 group-hover:scale-105 transition-transform"
-                                src={evento.imagenes.length !== 0 ? `../../../../../public/${evento.imagenes[0].ruta}` : eventodefecto}
+                                src={evento.imagenes.length !== 0 ? importImage(evento.imagenes[0].ruta) : eventodefecto}
                                 style={{ aspectRatio: "600/400", objectFit: "cover" }}
                                 width={600}
                                 height={400}
@@ -158,7 +161,7 @@ const MisEventos = () => {
                                 </div>
                                 <div className="flex items-center gap-2 text-sm">
                                     <RiPriceTag3Line className="w-4 h-4 text-blue-500" />
-                                    <span className="text-colorFuente font-semibold">{evento.precio} €</span>
+                                    <span className="text-colorFuente font-semibold">{evento.precio === 0 ? 'Gratis' : evento.precio + " €"}</span>
                                 </div>
                                 {user && user.id === evento.idOrganizador && (
                                     <div className="flex justify-end items-center gap-2">

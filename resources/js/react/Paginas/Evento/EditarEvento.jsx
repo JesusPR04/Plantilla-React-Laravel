@@ -57,6 +57,10 @@ function EditarEvento() {
     const [imagenes, setImagenes] = useState([]);
     const [imagenesEliminadas, setImagenesEliminadas] = useState([]);
 
+    const importImage = (ruta) => {
+        return new URL(`../../assets/${ruta}`, import.meta.url).href;
+    };
+
     return (
         <main className='bg-gray-100 min-h-[calc(100vh-436px)] py-12'>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-colorFuente uppercase text-center">
@@ -256,7 +260,7 @@ function EditarEvento() {
                 <div className="w-full col-span-3 flex flex-wrap justify-center sm:justify-between gap-y-1">
                     {evento.imagenes && evento.imagenes.map((imagen, index) => (
                         <div key={index} className='relative'>
-                            <img className='w-60 h-44 rounded-lg' src={`../../../../../public/${imagen.ruta}`} alt={`Imagen ${index}`} />
+                            <img className='w-60 h-44 rounded-lg' src={importImage(imagen.ruta)} alt={`Imagen ${index}`} />
                             <span className="absolute top-2 left-2 bg-blue-500 text-white font-semibold text-xs rounded-full inline-block z-1 cursor-pointer">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-circle-x"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
                             </span>
