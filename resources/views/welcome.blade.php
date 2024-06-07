@@ -6,6 +6,7 @@
         <title>Eventia</title>
         @viteReactRefresh
         @vite('resources/js/app.js')
+        @vite('../path/to/flowbite/dist/flowbite.min.js')
         <!-- Favicon -->
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">  
     </head>
