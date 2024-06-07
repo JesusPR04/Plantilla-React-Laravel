@@ -269,7 +269,6 @@ class EventoController extends Controller
                 "message" => "ID de evento no válido"
             ], 400);
         }
-
         // Buscar el evento a eliminar
         $evento = Eventos::where('id', $id)->where('idOrganizador', $request->user()->id)->first();
 

@@ -601,7 +601,7 @@ export const eliminarEvento = async (id) => {
   try {
     const url = `${PATH_API}/deleteEvent/${id}`
     const headers = {
-      method: 'POST',
+      method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'

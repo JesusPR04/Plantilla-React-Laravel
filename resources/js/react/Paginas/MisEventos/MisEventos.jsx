@@ -166,7 +166,7 @@ const MisEventos = () => {
                                 {user && user.id === evento.idOrganizador && (
                                     <div className="flex justify-end items-center gap-2">
                                         <button onClick={() => navigate('/editarEvento', { state: { evento } })}  
-                                        className=" bg-blue-500 text-white font-semibold px-2 py-1 text-xs rounded-full inline-block z-20 cursor-pointer">
+                                        className=" bg-blue-500 text-white font-semibold px-2 py-1 text-xs rounded-full inline-block z-20 cursor-pointer hover:scale-105 duration-100">
                                             Editar
                                         </button>
                                         <button onClick={()=> borrarEvento(evento.id)} 

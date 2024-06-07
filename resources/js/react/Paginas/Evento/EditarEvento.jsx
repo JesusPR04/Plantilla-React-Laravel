@@ -350,7 +350,12 @@ function EditarEvento() {
                 <div className='col-span-3 sm:col-span-2'>
                     <p className='font-semibold'><span className='text-red-500 font-bold'>*</span> La primera foto será la elegida como portada</p>
                 </div>
-                <div className='col-end-4 sm:col-span-1 flex justify-end'>
+                <div className='col-end-4 sm:col-span-1 flex justify-end gap-4'>
+                    <input
+                        type="submit" value="Cancelar"
+                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded cursor-pointer"
+                        onClick={() => navigate('/misEventos')}
+                    />
                     <input
                         type="submit" value="Editar Evento"
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer"

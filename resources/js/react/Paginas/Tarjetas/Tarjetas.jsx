@@ -13,7 +13,7 @@ const Tarjetas = () => {
     cvv: ''
   });
   const [editForm, setEditForm] = useState(null);
-
+  
   useEffect(() => {
     loadCards();
   }, []);
@@ -26,12 +26,18 @@ const Tarjetas = () => {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.id]: e.target.value });
   };
-
+  
+  const [cvv, setCvv] = useState({estado: false})
+  const [numeros, setNumeros] = useState({estado: false})
+  const [caducidad, setCaducidad] = useState({estado: false})
   const handleAddCard = async () => {
     const response = await añadirTarjeta(form)
     if (response.status) {
       toast.success(response.message)
     } else {
+      if (response.errors?.cvv) {setCvv({...cvv, estado:true}); toast.error(response.errors.cvv[0])}else{setCvv({...cvv, estado:false})}
+      if (response.errors?.caducidad) {setCaducidad({...caducidad, estado:true}); toast.error(response.errors.caducidad[0])}else{setCaducidad({...caducidad, estado:false})}
+      if (response.errors?.numero) {setNumeros({...numeros, estado:true}); toast.error(response.errors.numero[0])}else{setNumeros({...numeros, estado:false})}
       toast.error(response.message)
     }
     loadCards();
@@ -94,7 +100,7 @@ const Tarjetas = () => {
               <label className="text-sm font-medium text-colorFuente" htmlFor="numero">
                 Número de Tarjeta
               </label>
-              <input className="flex h-10 w-full rounded-md border border-input px-3 py-2 sm:text-sm bg-gray-50 border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              <input style={{borderColor: numeros.estado ? 'red': ''}} className="flex h-10 w-full rounded-md border border-input px-3 py-2 sm:text-sm bg-gray-50 border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 id="numero" placeholder="0000 0000 0000 0000" type="text" value={form.numero} onChange={handleChange} />
             </div>
             <div className="grid grid-cols-3 gap-4">
@@ -102,14 +108,14 @@ const Tarjetas = () => {
                 <label className="text-sm font-medium text-colorFuente" htmlFor="caducidad">
                   Mes/Año
                 </label>
-                <input className="flex h-10 w-full rounded-md border border-input px-3 py-2 sm:text-sm bg-gray-50 border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                <input style={{borderColor: caducidad.estado ? 'red': ''}} className="flex h-10 w-full rounded-md border border-input px-3 py-2 sm:text-sm bg-gray-50 border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                   id="caducidad" placeholder="MM/YY" type="text" value={form.caducidad} onChange={handleChange} />
               </div>
               <div className="space-y-2 col-span-1">
                 <label className="text-sm font-medium text-colorFuente" htmlFor="cvv">
                   CVC
                 </label>
-                <input className="flex h-10 w-full rounded-md border border-input px-3 py-2 sm:text-sm bg-gray-50 border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                <input style={{borderColor: cvv.estado ? 'red': ''}} className="flex h-10 w-full rounded-md border border-input px-3 py-2 sm:text-sm bg-gray-50 border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                   id="cvv" placeholder="123" type="text" value={form.cvv} onChange={handleChange} />
               </div>
             </div>
