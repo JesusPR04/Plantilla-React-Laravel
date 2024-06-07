@@ -16,6 +16,7 @@
     "dependencies": {
         "@vitejs/plugin-react": "^4.2.1",
         "button": "^1.1.1",
+        "flowbite": "^2.3.0",
         "popover": "^2.4.1",
         "react": "^18.2.0",
         "react-button": "^1.2.1",

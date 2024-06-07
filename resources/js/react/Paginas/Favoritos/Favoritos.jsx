@@ -7,6 +7,7 @@ import { BsPeople } from "react-icons/bs";
 import { RiPriceTag3Line } from "react-icons/ri";
 import { comprobarAccesoEventos, fetchUserData, getMisFavoritos } from '../../api/requests';
 import { ToastContainer, toast } from 'react-toastify';
+import { PATH_API } from '../../api/env';
 
 const Favoritos = () => {
     const [favoritos, setFavoritos] = useState([]);
@@ -58,7 +59,7 @@ const Favoritos = () => {
         const fetchEventos = async () => {
             try {
                 const response = await fetch(
-                    `http://localhost/api/getEventos?ciudad=` +
+                    `${PATH_API}/getEventos?ciudad=` +
                     ciudad +
                     ""
                 );

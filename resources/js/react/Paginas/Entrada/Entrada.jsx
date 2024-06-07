@@ -10,8 +10,7 @@ import { FaClock } from "react-icons/fa6";
 import { CiLocationOn } from "react-icons/ci";
 import { BsPeople } from "react-icons/bs";
 import { RiPriceTag3Line } from "react-icons/ri";
-
-const BASE_URL = "http://localhost:";
+import { PATH_API } from "../../api/env";
 
 const Entrada = () => {
     const [user, setUser] = useState(null);
@@ -68,7 +67,7 @@ const Entrada = () => {
         const fetchEventos = async () => {
             try {
                 const response = await fetch(
-                    `http://localhost/api/getEventos?ciudad=` +
+                    `${PATH_API}/getEventos?ciudad=` +
                     ciudad +
                     ""
                 );

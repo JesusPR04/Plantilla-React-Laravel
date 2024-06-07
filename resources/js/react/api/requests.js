@@ -1,6 +1,8 @@
+import { PATH_API } from './env.js'
+
 export const login = async (email, password) => {
   try {
-    const response = await fetch('http://localhost/api/login', {
+    const response = await fetch(`${PATH_API}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -17,7 +19,7 @@ export const login = async (email, password) => {
 };
 
 export const register = async (name, surname, email, city, telephone, password) => {
-  const url = 'http://localhost/api/register'
+  const url = `${PATH_API}/register`
   const options = {
     method: 'Post',
     headers: {
@@ -43,7 +45,7 @@ export const register = async (name, surname, email, city, telephone, password) 
 }
 
 export const getCiudades = async () => {
-  const url = 'http://localhost/ciudades'
+  const url = `${PATH_API}/ciudades`
   try {
     const response = await fetch(url)
     const data = response.json()
@@ -54,7 +56,7 @@ export const getCiudades = async () => {
 }
 
 export const getGenrers = async () => {
-  const url = 'http://localhost/categorias'
+  const url = `${PATH_API}/categorias`
   try {
     const response = await fetch(url)
     const data = response.json()
@@ -65,7 +67,7 @@ export const getGenrers = async () => {
 }
 
 export const getTotalEvents = async () => {
-  const url = 'http://localhost/api/totalEvent'
+  const url = `${PATH_API}/totalEvent`
   try {
     const response = await fetch(url)
     const data = response.json()
@@ -76,7 +78,7 @@ export const getTotalEvents = async () => {
 }
 
 export const getTotalOrganizers = async () => {
-  const url = 'http://localhost/api/totalOrganizers'
+  const url = `${PATH_API}/totalOrganizers`
   try {
     const response = await fetch(url)
     const data = response.json()
@@ -88,7 +90,7 @@ export const getTotalOrganizers = async () => {
 
 export const organizador = async (formData) => {
   const token = localStorage.getItem('user-token');
-  const url = 'http://localhost/api/organizador'
+  const url = `${PATH_API}/organizador`
   const options = {
     headers: {
       'Authorization': `Bearer ${token}`
@@ -107,7 +109,7 @@ export const organizador = async (formData) => {
 }
 
 export const crearEvento = async (formData) => {
-  const url = 'http://localhost/api/storeEvent'
+  const url = `${PATH_API}/storeEvent`
   const options = {
     method: "Post",
     body: formData
@@ -128,7 +130,7 @@ export const comprarEntrada = async ({ idUsuario, idEvento, cantidad, metodoPago
     throw new Error('No token found');
   }
 
-  const response = await fetch('http://localhost/api/entradas/comprar', {
+  const response = await fetch(`${PATH_API}/entradas/comprar`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -145,7 +147,7 @@ export const comprarEntrada = async ({ idUsuario, idEvento, cantidad, metodoPago
 
 
 export const getEntradas = async (token) => {
-  const response = await fetch('http://localhost/api/entradas', {
+  const response = await fetch(`${PATH_API}/entradas`, {
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -169,7 +171,7 @@ export const fetchUserData = async () => {
   }
 
   try {
-    const response = await fetch('http://localhost/api/user', { // Asegúrate de usar la URL correcta
+    const response = await fetch(`${PATH_API}/user`, { // Asegúrate de usar la URL correcta
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
@@ -191,7 +193,7 @@ export const fetchUserData = async () => {
 
 export const updateUserData = async (userData) => {
   const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
-  const response = await fetch('http://localhost/api/user', {
+  const response = await fetch(`${PATH_API}/user`, {
     method: 'PUT',
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -207,7 +209,7 @@ export const updateUserData = async (userData) => {
 
 export const getEventos = async (filters = {}) => {
   const queryString = new URLSearchParams(filters).toString();
-  const url = `http://localhost/api/getEventos?${queryString}`;
+  const url = `${PATH_API}/getEventos?${queryString}`;
   try {
     const response = await fetch(url);
     const data = await response.json();
@@ -216,10 +218,10 @@ export const getEventos = async (filters = {}) => {
     console.error(error);
     throw error;
   }
-};
+}; 
 
 export const getEventoById = async (id) => {
-  const url = `http://localhost/api/evento/${id}`;
+  const url = `${PATH_API}/evento/${id}`;
   try {
     const response = await fetch(url);
     const data = await response.json();
@@ -238,7 +240,7 @@ export const comprobarAccesoAdmin = async () => {
   }
 
   try {
-    const url = 'http://localhost/api/admin'
+    const url = `${PATH_API}/admin`
     const headers = {
       method: 'POST',
       headers: {
@@ -262,7 +264,7 @@ export const recogerPeticiones = async () => {
     throw new Error('No token found');
   }
   try {
-    const url = 'http://localhost/api/peticiones'
+    const url = `${PATH_API}/peticiones`
     const headers = {
       method: 'GET',
       headers: {
@@ -286,7 +288,7 @@ export const descargarArchivo = async (archivo) => {
     throw new Error('No token found');
   }
   try {
-    const url = 'http://localhost/api/descargarArchivo'
+    const url = `${PATH_API}/descargarArchivo`
     const headers = {
       method: 'POST',
       headers: {
@@ -325,7 +327,7 @@ export const permitirOrganizador = async () => {
   }
 
   try {
-    const url = 'http://localhost/api/organizador'
+    const url = `${PATH_API}/organizador`
     const headers = {
       method: 'GET',
       headers: {
@@ -349,7 +351,7 @@ export const comprobarSolicitud = async (request) => {
     throw new Error('No token found');
   }
   try {
-    const url = 'http://localhost/api/comprobarSolicitud'
+    const url = `${PATH_API}/comprobarSolicitud`
     const headers = {
       method: 'POST',
       headers: {
@@ -375,7 +377,7 @@ export const comprobarFavorito = async (evento) => {
   }
 
   try {
-    const url = 'http://localhost/api/favorito'
+    const url = `${PATH_API}/favorito`
     const headers = {
       method: 'POST',
       headers: {
@@ -400,7 +402,7 @@ export const marcarFavorito = async (evento) => {
   }
 
   try {
-    const url = 'http://localhost/api/marcarFavorito'
+    const url = `${PATH_API}/marcarFavorito`
     const headers = {
       method: 'POST',
       headers: {
@@ -424,7 +426,7 @@ export const getMisEventos = async () => {
     throw new Error('No token found');
   }
 
-  const response = await fetch('http://localhost/api/miseventos', {
+  const response = await fetch(`${PATH_API}/miseventos`, {
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -448,7 +450,7 @@ export const getMisFavoritos = async (evento) => {
   }
 
   try {
-    const url = 'http://localhost/api/misFavoritos'
+    const url = `${PATH_API}/misFavoritos`
     const headers = {
       method: 'POST',
       headers: {
@@ -473,7 +475,7 @@ export const cancelarEntrada = async (id) => {
   }
 
   try {
-    const url = `http://localhost/api/cancelarEntrada/${id}`
+    const url = `${PATH_API}/cancelarEntrada/${id}`
     const headers = {
       method: 'GET',
       headers: {
@@ -495,11 +497,76 @@ export const getTarjetas = async () => {
   if (!token) {
     throw new Error('No token found');
   }
-
   try {
-    const url = `http://localhost/api/tarjetas`
+    const url = `${PATH_API}/tarjetas`
     const headers = {
-      method: 'GET',
+      method: 'get',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+    }
+    const response = await fetch(url,headers);
+    const data = await response.json();
+    return data.tarjetas;
+  } catch (error) {
+    console.error('Error fetching tarjetas:', error);
+    return [];
+  }
+}
+
+export const añadirTarjeta = async (formData) => {
+  const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
+
+  if (!token) {
+    throw new Error('No token found');
+  }
+  const url = `${PATH_API}/tarjetas`
+  const options = {
+    method: "Post",
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formData)
+  }
+  try {
+    const response = await fetch(url, options)
+    const data = response.json()
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const editarTarjeta = async (formData) => {
+  const url = `${PATH_API}/tarjetas`
+  const options = {
+    method: "Put",
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: formData
+  }
+  try {
+    const response = await fetch(url, options)
+    const data = response.json()
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const borrarTarjeta = async (id) => {
+  const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
+  if (!token) {
+    throw new Error('No token found');
+  }
+  try {
+    const url = `${PATH_API}/tarjetas/${id}`
+    const headers = {
+      method: 'Delete',
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
@@ -512,6 +579,7 @@ export const getTarjetas = async () => {
     throw error
   }
 }
+
 export const eliminarEvento = async (id) => {
   const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
 
@@ -520,7 +588,7 @@ export const eliminarEvento = async (id) => {
   }
 
   try {
-    const url = `http://localhost/api/deleteEvent/${id}`
+    const url = `${PATH_API}/deleteEvent/${id}`
     const headers = {
       method: 'POST',
       headers: {
@@ -544,7 +612,7 @@ export const comprobarAccesoEventos = async () => {
   }
 
   try {
-    const url = 'http://localhost/api/eventos'
+    const url = `${PATH_API}/eventos`
     const headers = {
       method: 'POST',
       headers: {

@@ -6,17 +6,10 @@
         <title>Eventia</title>
         @viteReactRefresh
         @vite('resources/js/app.js')
-
         <!-- Favicon -->
-        <link rel="shortcut icon" href="{{ Vite::asset('../resources/js/react/assets/favicon.ico') }}" type="image/x-icon">
-
-        <!-- CDN Flowvite -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">  
     </head>
     <body>
        <div id='root'></div>
-       
-       <!-- Script for Flowvite -->
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     </body>
 </html>

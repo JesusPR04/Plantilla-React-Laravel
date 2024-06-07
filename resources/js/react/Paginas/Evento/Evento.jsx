@@ -6,8 +6,6 @@ import { getEventoById, fetchUserData, comprarEntrada, comprobarFavorito, marcar
 import ImageSlider from "../../Components/ImageSlider";
 import imagenDefecto from '../../assets/eventodefecto.png'
 
-const BASE_URL = "http://localhost:";
-
 const Evento = () => {
     const { id } = useParams();
     const navigate = useNavigate();
