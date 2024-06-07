@@ -383,6 +383,7 @@ function Header() {
                             {!openMenu ? (
                                 <button
                                     onClick={() => setOpenMenu(true)}
+                                    onTouchStart={() => setOpenMenu(true)}
                                     data-collapse-toggle="navbar-search"
                                     type="button"
                                     className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-colorFuente rounded-lg md:hidden hover:bg-[#eeedf2] focus:outline-none focus:ring-2 focus:ring-gray-200"
@@ -409,6 +410,7 @@ function Header() {
                             ) : (
                                 <button
                                     onClick={() => setOpenMenu(false)}
+                                    onTouchStart={() => setOpenMenu(false)}
                                     data-collapse-toggle="navbar-search"
                                     type="button"
                                     className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-colorFuente rounded-lg md:hidden hover:bg-[#eeedf2] focus:outline-none focus:ring-2 focus:ring-gray-200"
@@ -471,14 +473,6 @@ function Header() {
                                         Encuentra eventos
                                     </Link>
                                 </li>
-                                {/* <li>
-                                    <Link
-                                        to="/organizador"
-                                        className="block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500"
-                                    >
-                                        ¿Quieres ser organizador?
-                                    </Link>
-                                </li> */}
                                 <li>
                                     <Link
                                         to="/ayuda"
