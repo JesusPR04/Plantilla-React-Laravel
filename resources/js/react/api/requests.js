@@ -639,3 +639,23 @@ export const comprobarAccesoEventos = async () => {
     throw error;
   }
 }
+
+export const editarEvento = async (id, formData) => {
+  const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
+
+  const url = `${PATH_API}/updateEvent/${id}`
+  const options = {
+    method: "POST",
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
+    body: formData
+  }
+  try {
+    const response = await fetch(url, options)
+    const data = response.json()
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}

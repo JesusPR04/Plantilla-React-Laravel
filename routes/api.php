@@ -52,7 +52,7 @@ Route::post('/eventos', [EventoController::class, 'index'])->middleware('auth:sa
 Route::post('/storeEvent', [EventoController::class, 'store'])->middleware('auth:sanctum');
 Route::get('/totalEvent', [EventoController::class, 'getCountEvent']);
 //TODO: Cambiar los post por la acción pertienente
-Route::put('/updateEvent/{id}', [EventoController::class, 'update'])->middleware('auth:sanctum');
+Route::post('/updateEvent/{id}', [EventoController::class, 'update'])->middleware('auth:sanctum');
 Route::delete('/deleteEvent/{id}', [EventoController::class, 'delete'])->middleware('auth:sanctum');
 Route::get('/getEventos', [EventoController::class, 'getEventos']);
 Route::get('/evento/{id}', [EventoController::class, 'getEventoById']);

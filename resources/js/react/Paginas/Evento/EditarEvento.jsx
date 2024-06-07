@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import Select from 'react-select';
-import { toast, ToastContainer } from 'react-toast';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { comprobarAccesoEventos, getCiudades, getGenrers } from '../../api/requests';
+import { comprobarAccesoEventos, editarEvento, getCiudades, getGenrers } from '../../api/requests';
 
 function EditarEvento() {
     const location = useLocation()
@@ -14,6 +14,8 @@ function EditarEvento() {
     const [genrers, setGenrers] = useState([]);
     const [eventGenrer, setEventGenrer] = useState({});
     const [eventCity, setEventCity] = useState({});
+    const [imagenesBorrar, setImagenesBorrar] = useState([]);
+    const [imagenes, setImagenes] = useState({ imagenes: [] });
     const navigate = useNavigate()
     const cambiarCiudad = (selectedOption) => {
         setEvento({
@@ -80,26 +82,71 @@ function EditarEvento() {
         }
     }, [permiso]);
 
-    const [imagenes, setImagenes] = useState([]);
-    const [imagenesEliminadas, setImagenesEliminadas] = useState([]);
-
     const importImage = (ruta) => {
         return new URL(`../../assets/${ruta}`, import.meta.url).href;
     };
-    const borrarFoto = (id) =>{ 
-        const newImagenes = evento.imagenes.filter(imagen => imagen.id !== id);
+
+    const handleFileChange = (e) => {
+        const { name, files } = e.target;
+        let arrayFotos = Array.from(files)
+        if (files.length + evento.imagenes.length <= 5) {
+            for (let i = 0; i < files.length; i++) {
+                if (arrayFotos[i].type !== 'image/png' && arrayFotos[i].type !== 'image/jpeg' && arrayFotos[i].type !== 'image/jpg') {
+                    arrayFotos.splice(i, 1);
+                }
+            }
+            //Para que se vea en la vista los archivos que han quedado despues de la validacion
+            let dataTransfer = new DataTransfer();
+            arrayFotos.forEach(file => dataTransfer.items.add(file));
+            e.target.files = dataTransfer.files;
+            setImagenes({
+                ...imagenes,
+                [name]: arrayFotos
+            });
+        } else {
+            toast.error('Solo se pueden subir 5 imagenes incluyendo las editables')
+            e.target.value = ''
+        }
+    };
+
+    const borrarFoto = (id) => {
+        const imagen_eliminada = evento.imagenes.find(imagen => imagen.id === id)
+        setImagenesBorrar(imagenesBorrar.concat(imagen_eliminada));
+
+        const newImagenes = evento.imagenes.filter(imagen => imagen.id !== id)
         setEvento({
             ...evento,
             imagenes: newImagenes
         });
     }
-    const actualizarEvento = () =>{
-        console.log(evento);
+    const actualizarEvento = () => {
+        const data = new FormData();
+        data.append('nombre', evento.nombre) 
+        data.append('hora', evento.hora)
+        data.append('fecha', evento.fecha)
+        data.append('localizacion', evento.localizacion)
+        data.append('idCiudad', evento.ciudad.id)
+        data.append('aforoTotal', evento.aforoTotal)
+        data.append('aforoDisponible', evento.aforoDisponible)
+        data.append('idCategoria', evento.categoria.id)
+        data.append('descripcion', evento.descripcion)
+        data.append('precio', evento.precio)
+        data.append(`imagenes_a_eliminar`, JSON.stringify(imagenesBorrar))
+        for (let i = 0; i < imagenes.imagenes.length; i++) {
+            data.append(`imagenes[${i}]`, imagenes.imagenes[i])
+        }
+        
+        editarEvento(evento.id, data)
+            .then(response => console.log(response))
+            .catch(err => {
+                toast.error('Error al editar el evento');
+                console.error(err);
+            });
     }
 
     if (loading || !permiso) {
         return <div className='min-h-[calc(100vh-436px)] text-xl sm:text-4xl pt-12 font-bold tracking-tight text-colorFuente uppercase text-center'>
-            <ToastContainer className='text-base normal-case text-black text-start'/>
+            <ToastContainer className='text-base normal-case text-black text-start' />
             Cargando...
         </div>;
     }
@@ -304,7 +351,7 @@ function EditarEvento() {
                     {evento.imagenes && evento.imagenes.map((imagen, index) => (
                         <div key={index} className='relative'>
                             <img className='w-60 h-44 rounded-lg' src={importImage(imagen.ruta)} alt={`Imagen ${index}`} />
-                            <span className="absolute top-2 left-2 bg-blue-500 text-white font-semibold text-xs rounded-full inline-block z-1 cursor-pointer" onClick={() =>borrarFoto(imagen.id)}>
+                            <span className="absolute top-2 left-2 bg-blue-500 text-white font-semibold text-xs rounded-full inline-block z-1 cursor-pointer" onClick={() => borrarFoto(imagen.id)}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-circle-x"><circle cx="12" cy="12" r="10" /><path d="m15 9-6 6" /><path d="m9 9 6 6" /></svg>
                             </span>
                         </div>
@@ -325,7 +372,8 @@ function EditarEvento() {
                         //style={{ borderColor: nombre.estado ? 'red' : '#D3D3D3' }}
                         className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
                     focus:ring-blue-500 focus:border-blue-500 block w-full"
-                        //onChange={handleFileChange}
+                        onChange={handleFileChange}
+
                         multiple
                         required
                     />

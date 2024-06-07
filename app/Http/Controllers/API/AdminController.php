@@ -73,7 +73,7 @@ class AdminController extends Controller
                         $peticion->estado = 'Aceptada';
                         $user->rol = 'Organizador';
                         if ($user->save() && $peticion->save()) {
-                            Mail::to('jpc0016@alu.medac.es')->send(new aceptarMail()); 
+                            Mail::to('jpc0016@alu.medac.es')->send(new aceptarMail());
                             return response()->json([
                                 'status' => true,
                                 'message' => 'Correo enviado correctamente'

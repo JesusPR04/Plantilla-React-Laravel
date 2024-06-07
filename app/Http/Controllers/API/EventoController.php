@@ -190,12 +190,11 @@ class EventoController extends Controller
             'hora' => 'required|regex:/\d{2}\:\d{2}/',
             'fecha' => 'required|regex:/\d{4}\-\d{2}\-\d{2}/',
             'localizacion' => 'required|string',
-            'ciudad' => 'required|integer',
-            'categoria' => 'required|integer',
+            'idCiudad' => 'required|integer',
+            'idCategoria' => 'required|integer',
             'aforoTotal' => 'required|integer|min:0',
             'aforoDisponible' => 'required|integer|min:0',
             'precio' => 'required|integer|min:0',
-            'idOrganizador' => 'required|integer',
             'descripcion' => 'required|string',
             'imagenes.*' => ['required', File::image()->types(['jpeg', 'jpg', 'png', 'gif'])->max(15 * 1024)] // Valida cada imagen individualmente
         ], $mensajes);
@@ -204,41 +203,97 @@ class EventoController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $evento = Eventos::find($id);
+        $evento = Eventos::where('id', $id)->where('idOrganizador', $request->user()->id)->first();
 
         if (is_null($evento)) {
-            return response()->json(["message" => "Evento no encontrado"]);
+            return response()->json([
+                'status' => false,
+                "message" => "Evento no encontrado"
+            ], 404);
         }
-        $evento->nombre = $request->nombre;
-        $evento->hora = $request->hora;
-        $evento->fecha = $request->fecha;
-        $evento->localizacion = $request->localizacion;
-        $evento->aforoTotal = $request->aforoTotal;
-        $evento->aforoDisponible = $request->aforoDisponible;
-        $evento->idCategoria = $request->idCategoria;
-        $evento->descripcion = $request->descripcion;
-        $evento->precio = $request->precio;
-        $evento->idOrganizador = $request->idOrganizador;
-        $evento->idCiudad = $request->idCiudad;
+        try {
+            $evento->nombre = $request->nombre;
+            $evento->hora = $request->hora;
+            $evento->fecha = $request->fecha;
+            $evento->localizacion = $request->localizacion;
+            $evento->aforoTotal = $request->aforoTotal;
+            $evento->aforoDisponible = $request->aforoDisponible;
+            $evento->idCategoria = $request->idCategoria;
+            $evento->descripcion = $request->descripcion;
+            $evento->precio = $request->precio;
+            $evento->idCiudad = $request->idCiudad;
 
-        $evento->save();
+            if (!$evento->save()) {
+                return response()->json([
+                    'status' => false,
+                    "message" => 'Error al guardar el evento'
+                ], 400);
+            }
+            $imagenes_borrar = json_decode($request->input('imagenes_a_eliminar'), true);
+
+            if (count($imagenes_borrar) > 0) {
+                foreach ($imagenes_borrar as $idImagen) {
+                    $evento = Eventos::where('id', $idImagen['idEvento'])->where('idOrganizador', $request->user()->id)->first();
+                    if (!is_null($evento)) {
+                        $imagen = Imagenes::where('id', $idImagen['id'])->first();
+                        if (!is_null($imagen)) {
+                            $imagen->delete();
+                        }else{
+                            return response()->json([
+                                'status' => false,
+                                'message' => 'No se encuentra la imagen a borrar'
+                            ], 404);
+                        }
+                    }else{
+                        return response()->json([
+                            'status' => false,
+                            "message" => "Las imagenes no corresponden al evento esperado"
+                        ], 400);
+                    }
+                }
+            }
+
+            if ($request->hasFile('imagenes')) {
+                // Iteración sobre cada imagen
+                foreach ($request->file('imagenes') as $image) {
+                    $uuid = Str::uuid(); // Genera un UUID único
+                    // Nombre de la imagen idEvento más id único aleatorio más la extensión de la imagen
+                    $imageName = 'Event' . $id . '_' . $uuid . '.' . $image->getClientOriginalExtension();
+                    // Guarda la imagen en la carpeta
+                    $image->move(resource_path('js/react/assets/images'), $imageName);
+    
+                    $imagen = new Imagenes();
+                    $imagen->ruta = 'images/' . $imageName; // Guarda la ruta de la imagen
+                    $imagen->idEvento = $evento->id; // Asocia la imagen con el evento
+                    if (!$imagen->save()) {
+                        return response()->json([
+                            'status' => false,
+                            'message' => 'Error al guardar la imagen'
+                        ], 400);
+                    }
+                }
+            }
+            return response()->json([
+                'status' => true,
+                'message' => 'Evento editado correctamente'
+            ], 200);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                "message" => $th->getMessage()
+            ], 500);
+        }
+        /*
+
+        }
+        
+
+        
 
         // Maneja la eliminación de imágenes existentes
         // Imagenes a eliminar contendrá el id de la imagen o un array en caso de ser más de una
-        if ($request->has('imagenes_a_eliminar')) {
-            foreach ($request->imagenes_a_eliminar as $imagenId) {
-                // Encuentra la imagen por su ID
-                $imagen = Imagenes::find($imagenId);
-                if (!is_null($imagen)) {
-                    // Elimina el archivo de imagen del servidor
-                    if (file_exists(public_path($imagen->ruta))) {
-                        unlink(public_path($imagen->ruta));
-                    }
-                    // Elimina la entrada de la imagen de la base de datos
-                    $imagen->delete();
-                }
-            }
-        }
+        
 
         // Comprueba si en la solicitud ($request) hay un archivo con el nombre imagenes.
         if ($request->hasFile('imagenes')) {
@@ -256,7 +311,7 @@ class EventoController extends Controller
                 $imagen->save();
             }
         }
-
+ */
         return response()->json($evento);
     }
 

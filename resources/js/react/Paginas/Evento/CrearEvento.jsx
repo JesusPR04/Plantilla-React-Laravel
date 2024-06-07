@@ -19,20 +19,20 @@ function CrearEvento() {
     const [ciudades, setCiudades] = useState([]);
     const [genrers, setGenrers] = useState([]);
 
-    useEffect(() => {    
+    useEffect(() => {
         comprobarAccesoEventos()
-        .then((respuesta) => {
-            if (!respuesta.status) {
-                toast.error(respuesta.message)
-                setTimeout(() => {navigate('/')}, 2000)
-            }else{
-                setPermiso(true)
-            }
-        })
-        .catch(error => {
-            toast.error(error.message)
-            setTimeout(() => {navigate('/')}, 2000)
-        })
+            .then((respuesta) => {
+                if (!respuesta.status) {
+                    toast.error(respuesta.message)
+                    setTimeout(() => { navigate('/') }, 2000)
+                } else {
+                    setPermiso(true)
+                }
+            })
+            .catch(error => {
+                toast.error(error.message)
+                setTimeout(() => { navigate('/') }, 2000)
+            })
     }, [])
 
     useEffect(() => {
@@ -79,27 +79,32 @@ function CrearEvento() {
 
     const handleFileChange = (e) => {
         const { name, files } = e.target;
-        let arrayFotos = Array.from(files)
-        for (let i = 0; i < files.length; i++) {
-            if (arrayFotos[i].type !== 'image/png' && arrayFotos[i].type !== 'image/jpeg' && arrayFotos[i].type !== 'image/jpg') {
-                arrayFotos.splice(i, 1);
+        if (files.length <= 5) {
+            let arrayFotos = Array.from(files)
+            for (let i = 0; i < files.length; i++) {
+                if (arrayFotos[i].type !== 'image/png' && arrayFotos[i].type !== 'image/jpeg' && arrayFotos[i].type !== 'image/jpg') {
+                    arrayFotos.splice(i, 1);
+                }
             }
+            //Para que se vea en la vista los archivos que han quedado despues de la validacion
+            let dataTransfer = new DataTransfer();
+            arrayFotos.forEach(file => dataTransfer.items.add(file));
+            e.target.files = dataTransfer.files;
+            setFormData({
+                ...formData,
+                [name]: arrayFotos
+            });
+        }else{
+            toast.error('Solo se pueden subir 5 imagenes incluyendo las editables')
+            e.target.value = ''
         }
-        //Para que se vea en la vista los archivos que han quedado despues de la validacion
-        let dataTransfer = new DataTransfer();
-        arrayFotos.forEach(file => dataTransfer.items.add(file));
-        e.target.files = dataTransfer.files;
-        setFormData({
-            ...formData,
-            [name]: arrayFotos
-        });
     };
 
     function enviarEvento() {
         if (formData.imagenes.length === 0) {
             setImagenes({ ...imagenes, estado: true });
             toast.error('Debe subir al menos una imagen');
-        }else{
+        } else {
             setImagenes({ ...imagenes, estado: false });
         }
         const data = new FormData();
@@ -159,7 +164,7 @@ function CrearEvento() {
     if (!permiso) {
         return (
             <div className="min-h-[calc(100vh-436px)] text-center mt-10 text-colorFuente text-xl sm:text-4xl font-bold uppercase">
-                <ToastContainer className='text-base normal-case text-black text-start'/>
+                <ToastContainer className='text-base normal-case text-black text-start' />
                 Cargando...
             </div>
         )
