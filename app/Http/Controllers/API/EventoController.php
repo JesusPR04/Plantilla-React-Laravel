@@ -29,59 +29,6 @@ class EventoController extends Controller
     }
     public function getEventos(Request $request)
     {
-        /* $query = "SELECT e.* , i.ruta FROM eventos e
-        LEFT JOIN  imagenes i on i.idEvento=e.id"; 
-
-        $filtros = [];
-
-        if (!is_null($request->input('fechaDesde'))) {
-            $filtros[] = "fecha >= '" . $request->input('fechaDesde') . "'";
-        }
-
-        if (!is_null($request->input('fechaHasta'))) {
-            $filtros[] = "fecha <= '" . $request->input('fechaHasta') . "'";
-        }
-
-        if (!is_null($request->input('aforoMin'))) {
-            $filtros[] = "aforoDisponible >= " . $request->input('aforoMin');
-        }
-
-        if (!is_null($request->input('aforoMax'))) {
-            $filtros[] = "aforoDisponible <= " . $request->input('aforoMax');
-        }
-
-        if (!is_null($request->input('agotado'))) {
-            $agotado = $request->input('agotado') ? 0 : 1;
-            $filtros[] = "aforoDisponible = " . $agotado;
-        }
-
-        if (!is_null($request->input('categoria'))) {
-            $filtros[] = "idCategoria = '" . $request->input('categoria') . "'";
-        }
-
-        if (!is_null($request->input('precioMin')) && $request->input('precioMin') !=0) {
-            $filtros[] = "precio >= " . $request->input('precioMin');
-        }
-
-        if (!is_null($request->input('precioMax'))) {
-            $filtros[] = "precio <= " . $request->input('precioMax');
-        }
-
-        if (!is_null($request->input('ciudad'))) {
-            $filtros[] = "idCiudad = " . $request->input('ciudad');
-        }
-
-        if (!empty($filtros)) {
-            $query .= " WHERE " . implode(" AND ", $filtros);
-        }
-
-        $query .= " ORDER BY fecha ASC";
-
-        
-
-        $eventos = DB::select($query);
-
-        return response()->json($eventos); */
 
         $query = Eventos::with(['imagenes', 'ciudad']);
 
@@ -240,16 +187,16 @@ class EventoController extends Controller
 
         $validator = Validator::make($request->all(), [
             'nombre' => 'required',
-            'precio' => 'required|integer|min:0',
             'hora' => 'required|regex:/\d{2}\:\d{2}/',
             'fecha' => 'required|regex:/\d{4}\-\d{2}\-\d{2}/',
-            'aforoTotal' => 'required|integer|min:0',
-            'aforoDisponible' => 'required|integer|min:0',
-            'descripcion' => 'required|string',
-            'idOrganizador' => 'required|integer',
+            'localizacion' => 'required|string',
             'ciudad' => 'required|integer',
             'categoria' => 'required|integer',
-            'localizacion' => 'required|string',
+            'aforoTotal' => 'required|integer|min:0',
+            'aforoDisponible' => 'required|integer|min:0',
+            'precio' => 'required|integer|min:0',
+            'idOrganizador' => 'required|integer',
+            'descripcion' => 'required|string',
             'imagenes.*' => ['required', File::image()->types(['jpeg', 'jpg', 'png', 'gif'])->max(15 * 1024)] // Valida cada imagen individualmente
         ], $mensajes);
 

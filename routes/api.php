@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Categorias;
 use App\Models\Eventos;
 use App\Models\Ciudades;
 use App\Models\Entradas;
@@ -28,7 +29,7 @@ use App\Http\Controllers\API\OrganizadorController;
 // Usuario
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     $user = $request->user();
-    $ciudad_id=Ciudades::where('nombre',$user->ciudad)->first()->id;
+    $ciudad_id = Ciudades::where('nombre', $user->ciudad)->first()->id;
     return response()->json([
         'id' => $user->id,
         'nombre' => $user->nombre,
@@ -66,7 +67,7 @@ Route::middleware('auth:sanctum')->get('/entradas', function (Request $request) 
         $evento = $entrada->evento;
         $imagenes = Eventos::with('imagenes')->find($evento->id);
         $entrada->evento->imagenes = $imagenes->imagenes;
-    }  
+    }
     return response()->json($entradas);
 });
 
@@ -78,6 +79,20 @@ Route::middleware('auth:sanctum')->get('/miseventos', function (Request $request
     $user = $request->user();
     $eventos = Eventos::with(['imagenes', 'ciudad', 'categoria'])->where('idOrganizador', $user->id)->get();
     return response()->json($eventos);
+});
+Route::get('/ciudades', function (Request $request) {
+    $ciudades = Ciudades::all();
+    return response()->json([
+        'status' => true,
+        'ciudades' => $ciudades
+    ]);
+});
+Route::get('/categorias', function (Request $request) {
+    $categorias = Categorias::all();
+    return response()->json([
+        'status' => true,
+        'categorias' => $categorias
+    ]);
 });
 
 // Admin
@@ -98,8 +113,8 @@ Route::get('/tarjetas/{id}', [TarjetasController::class, 'show'])->middleware('a
 Route::put('/tarjetas/{id}', [TarjetasController::class, 'update'])->middleware('auth:sanctum');
 Route::delete('/tarjetas/{id}', [TarjetasController::class, 'destroy'])->middleware('auth:sanctum');
 
-Route::get('/prueba',function(){
+Route::get('/prueba', function () {
     return response()->json([
-        "mensaje"=>"TODO OK"
+        "mensaje" => "TODO OK"
     ]);
 });
