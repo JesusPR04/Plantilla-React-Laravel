@@ -95,7 +95,7 @@ Route::post('/misFavoritos', [FavoritosController::class, 'misFavoritos'])->midd
 Route::get('/tarjetas', [TarjetasController::class, 'index'])->middleware('auth:sanctum');
 Route::post('/tarjetas', [TarjetasController::class, 'store'])->middleware('auth:sanctum');
 Route::get('/tarjetas/{id}', [TarjetasController::class, 'show'])->middleware('auth:sanctum');
-Route::put('/tarjetas', [TarjetasController::class, 'update'])->middleware('auth:sanctum');
+Route::put('/tarjetas/{id}', [TarjetasController::class, 'update'])->middleware('auth:sanctum');
 Route::delete('/tarjetas/{id}', [TarjetasController::class, 'destroy'])->middleware('auth:sanctum');
 
 Route::get('/prueba',function(){
