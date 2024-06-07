@@ -315,7 +315,7 @@ const Evento = () => {
                                                         Precio
                                                     </h3>
                                                     <p className="text-colorFuente">
-                                                        {evento.precio === 0 ? 'Gratis' : evento.precio + " € o " + { precioEnPuntos } + ' puntos'}
+                                                        {evento.precio === 0 ? 'Gratis' : <span>{evento.precio} € o {precioEnPuntos} puntos</span>}
                                                     </p>
                                                 </div>
                                                 <p> <span className="text-red-500 font-bold">*</span> Solo podrás comprar como máximo 5 entradas</p>
