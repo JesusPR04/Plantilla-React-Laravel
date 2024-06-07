@@ -299,7 +299,7 @@ const Evento = () => {
                                             Precio
                                         </h3>
                                         <p className="text-colorFuente">
-                                            {evento.precio} € o {precioEnPuntos} puntos
+                                            {evento.precio === 0 ? 'Gratis' : evento.precio + " € o " + {precioEnPuntos} +' puntos'}
                                         </p>
                                     </div>
                                 </div>)

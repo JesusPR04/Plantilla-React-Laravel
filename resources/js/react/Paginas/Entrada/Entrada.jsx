@@ -186,7 +186,7 @@ const Entrada = () => {
                                         <div className="flex items-center gap-2 text-sm">
                                             <RiPriceTag3Line className="w-4 h-4 text-blue-500" />
                                             <span className="text-colorFuente font-semibold">
-                                                {evento.precio} €
+                                                {evento.precio === 0 ? 'Gratis' : evento.precio + " €"}
                                             </span>
                                         </div>
                                     </div>
