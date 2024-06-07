@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { FaRegTrashCan } from "react-icons/fa6";
 import { FiCreditCard } from "react-icons/fi";
 import { añadirTarjeta, editarTarjeta, borrarTarjeta, getTarjetas } from '../../api/requests'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Tarjetas = () => {
   const [cards, setCards] = useState([]);
   const [form, setForm] = useState({
     numero: '',
     caducidad: '',
-    cvv: '',
-    nombre: ''
+    cvv: ''
   });
   const [editForm, setEditForm] = useState(null);
 
@@ -18,7 +19,6 @@ const Tarjetas = () => {
   }, []);
 
   const loadCards = async () => {
-    console.log(getTarjetas());
     const tarjetas = await getTarjetas();
     setCards(tarjetas);
   };
@@ -28,13 +28,17 @@ const Tarjetas = () => {
   };
 
   const handleAddCard = async () => {
-    await añadirTarjeta(form);
+    const response = await añadirTarjeta(form)
+    if (response.status) {
+      toast.success(response.message)
+    } else {
+      toast.error(response.message)
+    }
     loadCards();
     setForm({
       numero: '',
       caducidad: '',
       cvv: '',
-      nombre: ''
     });
   };
 
@@ -43,84 +47,103 @@ const Tarjetas = () => {
   };
 
   const handleEditCard = async (id) => {
-    await editarTarjeta(id, editForm);
+    const response = await editarTarjeta(id, editForm);
+    if (response.status) {
+      toast.success(response.message)
+    } else {
+      toast.error(response.message)
+    }
     loadCards();
     setEditForm(null);
   };
 
   const handleDeleteCard = async (id) => {
-    await borrarTarjeta(id);
+    const response = await borrarTarjeta(id);
+    if (response.status) {
+      toast.success(response.message)
+    } else {
+      toast.error(response.message)
+    }
     loadCards();
   };
 
+  const maskCardNumber = (cardNumber) => {
+    const firstFour = cardNumber.slice(0, 4)
+    const lastFour = cardNumber.slice(-4)
+    const middleHidden = 'X'.repeat(cardNumber.length - 8)
+    const hiddenWithSpaces = middleHidden.replace(/(.{4})/g, '$1 ')
+    return `${firstFour} ${hiddenWithSpaces} ${lastFour}`
+  }
+
   return (
-    <main className='min-h-[calc(100vh-436px)] bg-gray-100 flex flex-col'>
+    <main className='min-h-[calc(100vh-436px)] bg-gray-100 p-10 text-colorFuente'>
+      <ToastContainer />
       <div className="grid gap-6 md:grid-cols-2">
-        <div className="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+        <div className="rounded-lg border bg-white text-card-foreground shadow-sm" data-v0-t="card">
           <div className="flex flex-col space-y-1.5 p-6">
-            <h3 className="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight">Agregar Tarjeta de Crédito</h3>
-            <p className="text-sm text-muted-foreground">Introduce tu información de pago.</p>
+            <h3 className="text-2xl font-bold leading-none tracking-tight uppercase">Agregar 
+              <span className='text-blue-500'> Tarjeta de Crédito</span></h3>
+            <p className="text-sm text-colorFuente pt-2">
+                ¡ <span className='text-blue-500 font-semibold'>Importante</span> todos los campos son <span
+                    className="bg-blue-500 text-white font-semibold px-2 py-1 text-xs rounded-full inline-block"
+                > Requeridos</span> !
+            </p>
           </div>
           <div className="p-6 space-y-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" htmlFor="numero">
+              <label className="text-sm font-medium text-colorFuente" htmlFor="numero">
                 Número de Tarjeta
               </label>
-              <input className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              <input className="flex h-10 w-full rounded-md border border-input px-3 py-2 sm:text-sm bg-gray-50 border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 id="numero" placeholder="0000 0000 0000 0000" type="text" value={form.numero} onChange={handleChange} />
             </div>
             <div className="grid grid-cols-3 gap-4">
               <div className="space-y-2 col-span-1">
-                <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" htmlFor="caducidad">
+                <label className="text-sm font-medium text-colorFuente" htmlFor="caducidad">
                   Mes/Año
                 </label>
-                <input className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                <input className="flex h-10 w-full rounded-md border border-input px-3 py-2 sm:text-sm bg-gray-50 border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                   id="caducidad" placeholder="MM/YY" type="text" value={form.caducidad} onChange={handleChange} />
               </div>
               <div className="space-y-2 col-span-1">
-                <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" htmlFor="cvv">
+                <label className="text-sm font-medium text-colorFuente" htmlFor="cvv">
                   CVC
                 </label>
-                <input className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                <input className="flex h-10 w-full rounded-md border border-input px-3 py-2 sm:text-sm bg-gray-50 border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                   id="cvv" placeholder="123" type="text" value={form.cvv} onChange={handleChange} />
               </div>
             </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" htmlFor="nombre">
-                Nombre del Titular
-              </label>
-              <input className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                id="nombre" placeholder="Nombre Apellidos..." type="text" value={form.nombre} onChange={handleChange} />
-            </div>
           </div>
           <div className="flex items-center p-6">
-            <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 ml-auto"
+            <button className="inline-flex items-center justify-center whitespace-nowrap rounded text-white font-bold  h-10 px-4 py-2 ml-auto bg-blue-500 hover:bg-blue-700"
               onClick={()=>handleAddCard()}>
               Agregar Tarjeta
             </button>
           </div>
         </div>
 
-        <div className="rounded-lg border bg-card text-card-foreground shadow-sm" data-v0-t="card">
+        <div className="rounded-lg border bg-white text-card-foreground shadow-sm" data-v0-t="card">
           <div className="flex flex-col space-y-1.5 p-6">
-            <h3 className="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight">Tarjetas de Crédito</h3>
+            <h3 className="whitespace-nowrap text-2xl font-bold leading-none tracking-tight uppercase text-colorFuente">Tarjetas de Crédito</h3>
           </div>
           <div className="p-6 space-y-4">
             {cards.length == 0 ? (
-              <p className="text-center text-gray-500">No hay tarjetas disponibles</p>
+              <p className="text-center text-colorFuente">No hay tarjetas disponibles</p>
             ) : (
               cards.map((card) => (
                 <div key={card.id} className="grid gap-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
+                  <div className="flex flex-col gap-y-4 sm:flex-row sm:gap-y-0 items-center justify-between">
+                    <div className="flex items-start gap-4">
                       <FiCreditCard className="h-8 w-8" />
                       <div>
-                        <div className="font-medium">{card.nombre} - {card.numero.slice(-4)}</div>
-                        <div className="text-sm text-gray-500 dark:text-gray-400">Expira {card.caducidad}</div>
+                        <div className="font-medium text-colorFuente">
+                          {maskCardNumber(card.numero)}
+                        </div>
+                        <div className="text-sm text-gray-400">Expira {card.caducidad}</div>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+                      <button className="inline-flex items-center justify-center whitespace-nowrap rounded text-white font-bold  h-10 px-4 py-2 ml-auto bg-blue-500 hover:bg-blue-700"
                         onClick={() => setEditForm(card)}>
                         Editar
                       </button>
@@ -131,41 +154,40 @@ const Tarjetas = () => {
                     </div>
                   </div>
                   {editForm && editForm.id === card.id && (
-                    <div className="p-6 space-y-4">
+                    <div className={`space-y-4`}>
                       <div className="space-y-2">
-                        <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" htmlFor="numero">
+                        <label className="text-sm font-medium text-colorFuente" htmlFor="numero">
                           Número de Tarjeta
                         </label>
-                        <input className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        <input className="flex h-10 w-full rounded-md border border-input px-3 py-2 sm:text-sm bg-gray-50 border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                           id="numero" placeholder="0000 0000 0000 0000" type="text" value={editForm.numero} onChange={handleEditChange} />
                       </div>
                       <div className="grid grid-cols-3 gap-4">
                         <div className="space-y-2 col-span-1">
-                          <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" htmlFor="caducidad">
-                            Mes/Año de Expiración
+                          <label className="text-sm font-medium text-colorFuente" htmlFor="caducidad">
+                            Mes/Año
                           </label>
-                          <input className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                          <input className="flex h-10 w-full rounded-md border border-input px-3 py-2 sm:text-sm bg-gray-50 border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                             id="caducidad" placeholder="MM/YY" type="text" value={editForm.caducidad} onChange={handleEditChange} />
                         </div>
                         <div className="space-y-2 col-span-1">
-                          <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" htmlFor="cvv">
+                          <label className="text-sm font-medium text-colorFuente" htmlFor="cvv">
                             CVC
                           </label>
-                          <input className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                          <input className="flex h-10 w-full rounded-md border border-input px-3 py-2 sm:text-sm bg-gray-50 border-gray-300 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                             id="cvv" placeholder="123" type="text" value={editForm.cvv} onChange={handleEditChange} />
                         </div>
                       </div>
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" htmlFor="nombre">
-                          Nombre del Titular
-                        </label>
-                        <input className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                          id="nombre" placeholder="Nombre Apellidos..." type="text" value={editForm.nombre} onChange={handleEditChange} />
-                      </div>
-                      <div className="flex items-center p-6">
-                        <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 ml-auto"
+                      <div className="flex items-center py-6 gap-x-2">
+                        <button className="inline-flex items-center justify-center whitespace-nowrap rounded text-white font-bold  h-10 px-4 py-2 ml-auto bg-blue-500 hover:bg-blue-700"
                           onClick={() => handleEditCard(card.id)}>
                           Guardar Cambios
+                        </button>
+                        <button
+                            className='bg-red-500 hover hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
+                            onClick={() => setEditForm(null)}
+                        >
+                            Cancelar
                         </button>
                       </div>
                     </div>

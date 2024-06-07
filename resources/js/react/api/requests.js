@@ -549,15 +549,16 @@ export const añadirTarjeta = async (formData) => {
   }
 }
 
-export const editarTarjeta = async (formData) => {
-  const url = `${PATH_API}/tarjetas`
+export const editarTarjeta = async (id, formData) => {
+  const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
+  const url = `${PATH_API}/tarjetas/${id}`
   const options = {
     method: "Put",
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     },
-    body: formData
+    body: JSON.stringify(formData)
   }
   try {
     const response = await fetch(url, options)
