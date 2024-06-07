@@ -382,8 +382,7 @@ function Header() {
 
                             {!openMenu ? (
                                 <button
-                                    //onClick={() => setOpenMenu(true)}
-                                    onTouchStart={() => setOpenMenu(true)}
+                                    onClick={() => setOpenMenu(true)}
                                     data-collapse-toggle="navbar-search"
                                     type="button"
                                     className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-colorFuente rounded-lg md:hidden hover:bg-[#eeedf2] focus:outline-none focus:ring-2 focus:ring-gray-200"
@@ -409,8 +408,7 @@ function Header() {
                                 </button>
                             ) : (
                                 <button
-                                    //onClick={() => setOpenMenu(false)}
-                                    onTouchStart={() => setOpenMenu(false)}
+                                    onClick={() => setOpenMenu(false)}
                                     data-collapse-toggle="navbar-search"
                                     type="button"
                                     className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-colorFuente rounded-lg md:hidden hover:bg-[#eeedf2] focus:outline-none focus:ring-2 focus:ring-gray-200"
