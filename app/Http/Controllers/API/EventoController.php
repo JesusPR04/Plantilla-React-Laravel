@@ -12,20 +12,20 @@ use Illuminate\Validation\Rules\File;
 
 class EventoController extends Controller
 {
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $user = $request->user();
         if ($user->rol === 'Usuario') {
             return response()->json([
-               'status' => false,
-               'message' => 'No tienes permisos para acceder a este recurso'
+                'status' => false,
+                'message' => 'No tienes permisos para acceder a este recurso'
             ], 403);
-        }else{
+        } else {
             return response()->json([
                 'status' => true,
                 'message' => 'Acceso concedido a mis eventos'
-             ], 200);
+            ], 200);
         }
-
     }
     public function getEventos(Request $request)
     {
@@ -228,17 +228,29 @@ class EventoController extends Controller
 
     public function update(Request $request, $id)
     {
+        $mensajes = [
+            'required' => 'El campo :attribute es obligatorio',
+            'regex' => 'El formato del campo :attribute no es correcto',
+            'integer' => 'El campo :attribute debe ser numérico',
+            'min' => 'El minimo del campo :attribute es 0',
+            'mimes' => 'El formato de las imagenes debe ser jpeg, png, jpg o gif',
+            'image' => 'El campo :attribute debe ser una imagen'
+        ];
+
         $validator = Validator::make($request->all(), [
             'nombre' => 'required',
-            'precio' => 'required',
-            'hora' => 'required',
-            'fecha' => 'required',
-            'aforoTotal' => 'required',
-            'descripcion' => 'required',
-            'idOrganizador' => 'required',
-            'idCiudad' => 'required',
-            'imagenes.*' => 'image|mimes:jpeg,png,jpg,gif' // Valida cada imagen individualmente, al actualizar evento no es obligatorio
-        ]);
+            'precio' => 'required|integer|min:0',
+            'hora' => 'required|regex:/\d{2}\:\d{2}/',
+            'fecha' => 'required|regex:/\d{4}\-\d{2}\-\d{2}/',
+            'aforoTotal' => 'required|integer|min:0',
+            'aforoDisponible' => 'required|integer|min:0',
+            'descripcion' => 'required|string',
+            'idOrganizador' => 'required|integer',
+            'ciudad' => 'required|integer',
+            'categoria' => 'required|integer',
+            'localizacion' => 'required|string',
+            'imagenes.*' => ['required', File::image()->types(['jpeg', 'jpg', 'png', 'gif'])->max(15 * 1024)] // Valida cada imagen individualmente
+        ], $mensajes);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
@@ -326,7 +338,7 @@ class EventoController extends Controller
                 'status' => true,
                 "message" => "Evento borrado correctamente"
             ], 200);
-        }else{
+        } else {
             return response()->json([
                 'status' => false,
                 "message" => "Error al borrar el evento"
