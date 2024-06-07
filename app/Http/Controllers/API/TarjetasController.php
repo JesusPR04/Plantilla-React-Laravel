@@ -52,7 +52,7 @@ class TarjetasController extends Controller
                 'idUsuario' => $request->user()->id
             ]);
             return response()->json([
-                'status' => false,
+                'status' => true,
                 'message' => 'Tarjeta creada correctamente'
             ], 201);
         } catch (\Throwable $th) {

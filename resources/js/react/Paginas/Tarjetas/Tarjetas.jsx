@@ -28,7 +28,7 @@ const Tarjetas = () => {
   };
 
   const handleAddCard = async () => {
-    const response = await añadirTarjeta(form);
+    const response = await añadirTarjeta(form)
     if (response.status) {
       toast.success(response.message)
     } else {
