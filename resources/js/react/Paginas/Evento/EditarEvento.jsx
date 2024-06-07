@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Select from 'react-select';
-import { getCiudades, getGenrers } from '../../api/requests';
+import { toast, ToastContainer } from 'react-toast';
+import 'react-toastify/dist/ReactToastify.css';
+import { comprobarAccesoEventos, getCiudades, getGenrers } from '../../api/requests';
 
 function EditarEvento() {
     const location = useLocation()
     const [evento, setEvento] = useState({})
+    const [permiso, setPermiso] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [ciudades, setCiudades] = useState([]);
     const [genrers, setGenrers] = useState([]);
     const [eventGenrer, setEventGenrer] = useState({});
     const [eventCity, setEventCity] = useState({});
+    const navigate = useNavigate()
     const cambiarCiudad = (selectedOption) => {
         setEvento({
             ...evento,
@@ -37,22 +42,43 @@ function EditarEvento() {
         });
     };
 
+    useEffect(() => {
+        comprobarAccesoEventos()
+            .then((respuesta) => {
+                if (!respuesta.status) {
+                    toast.error(respuesta.message)
+                    setTimeout(() => { navigate('/') }, 2000)
+                } else {
+                    setPermiso(true)
+                }
+            })
+            .catch(error => {
+                toast.error(error.message)
+                setTimeout(() => { navigate('/') }, 2000)
+            })
+    }, [])
     // Para establecer en los select los datos del evento y obtener todas las ciudades y categorias
     useEffect(() => {
-        if (location.state && location.state.evento) {
-            setEvento(location.state.evento);
-            setEventCity({
-                value: location.state.evento.ciudad.id,
-                label: location.state.evento.ciudad.nombre
-            })
-            setEventGenrer({
-                value: location.state.evento.categoria.id,
-                label: location.state.evento.categoria.nombre
-            })
+        try {
+            if (location.state && location.state.evento) {
+                setEvento(location.state.evento);
+                setEventCity({
+                    value: location.state.evento.ciudad.id,
+                    label: location.state.evento.ciudad.nombre
+                })
+                setEventGenrer({
+                    value: location.state.evento.categoria.id,
+                    label: location.state.evento.categoria.nombre
+                })
+            }
+            getCiudades().then((data) => setCiudades(data.ciudades));
+            getGenrers().then((data) => setGenrers(data.categorias));
+        } catch (error) {
+            toast.error(error)
+        } finally {
+            setLoading(false)
         }
-        getCiudades().then((data) => setCiudades(data.ciudades));
-        getGenrers().then((data) => setGenrers(data.categorias));
-    }, []);
+    }, [permiso]);
 
     const [imagenes, setImagenes] = useState([]);
     const [imagenesEliminadas, setImagenesEliminadas] = useState([]);
@@ -60,9 +86,26 @@ function EditarEvento() {
     const importImage = (ruta) => {
         return new URL(`../../assets/${ruta}`, import.meta.url).href;
     };
+    const borrarFoto = (id) =>{ 
+        const newImagenes = evento.imagenes.filter(imagen => imagen.id !== id);
+        setEvento({
+            ...evento,
+            imagenes: newImagenes
+        });
+    }
+    const actualizarEvento = () =>{
+        console.log(evento);
+    }
 
+    if (loading || !permiso) {
+        return <div className='min-h-[calc(100vh-436px)] text-xl sm:text-4xl pt-12 font-bold tracking-tight text-colorFuente uppercase text-center'>
+            <ToastContainer className='text-base normal-case text-black text-start'/>
+            Cargando...
+        </div>;
+    }
     return (
         <main className='bg-gray-100 min-h-[calc(100vh-436px)] py-12'>
+            <ToastContainer />
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-colorFuente uppercase text-center">
                 Edita tu
                 <span className='text-blue-500 uppercase'> evento</span>
@@ -128,7 +171,7 @@ function EditarEvento() {
                         name='fecha'
                         type="date"
                         value={evento.fecha}
-                    onChange={handleChange}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className="w-full col-span-3 sm:col-span-1">
@@ -261,8 +304,8 @@ function EditarEvento() {
                     {evento.imagenes && evento.imagenes.map((imagen, index) => (
                         <div key={index} className='relative'>
                             <img className='w-60 h-44 rounded-lg' src={importImage(imagen.ruta)} alt={`Imagen ${index}`} />
-                            <span className="absolute top-2 left-2 bg-blue-500 text-white font-semibold text-xs rounded-full inline-block z-1 cursor-pointer">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-circle-x"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
+                            <span className="absolute top-2 left-2 bg-blue-500 text-white font-semibold text-xs rounded-full inline-block z-1 cursor-pointer" onClick={() =>borrarFoto(imagen.id)}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-circle-x"><circle cx="12" cy="12" r="10" /><path d="m15 9-6 6" /><path d="m9 9 6 6" /></svg>
                             </span>
                         </div>
                     ))}
@@ -311,7 +354,7 @@ function EditarEvento() {
                     <input
                         type="submit" value="Editar Evento"
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer"
-                    //onClick={() => enviarEvento()}
+                        onClick={() => actualizarEvento()}
                     />
                 </div>
             </section>

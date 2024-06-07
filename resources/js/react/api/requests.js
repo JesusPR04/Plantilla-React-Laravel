@@ -58,6 +58,7 @@ export const getCiudades = async () => {
 export const getGenrers = async () => {
   const url = `${PATH_API}/categorias`
   try {
+    
     const response = await fetch(url)
     const data = response.json()
     return data;
@@ -109,9 +110,18 @@ export const organizador = async (formData) => {
 }
 
 export const crearEvento = async (formData) => {
+  const token = localStorage.getItem('user-token');
+
+  if (!token) {
+    throw new Error('No token found');
+  }
+
   const url = `${PATH_API}/storeEvent`
   const options = {
-    method: "Post",
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
+    method: "POST",
     body: formData
   }
   try {
