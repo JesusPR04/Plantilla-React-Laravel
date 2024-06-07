@@ -5,7 +5,7 @@ function TerminosCondiciones() {
     return (
         <main className='bg-gray-100 min-h-[calc(100vh-436px)] p-10'>
             <div class="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
-                <h1 class="text-3xl font-bold text-colorFuente mb-4">Términos y Condiciones de <span className='text-blue-500 uppercase font-bold'>Evenetia</span></h1>
+                <h1 class="text-3xl font-bold text-colorFuente mb-4">Términos y Condiciones de <span className='text-blue-500 uppercase font-bold'>Eventia</span></h1>
                 <h2 className='font-semibold text-colorFuente text-2xl mb-6'>Última actualización: 27 de mayo de 2024</h2>
 
                 <section class="mb-6">

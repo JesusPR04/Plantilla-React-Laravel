@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,  } from "react-router-dom";
 import logo from "../assets/Eventia-logo-removebg.png";
 import { fetchUserData } from "../api/requests";
 
@@ -16,12 +16,18 @@ function Header() {
         }
     }, [token])
 
-    const cambiarNombreBusqueda = (e) =>{
+    const cambiarNombreBusqueda = (e) => {
         setNombre(() => e.target.value)
     }
     const buscarEventos = (e) => {
         if (e.key === 'Enter') {
-            navigate('/buscadoreventos?nombre=' + nombre)
+            const nuevaRuta = '/buscadoreventos?nombre=' + nombre;
+            if (!location.pathname.includes("buscadoreventos")) {
+                navigate(nuevaRuta);
+            } else {
+                navigate(nuevaRuta);
+                navigate(0);
+            }
         }
     }
 
@@ -72,7 +78,7 @@ function Header() {
                             rounded-2xl bg-[#f8f7fa] focus:ring-blue-500 focus:border-blue-500"
                                     placeholder="Buscar eventos"
                                     onChange={(e) => cambiarNombreBusqueda(e)}
-                                    onKeyDown={(e)=> buscarEventos(e)}
+                                    onKeyDown={(e) => buscarEventos(e)}
                                 />
                             </div>
 
@@ -155,7 +161,7 @@ function Header() {
                                     className="block w-full p-2 ps-10 text-sm text-colorFuente border border-[#eeedf2] rounded-2xl bg-[#f8f7fa] focus:ring-blue-500 focus:border-blue-500 "
                                     placeholder="Buscar eventos"
                                     onChange={(e) => cambiarNombreBusqueda(e)}
-                                    onKeyDown={(e)=> buscarEventos(e)}
+                                    onKeyDown={(e) => buscarEventos(e)}
                                 />
                             </div>
                             <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:space-x-4 rtl:space-x-reverse md:flex-row md:justify-center md:mt-4 mb-4 md:border-0 2xl:ml-12">
@@ -208,7 +214,7 @@ function Header() {
                                     </Link>
                                 </li>
                                 <li>
-                                    <button 
+                                    <button
                                         id="dropdownNavbarLink"
                                         data-dropdown-toggle="dropdownNavbar"
                                         className="py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500
@@ -244,7 +250,7 @@ function Header() {
                                                                 height="18"
                                                                 viewBox="0 0 24 24"
                                                                 fill="yellow"
-                                                                stroke="yellow" 
+                                                                stroke="yellow"
                                                                 strokeWidth="2"
                                                                 strokeLinecap="round"
                                                                 strokeLinejoin="round"
@@ -370,7 +376,7 @@ function Header() {
                                 rounded-2xl bg-[#f8f7fa] focus:ring-blue-500 focus:border-blue-500"
                                     placeholder="Buscar eventos"
                                     onChange={(e) => cambiarNombreBusqueda(e)}
-                                    onKeyDown={(e)=> buscarEventos(e)}
+                                    onKeyDown={(e) => buscarEventos(e)}
                                 />
                             </div>
 
@@ -453,7 +459,7 @@ function Header() {
                                     className="block w-full p-2 ps-10 text-sm text-colorFuente border border-[#eeedf2] rounded-2xl bg-[#f8f7fa] focus:ring-blue-500 focus:border-blue-500 "
                                     placeholder="Buscar eventos"
                                     onChange={(e) => cambiarNombreBusqueda(e)}
-                                    onKeyDown={(e)=> buscarEventos(e)}
+                                    onKeyDown={(e) => buscarEventos(e)}
                                 />
                             </div>
                             <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:space-x-4 rtl:space-x-reverse md:flex-row md:justify-center md:mt-4 mb-4 md:border-0 2xl:ml-12">
@@ -465,14 +471,6 @@ function Header() {
                                         Encuentra eventos
                                     </Link>
                                 </li>
-                                {/* <li>
-                                    <Link
-                                        to="/organizador"
-                                        className="block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500"
-                                    >
-                                        ¿Quieres ser organizador?
-                                    </Link>
-                                </li> */}
                                 <li>
                                     <Link
                                         to="/ayuda"

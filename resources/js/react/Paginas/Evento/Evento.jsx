@@ -182,9 +182,10 @@ const Evento = () => {
                         </div>
                         {user && user.id === evento.idOrganizador ?
                             (
-                                <div className="w-full flex justify-center">
+                                <div className="w-full flex justify-end">
                                     <button onClick={() => navigate('/editarEvento', { state: { evento } })}
-                                        className=" bg-blue-500 hover:bg-blue-700 text-white font-semibold px-4 py-2 w-1/2 rounded-lg hover:scale-105 duration-100">
+                                        className=" bg-blue-500 hover:bg-blue-700 text-white font-semibold px-4 py-2 
+                                        lg:mt-36 w-1/2 md:w-1/4 rounded-lg hover:scale-105 duration-100">
                                         Editar Evento
                                     </button>
                                 </div>
