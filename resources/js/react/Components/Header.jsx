@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,  } from "react-router-dom";
 import logo from "../assets/Eventia-logo-removebg.png";
 import { fetchUserData } from "../api/requests";
 
@@ -22,11 +22,11 @@ function Header() {
     const buscarEventos = (e) => {
         if (e.key === 'Enter') {
             const nuevaRuta = '/buscadoreventos?nombre=' + nombre;
-            if (location.pathname + location.search !== nuevaRuta) {
+            if (!location.pathname.includes("buscadoreventos")) {
                 navigate(nuevaRuta);
             } else {
-                navigate(0);
                 navigate(nuevaRuta);
+                navigate(0);
             }
         }
     }
