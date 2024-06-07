@@ -382,7 +382,7 @@ function Header() {
 
                             {!openMenu ? (
                                 <button
-                                    onClick={() => setOpenMenu(true)}
+                                    //onClick={() => setOpenMenu(true)}
                                     onTouchStart={() => setOpenMenu(true)}
                                     data-collapse-toggle="navbar-search"
                                     type="button"
@@ -409,7 +409,7 @@ function Header() {
                                 </button>
                             ) : (
                                 <button
-                                    onClick={() => setOpenMenu(false)}
+                                    //onClick={() => setOpenMenu(false)}
                                     onTouchStart={() => setOpenMenu(false)}
                                     data-collapse-toggle="navbar-search"
                                     type="button"
