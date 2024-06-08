@@ -15,9 +15,10 @@ import { Link } from 'react-router-dom'
 
 const navegacionSinToken = [
   { name: 'Encuentra eventos', href: '/buscadoreventos' },
-  { name: 'Contacto', href: '/ayuda'},
-  { name: 'Iniciar sesión', href: '/login'},
-  { name: 'Registrarse', href: '/register'}
+  { name: 'Contacto', href: '/ayuda' },
+  { name: 'Iniciar sesión', href: '/login' },
+  { name: 'Iniciar sesión', href: '/login' },
+  { name: 'Registrarse', href: '/register' }
 ]
 
 function classNames(...classes) {
@@ -25,15 +26,15 @@ function classNames(...classes) {
 }
 
 export default function Example() {
-    const token = localStorage.getItem('user-token')
+  const token = localStorage.getItem('user-token')
 
   return (
     <Disclosure as="nav" className="bg-gray-700">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-            <div className="relative flex h-16 items-center justify-between">
-              <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+          <div className="mx-auto max-w-full px-2 lg:flex lg:justify-center ">
+            <div className="relative flex h-28 items-center justify-between ">
+              <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
                 {/* Mobile menu button*/}
                 <DisclosureButton className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="absolute -inset-0.5" />
@@ -45,38 +46,64 @@ export default function Example() {
                   )}
                 </DisclosureButton>
               </div>
-              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <Link className='flex flex-shrink-0 items-center' to="/">
+              <div className="flex mx-auto items-center justify-center md:items-stretch md:justify-start xl:flex-row lg:mt-0 flex-col">
+                <div className='flex gap-4 m-auto pt-0 sm:pt-3'>
+                  <Link className='flex flex-shrink-0 items-center' to="/">
                     <img
-                        className="h-8 w-auto"
-                        src={logo}
-                        alt="Eventia"
+                      className="h-8 w-auto"
+                      src={logo}
+                      alt="Eventia"
                     />
                     <span className="ml-3 self-center text-2xl font-bold text-blue-500 whitespace-nowrap">
-                        EVENTIA
-                    </span> 
-                </Link>
-                <div className="hidden sm:ml-6 sm:block">
-                  <div className="flex space-x-4">
+                      EVENTIA
+                    </span>
+                  </Link>
+
+
+                  <div className="relative md:block mx-2 hidden">
+                    <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                      <svg
+                        className="w-4 h-4 text-colorFuente "
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                        />
+                      </svg>
+                      <span className="sr-only">Search icon</span>
+                    </div>
                     <input
-                        type="text"
-                        id="search-navbar"
-                        className="block text-sm text-colorFuente border border-[#eeedf2] rounded-2xl bg-[#f8f7fa] focus:ring-blue-500 focus:border-blue-500 "
-                        placeholder="Buscar eventos"
-                        /* onChange={(e) => cambiarNombreBusqueda(e)}
-                        onKeyDown={(e) => buscarEventos(e)} */
+                      type="text"
+                      id="search-navbar"
+                      className="block w-full md:w-[300px]
+                            p-2 ps-10 text-sm text-colorFuente border border-[#eeedf2] 
+                            rounded-2xl bg-[#f8f7fa] focus:ring-blue-500 focus:border-blue-500"
+                      placeholder="Buscar eventos"
+                      onChange={(e) => cambiarNombreBusqueda(e)}
+                      onKeyDown={(e) => buscarEventos(e)}
                     />
+                  </div>
+                </div>
+                <div className="hidden md:ml-6 md:block pt-2">
+                  <div className="flex items-center justify-center gap-4">
                     {!token ? (
-                        navegacionSinToken.map((item) => (
-                            <Link
-                                key={item.name}
-                                to={item.href}
-                                className={`text-white hover:text-blue-500 rounded-md px-3 py-2 font-medium`}
-                            >
-                                {item.name}
-                            </Link>
-                    ))) : (
-                        <div></div>
+                      navegacionSinToken.map((item) => (
+                        <Link
+                          key={item.name}
+                          to={item.href}
+                          className={`text-white hover:text-blue-500 rounded-md px-3 font-medium flex items-center ${item.name === 'Registrarse' && "block py-2 px-3 rounded-2xl md:rounded-md  md:text-white md:bg-blue-500 md:hover:bg-blue-700 md:hover:text-white text-colorFuente hover:bg-[#f8f7fa] hover:text-blue-500"}`}
+                        >
+                          {item.name}
+                        </Link>
+                      ))) : (
+                      <div></div>
                     )}
                   </div>
                 </div>
@@ -142,9 +169,39 @@ export default function Example() {
             </div>
           </div>
 
-          <DisclosurePanel className="sm:hidden">
+          <DisclosurePanel className="xs:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
-              {/* {navigation.map((item) => (
+              <div className="relative md:block mx-2">
+                <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                  <svg
+                    className="w-4 h-4 text-colorFuente "
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                    />
+                  </svg>
+                  <span className="sr-only">Search icon</span>
+                </div>
+                <input
+                  type="text"
+                  id="search-navbar"
+                  className="block w-full md:w-[300px]
+                            p-2 ps-10 text-sm text-colorFuente border border-[#eeedf2] 
+                            rounded-2xl bg-[#f8f7fa] focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Buscar eventos"
+                  onChange={(e) => cambiarNombreBusqueda(e)}
+                  onKeyDown={(e) => buscarEventos(e)}
+                />
+              </div>
+              {navegacionSinToken.map((item) => (
                 <DisclosureButton
                   key={item.name}
                   as="a"
@@ -157,7 +214,7 @@ export default function Example() {
                 >
                   {item.name}
                 </DisclosureButton>
-              ))} */}
+              ))}
             </div>
           </DisclosurePanel>
         </>
