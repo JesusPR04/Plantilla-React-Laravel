@@ -137,11 +137,20 @@ function EditarEvento() {
         }
         
         editarEvento(evento.id, data)
-            .then(response => console.log(response))
+            .then(response => comprobarRespuesta(response))
             .catch(err => {
                 toast.error('Error al editar el evento');
                 console.error(err);
             });
+    }
+    
+    const comprobarRespuesta = (respuesta) => {
+        if (respuesta.status) {
+            toast.success(respuesta.message)
+            setTimeout(() => { navigate('/misEventos') }, 2000)
+        }else{
+
+        }
     }
 
     if (loading || !permiso) {

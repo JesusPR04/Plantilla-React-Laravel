@@ -4,6 +4,7 @@ import { register, getCiudades } from "../../api/requests";
 import Select from "react-select";
 import img from "../../assets/register.jpg";
 import logo from "../../assets/Eventia-logo-removebg.png";
+import { ToastContainer, toast } from "react-toastify";
 
 const Register = () => {
     const [usuario, setUsuario] = useState({
@@ -14,6 +15,12 @@ const Register = () => {
         telefono: "",
         ciudad: "",
     });
+
+    if (localStorage.getItem('user-token') !== null) {
+        toast.info('Ya está logueado con una cuenta')
+        setTimeout(()=> {navigate('/')}, 2000)
+    }
+
     const [error, setError] = useState({
         mensaje: "",
         estado: false,
@@ -221,6 +228,7 @@ const Register = () => {
 
     return (
         <section className="bg-gray-100 flex justify-center items-center min-h-[calc(100vh-436px)]">
+            <ToastContainer/>
             <article className="flex justify-center">
                 <div className="relative mt-14 mb-14 rounded-l-lg basis-1/2 hidden lg:block lg:w-1/2 overflow-hidden">
                     <img
