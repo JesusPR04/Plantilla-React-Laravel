@@ -101,13 +101,14 @@ class EntradaController extends Controller
         $organizador=User::find($organizador_id);
         $entrada=Entradas::find($entrada_id);
         $empresa=Peticiones::where('idUsuario',$organizador->id)->first()->empresa;
+        
 
         if(!$empresa){
             $empresa=$organizador->nombre.' '.$organizador->apellidos;
         }
 
         try {
-            Mail::to('prf0005@alu.medac.es')->send(new eventoMail($empresa,$organizador->nombre, $organizador->apellidos, $user->nombre, $user->apellidos, $evento->nombre, $evento->fecha, $evento->hora, $evento->direccion, $evento->precio, $evento->ciudad->nombre, $organizador->nombre, $entrada->cantidad));
+            Mail::to('jpc0016@alu.medac.es')->send(new eventoMail($empresa,$organizador->nombre, $organizador->apellidos, $user->nombre, $user->apellidos, $evento->nombre, $evento->fecha, $evento->hora, $evento->direccion, $evento->precio, $evento->ciudad->nombre, $organizador->nombre, $entrada->cantidad));
 
             return response()->json([
                 'status' => true, 
