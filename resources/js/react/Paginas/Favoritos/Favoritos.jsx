@@ -15,38 +15,19 @@ const Favoritos = () => {
     const [ciudad, setCiudad] = useState(0)
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState(null);
-    const [permiso, setPermiso] = useState(false)
     const navigate = useNavigate()
 
     useEffect(() => {
-        comprobarAccesoEventos()
-            .then((respuesta) => {
-                if (!respuesta.status) {
-                    toast.error(respuesta.message)
-                    setTimeout(() => { navigate('/') }, 2000)
-                } else {
-                    setPermiso(true)
-                }
+        getMisFavoritos()
+            .then(respuesta => {
+                setFavoritos(respuesta.favoritos);
+                setLoading(false); // Cambia el estado de carga a falso cuando se completa la obtención de los favoritos
             })
             .catch(error => {
-                toast.error(error.message)
-                setTimeout(() => { navigate('/') }, 2000)
-            })
-    }, [])
-
-    useEffect(() => {
-        if (permiso) {
-            getMisFavoritos()
-                .then(respuesta => {
-                    setFavoritos(respuesta.favoritos);
-                    setLoading(false); // Cambia el estado de carga a falso cuando se completa la obtención de los favoritos
-                })
-                .catch(error => {
-                    console.error("Error obteniendo favoritos:", error);
-                    setLoading(false); // Cambia el estado de carga a falso en caso de error
-                });
-        }
-    }, [permiso]);
+                console.error("Error obteniendo favoritos:", error);
+                setLoading(false); // Cambia el estado de carga a falso en caso de error
+            });
+    }, []);
 
     useEffect(() => {
         fetchUserData()
@@ -78,9 +59,9 @@ const Favoritos = () => {
     };
 
     // Muestra un indicador de carga si loading es verdadero
-    if (loading && !permiso) {
+    if (loading) {
         return <div className='min-h-[calc(100vh-436px)] text-xl sm:text-4xl pt-12 font-bold tracking-tight text-colorFuente uppercase text-center'>
-            <ToastContainer className='text-base normal-case text-black text-start'/>
+            <ToastContainer className='text-base normal-case text-black text-start' />
             Cargando...
         </div>;
     }

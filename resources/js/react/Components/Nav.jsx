@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Disclosure,
     DisclosureButton,
@@ -11,22 +11,68 @@ import {
 } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import logo from '../assets/favicon.ico'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { fetchUserData } from '../api/requests'
 
 const Nav = () => {
+    const [user, setUser] = useState({})
+    const [name, setName] = useState('')
+    const [nombre, setNombre] = useState('')
+    const token = localStorage.getItem('user-token')
+    const navigate = useNavigate()
+
     const navegacionSinToken = [
         { name: 'Encuentra eventos', href: '/buscadoreventos' },
         { name: 'Contacto', href: '/ayuda' },
         { name: 'Iniciar sesión', href: '/login' },
-        { name: 'Iniciar sesión', href: '/login' },
         { name: 'Registrarse', href: '/register' }
     ]
+
+    const navegacionUsuario = [
+        { name: 'Encuentra eventos', href: '/buscadoreventos' },
+        { name: 'Contacto', href: '/ayuda' },
+        { name: '¿ Quieres ser organizador ?', href: '/organizador' }
+    ]
+
+    const navegacionOrganizador = [
+        { name: 'Encuentra eventos', href: '/buscadoreventos' },
+        { name: 'Contacto', href: '/ayuda' },
+        { name: 'Promociona tu evento', href: '/crearEvento' },
+        { name: 'Mis eventos', href: '/misEventos' }
+    ]
+
+    const navegacionAdmin = [
+        { name: 'Encuentra eventos', href: '/buscadoreventos' },
+        { name: 'Contacto', href: '/ayuda' },
+        { name: 'Revisar Peticiones', href: '/admin' }
+    ]
+    const [header, setHeader] = useState(navegacionSinToken)
 
     function classNames(...classes) {
         return classes.filter(Boolean).join(' ')
     }
 
-    const token = localStorage.getItem('user-token')
+    const cambiarNombreBusqueda = (e) => {
+        setNombre(() => e.target.value)
+    }
+
+    useEffect(() => {
+        if (token) {
+            fetchUserData().then(data => { setUser(data); setName(data.nombre) })
+        }
+    }, [token])
+
+    const buscarEventos = (e) => {
+        if (e.key === 'Enter') {
+            const nuevaRuta = '/buscadoreventos?nombre=' + nombre;
+            if (!location.pathname.includes("buscadoreventos")) {
+                navigate(nuevaRuta);
+            } else {
+                navigate(nuevaRuta);
+                navigate(0);
+            }
+        }
+    }
 
     return (
         <Disclosure as="nav" className="bg-gray-700">
@@ -91,8 +137,9 @@ const Nav = () => {
                                         />
                                     </div>
                                 </div>
-                                <div className="hidden md:ml-6 md:block pt-">
+                                <div className="hidden md:ml-6 md:block pt-1">
                                     <div className="flex items-center justify-center gap-4">
+                                        {/* HEADERS DINAMICOS */}
                                         {!token ? (
                                             navegacionSinToken.map((item) => (
                                                 <Link
@@ -103,7 +150,53 @@ const Nav = () => {
                                                     {item.name}
                                                 </Link>
                                             ))) : (
-                                            <div></div>
+                                            <>
+                                                {
+                                                    user.rol === 'Usuario' ?
+                                                        (
+                                                            <>
+                                                                {navegacionUsuario.map((item) => (
+                                                                    <Link
+                                                                        key={item.name}
+                                                                        to={item.href}
+                                                                        className={`text-white hover:text-blue-500 rounded-md px-3 font-medium flex items-center`}
+                                                                    >
+                                                                        {item.name}
+                                                                    </Link>
+                                                                ))}
+                                                            </>
+                                                        ) :
+                                                    user.rol === 'Organizador' ?
+                                                        (
+                                                            <>
+                                                                {navegacionOrganizador.map((item) => (
+                                                                    <Link
+                                                                        key={item.name}
+                                                                        to={item.href}
+                                                                        className={`text-white hover:text-blue-500 rounded-md px-3 font-medium flex items-center`}
+                                                                    >
+                                                                        {item.name}
+                                                                    </Link>
+                                                                ))}
+                                                            </>
+                                                        ) :
+                                                    user.rol === 'Administrador' ?
+                                                        (
+                                                            <>
+                                                                {navegacionAdmin.map((item) => (
+                                                                    <Link
+                                                                        key={item.name}
+                                                                        to={item.href}
+                                                                        className={`text-white hover:text-blue-500 rounded-md px-3 font-medium flex items-center`}
+                                                                    >
+                                                                        {item.name}
+                                                                    </Link>
+                                                                ))}
+                                                            </>
+                                                        ) :
+                                                    (<>Error</>)
+                                                }
+                                            </>
                                         )}
                                     </div>
                                 </div>
@@ -113,14 +206,10 @@ const Nav = () => {
                                 {/* Profile dropdown */}
                                 <Menu as="div" className="relative ml-3">
                                     <div>
-                                        <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                                        <MenuButton className="relative flex text-sm bg-blue-500 hover:bg-blue-700 hover:scale-105 duration-100 rounded focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 ">
                                             <span className="absolute -inset-1.5" />
-                                            <span className="sr-only">Open user menu</span>
-                                            <img
-                                                className="h-8 w-8 rounded-full"
-                                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                                alt=""
-                                            />
+                                            <span className="sr-only">Abrir menú de usuario</span>
+                                            <p className='px-4 py-2 text-white  font-semibold'>{user.nombre}</p>
                                         </MenuButton>
                                     </div>
                                     <Transition
@@ -133,33 +222,95 @@ const Nav = () => {
                                     >
                                         <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                             <MenuItem>
-                                                {({ focus }) => (
-                                                    <a
-                                                        href="#"
-                                                        className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                                {() => (
+                                                    <Link
+                                                        to='/favoritos'
+                                                        className={classNames('flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100')}
                                                     >
-                                                        Your Profile
-                                                    </a>
+                                                        Favoritos
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            width="18"
+                                                            height="18"
+                                                            viewBox="0 0 24 24"
+                                                            fill="yellow"
+                                                            stroke="yellow"
+                                                            strokeWidth="2"
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            className="lucide lucide-star"
+                                                        >
+                                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                                                        </svg>
+                                                    </Link>
+                                                )}
+                                            </MenuItem>
+                                            <MenuItem>
+                                                {() => (
+                                                    <Link
+                                                        to='/entradas'
+                                                        className={classNames('flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100')}
+                                                    >
+                                                        Mis entradas
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            width="18"
+                                                            height="18"
+                                                            fill="currentColor"
+                                                            className="bi bi-ticket-detailed-fill"
+                                                            viewBox="0 0 16 16">
+                                                            <path d="M0 4.5A1.5 1.5 0 0 1 1.5 3h13A1.5 1.5 0 0 1 16 4.5V6a.5.5 0 0 1-.5.5 1.5 1.5 0 0 0 0 3 .5.5 0 0 1 .5.5v1.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 11.5V10a.5.5 0 0 1 .5-.5 1.5 1.5 0 1 0 0-3A.5.5 0 0 1 0 6zm4 1a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7a.5.5 0 0 0-.5.5m0 5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7a.5.5 0 0 0-.5.5M4 8a1 1 0 0 0 1 1h6a1 1 0 1 0 0-2H5a1 1 0 0 0-1 1" />
+                                                        </svg>
+                                                    </Link>
+                                                )}
+                                            </MenuItem>
+                                            <MenuItem>
+                                                {() => (
+                                                    <Link
+                                                        to='/tarjetas'
+                                                        className={classNames('flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100')}
+                                                    >
+                                                        Mis Tarjetas
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            width="18"
+                                                            height="18"
+                                                            fill="currentColor"
+                                                            className="bi bi-credit-card-2-front-fill"
+                                                            viewBox="0 0 16 16">
+                                                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2.5 1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm0 3a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm3 0a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm3 0a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm3 0a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1z" />
+                                                        </svg>
+                                                    </Link>
+                                                )}
+                                            </MenuItem>
+                                            <MenuItem>
+                                                {() => (
+                                                    <Link
+                                                        to='/perfil'
+                                                        className={classNames('flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100')}
+                                                    >
+                                                        Perfil
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            width="18"
+                                                            height="18"
+                                                            fill="currentColor"
+                                                            className="bi bi-person-fill"
+                                                            viewBox="0 0 16 16">
+                                                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                                                        </svg>
+                                                    </Link>
                                                 )}
                                             </MenuItem>
                                             <MenuItem>
                                                 {({ focus }) => (
-                                                    <a
-                                                        href="#"
-                                                        className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                                    <button
+                                                        onClick={() => {
+                                                            localStorage.removeItem('user-token')
+                                                            navigate('/')
+                                                            navigate(0)
+                                                        }}
+                                                        className="block text-start px-4 py-2 text-sm font-semibold hover:text-red-700 text-red-500 w-full hover:bg-gray-100"
                                                     >
-                                                        Settings
-                                                    </a>
-                                                )}
-                                            </MenuItem>
-                                            <MenuItem>
-                                                {({ focus }) => (
-                                                    <a
-                                                        href="#"
-                                                        className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                                                    >
-                                                        Sign out
-                                                    </a>
+                                                        Cerrar Sesión
+                                                    </button>
                                                 )}
                                             </MenuItem>
                                         </MenuItems>
