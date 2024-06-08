@@ -51,7 +51,7 @@ function CrearEvento() {
         aforoDisponible: '',
         idCategoria: '',
         descripcion: '',
-        precio: '',
+        precio: 0,
         imagenes: [],
     });
 
@@ -157,7 +157,7 @@ function CrearEvento() {
             if (respuesta?.message?.aforoTotal) { setAforoTotal({ ...aforoTotal, estado: true }); toast.error(respuesta.message.aforoTotal[0]); } else { setAforoTotal({ ...aforoTotal, estado: false }) }
             if (respuesta?.message?.aforoDisponible) { setAforoDisponible({ ...aforoDisponible, estado: true }); toast.error(respuesta.message.aforoDisponible[0]); } else { setAforoDisponible({ ...aforoDisponible, estado: false }) }
             if (respuesta?.message?.precio) { setPrecio({ ...precio, estado: true }); toast.error(respuesta.message.precio[0]); } else { setPrecio({ ...precio, estado: false }) }
-            if (respuesta?.message?.imagenes) { setPrecio({ ...imagenes, estado: true }); toast.error(respuesta.message.imagenes[0]); }
+            if (respuesta?.message?.imagenes) { setImagenes({ ...imagenes, estado: true }); toast.error(respuesta.message.imagenes[0]); }
             if (respuesta?.message?.descripcion) { setDescripcion({ ...descripcion, estado: true }); toast.error(respuesta.message.descripcion[0]); } else { setDescripcion({ ...descripcion, estado: false }) }
         }
     }
