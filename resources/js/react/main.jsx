@@ -25,11 +25,13 @@ import MisEventos from './Paginas/MisEventos/MisEventos.jsx'
 import Favoritos from './Paginas/Favoritos/Favoritos.jsx'
 import Tarjetas from './Paginas/Tarjetas/Tarjetas.jsx'
 import EditarEvento from './Paginas/Evento/EditarEvento.jsx'
+import Nav from './Components/Nav.jsx'
 
 
 function AppLayout() {
   return <>
-    <Header />
+    {/* <Header /> */}
+    <Nav />
     <Outlet />
     <Footer />
   </>
