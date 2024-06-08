@@ -230,7 +230,7 @@ const Nav = () => {
                                             <MenuItem>
                                                 {() => (
                                                     <p
-                                                        className={classNames('flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100')}
+                                                        className={classNames('flex justify-between items-center px-4 py-2 text-sm text-colorFuente font-semibold hover:bg-gray-100')}
                                                     >
                                                         Tus puntos
                                                         <div className="flex flex-row gap-2 items-center justify-center">
@@ -244,7 +244,7 @@ const Nav = () => {
                                                 {() => (
                                                     <Link
                                                         to='/favoritos'
-                                                        className={classNames('flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100')}
+                                                        className={classNames('flex justify-between items-center px-4 py-2 text-sm text-colorFuente font-semibold hover:bg-gray-100 hover:text-blue-500')}
                                                     >
                                                         Favoritos
                                                         <svg
@@ -268,7 +268,7 @@ const Nav = () => {
                                                 {() => (
                                                     <Link
                                                         to='/entradas'
-                                                        className={classNames('flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100')}
+                                                        className={classNames('flex justify-between items-center px-4 py-2 text-sm text-colorFuente font-semibold hover:text-blue-500 hover:bg-gray-100')}
                                                     >
                                                         Mis entradas
                                                         <svg xmlns="http://www.w3.org/2000/svg"
@@ -286,7 +286,7 @@ const Nav = () => {
                                                 {() => (
                                                     <Link
                                                         to='/tarjetas'
-                                                        className={classNames('flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100')}
+                                                        className={classNames('flex justify-between items-center px-4 py-2 text-sm text-colorFuente font-semibold hover:text-blue-500 hover:bg-gray-100')}
                                                     >
                                                         Mis Tarjetas
                                                         <svg xmlns="http://www.w3.org/2000/svg"
@@ -304,7 +304,7 @@ const Nav = () => {
                                                 {() => (
                                                     <Link
                                                         to='/perfil'
-                                                        className={classNames('flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100')}
+                                                        className={classNames('flex justify-between items-center px-4 py-2 text-sm text-colorFuente font-semibold hover:text-blue-500 hover:bg-gray-100')}
                                                     >
                                                         Perfil
                                                         <svg xmlns="http://www.w3.org/2000/svg"
