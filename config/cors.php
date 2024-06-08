@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => ['https://proyecto2.medacarena.com.es/', 'http://proyecto2.medacarena.com.es/'],
 
     'allowed_origins_patterns' => [],
 
