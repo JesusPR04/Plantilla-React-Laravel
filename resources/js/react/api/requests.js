@@ -133,7 +133,7 @@ export const crearEvento = async (formData) => {
   }
 }
 
-export const comprarEntrada = async ({ idUsuario, idEvento, cantidad, metodoPago, idTarjeta }) => {
+export const comprarEntrada = async ({ idEvento, cantidad, metodoPago, idTarjeta }) => {
   const token = localStorage.getItem('user-token'); // Obtén el token del localStorage
 
   if (!token) {
@@ -146,7 +146,7 @@ export const comprarEntrada = async ({ idUsuario, idEvento, cantidad, metodoPago
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ idUsuario, idEvento, cantidad, metodoPago, idTarjeta })
+    body: JSON.stringify({ idEvento, cantidad, metodoPago, idTarjeta })
   });
   if (!response.ok) {
     throw new Error('Error purchasing ticket');
