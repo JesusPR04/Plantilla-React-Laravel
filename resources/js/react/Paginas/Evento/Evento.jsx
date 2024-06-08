@@ -49,12 +49,14 @@ const Evento = () => {
                 try {
                     const userData = await fetchUserData(token);
                     setUser(userData);
-                    const userTarjetas = await getTarjetas()
-                    if (userTarjetas.length > 0) {
-                        setTarjetas(userTarjetas)
-                        setSelectedTarjeta(userTarjetas[0].id)
-                    } else {
-                        setTarjetas(false)
+                    if (evento.precio > 0) {
+                        const userTarjetas = await getTarjetas()
+                        if (userTarjetas.length > 0) {
+                            setTarjetas(() => userTarjetas)
+                            setSelectedTarjeta(userTarjetas[0].id)
+                        } else {
+                            setTarjetas(false)
+                        }
                     }
                 } catch (error) {
                     console.error("Error fetching user:", error.message);
@@ -63,29 +65,37 @@ const Evento = () => {
         };
 
         fetchUser();
-    }, []);
+    }, [evento]);
 
     const handleCompra = async () => {
         if (!user) {
             toast.error("Debes estar logueado para comprar entradas");
-            setTimeout(() => navigate('/login'), 3000); // 3 segundos de demora
+            setTimeout(() => navigate('/login'), 2000); // 2 segundos de demora
             return;
         }
 
         try {
-            console.log(selectedTarjeta)
-            if (tarjetas !== false) {
-                await comprarEntrada({
-                    idEvento: id,
-                    cantidad,
-                    metodoPago, // Añadir el método de pago
-                    idTarjeta: selectedTarjeta
-                });
+            if (tarjetas !== false || evento.precio === 0) {
+                if (evento.precio === 0) {
+                    await comprarEntrada({
+                        idEvento: id,
+                        cantidad,
+                        metodoPago, // Añadir el método de pago
+                        idTarjeta: ''
+                    });
+                } else {
+                    await comprarEntrada({
+                        idEvento: id,
+                        cantidad,
+                        metodoPago, // Añadir el método de pago
+                        idTarjeta: selectedTarjeta
+                    });
+                }
                 toast.success("Compra realizada con éxito");
                 setTimeout(() => navigate('/entradas'), 3000); // 3 segundos de demora
-            }else{
+            } else {
                 toast.info('Necesitas una tarjeta de crédito para comprar entradas')
-                setTimeout(()=>{navigate('/tarjetas')}, 2000)
+                setTimeout(() => { navigate('/tarjetas') }, 2000)
             }
         } catch (error) {
             console.error("Error comprando entrada:", error);

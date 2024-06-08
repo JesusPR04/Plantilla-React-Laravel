@@ -14,11 +14,11 @@ class EntradaController extends Controller
 {
     public function comprar(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'idEvento' => 'required|exists:eventos,id',
             'cantidad' => 'required|integer|min:1',
             'metodoPago' => 'required|in:dinero,puntos', // Validar método de pago
-            'idTarjeta' => 'required|exists:tarjetas,id'
+            'idTarjeta' => 'nullable|exists:tarjetas,id'
         ]);
 
         $evento = Eventos::where('id', $request->idEvento)->first();
@@ -39,21 +39,27 @@ class EntradaController extends Controller
             $user->puntos += $puntosGanados;
         }
 
-        $tarjeta = Tarjetas::where('id', $request->idTarjeta)->where('idUsuario', $request->user()->id)->first();
-
-        if (!isset($tarjeta)) {
-            return response()->json([
+        if ($evento->precio > 0) {
+            $tarjeta = Tarjetas::where('id', $request->idTarjeta)->where('idUsuario', $request->user()->id)->first();
+            if (!isset($tarjeta)) {
+                return response()->json([
                     'status' => false,
-                    'error' => 'La tarjeta de crédito usada no está a su nombre.'
+                    'error' => 'No se encuentra la tarjeta de crédito.'
                 ], 404);
+            }
+            $entrada = Entradas::create([
+                'idUsuario' => $request->user()->id,
+                'idEvento' => $request->idEvento,
+                'cantidad' => $request->cantidad,
+                'idTarjeta' => $tarjeta->id,
+            ]);
+        }else{
+            $entrada = Entradas::create([
+                'idUsuario' => $request->user()->id,
+                'idEvento' => $request->idEvento,
+                'cantidad' => $request->cantidad,
+            ]);
         }
-
-        $entrada = Entradas::create([
-            'idUsuario' => $request->user()->id,
-            'idEvento' => $request->idEvento,
-            'cantidad' => $request->cantidad,
-            'idTarjeta' => $tarjeta->id,
-        ]);
 
         $user->save();
 
@@ -63,15 +69,16 @@ class EntradaController extends Controller
         ], 201);
     }
 
-    public function cancelarEntrada(Request $request, $id){
+    public function cancelarEntrada(Request $request, $id)
+    {
         $evento = Entradas::where('idEvento', $id)->where('idUsuario', $request->user()->id)->first();
-        if(isset($evento)){
+        if (isset($evento)) {
             $evento->delete();
             return response()->json([
                 'status' => true,
                 'message' => 'Entrada eliminada correctamente'
             ], 200);
-        }else{
+        } else {
             return response()->json([
                 'status' => false,
                 'message' => 'No se pudo encontrar la entrada'
