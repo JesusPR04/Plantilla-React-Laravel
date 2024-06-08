@@ -10,12 +10,14 @@ import {
   Transition,
 } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import logo from '../assets/favicon.ico'
+import { Link } from 'react-router-dom'
 
-const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
-  { name: 'Team', href: '#', current: false },
-  { name: 'Projects', href: '#', current: false },
-  { name: 'Calendar', href: '#', current: false },
+const navegacionSinToken = [
+  { name: 'Encuentra eventos', href: '/buscadoreventos' },
+  { name: 'Contacto', href: '/ayuda'},
+  { name: 'Iniciar sesión', href: '/login'},
+  { name: 'Registrarse', href: '/register'}
 ]
 
 function classNames(...classes) {
@@ -23,6 +25,8 @@ function classNames(...classes) {
 }
 
 export default function Example() {
+    const token = localStorage.getItem('user-token')
+
   return (
     <Disclosure as="nav" className="bg-gray-700">
       {({ open }) => (
@@ -42,41 +46,43 @@ export default function Example() {
                 </DisclosureButton>
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div className="flex flex-shrink-0 items-center">
-                  <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                    alt="Your Company"
-                  />
-                </div>
+                <Link className='flex flex-shrink-0 items-center' to="/">
+                    <img
+                        className="h-8 w-auto"
+                        src={logo}
+                        alt="Eventia"
+                    />
+                    <span className="ml-3 self-center text-2xl font-bold text-blue-500 whitespace-nowrap">
+                        EVENTIA
+                    </span> 
+                </Link>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    {navigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'rounded-md px-3 py-2 text-sm font-medium'
-                        )}
-                        aria-current={item.current ? 'page' : undefined}
-                      >
-                        {item.name}
-                      </a>
-                    ))}
+                    <input
+                        type="text"
+                        id="search-navbar"
+                        className="block text-sm text-colorFuente border border-[#eeedf2] rounded-2xl bg-[#f8f7fa] focus:ring-blue-500 focus:border-blue-500 "
+                        placeholder="Buscar eventos"
+                        /* onChange={(e) => cambiarNombreBusqueda(e)}
+                        onKeyDown={(e) => buscarEventos(e)} */
+                    />
+                    {!token ? (
+                        navegacionSinToken.map((item) => (
+                            <Link
+                                key={item.name}
+                                to={item.href}
+                                className={`text-white hover:text-blue-500 rounded-md px-3 py-2 font-medium`}
+                            >
+                                {item.name}
+                            </Link>
+                    ))) : (
+                        <div></div>
+                    )}
                   </div>
                 </div>
               </div>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <button
-                  type="button"
-                  className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                >
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
 
+              <div className={`${!token && 'hidden'} absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0`}>
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
                   <div>
@@ -138,7 +144,7 @@ export default function Example() {
 
           <DisclosurePanel className="sm:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
-              {navigation.map((item) => (
+              {/* {navigation.map((item) => (
                 <DisclosureButton
                   key={item.name}
                   as="a"
@@ -151,7 +157,7 @@ export default function Example() {
                 >
                   {item.name}
                 </DisclosureButton>
-              ))}
+              ))} */}
             </div>
           </DisclosurePanel>
         </>
