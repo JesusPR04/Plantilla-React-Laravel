@@ -83,7 +83,7 @@ function EditarEvento() {
     }, [permiso]);
 
     const importImage = (ruta) => {
-        return new URL(`../../assets/${ruta}`, import.meta.url).href;
+        return new URL(`../../../../../public/${ruta}`, import.meta.url).href;
     };
 
     const handleFileChange = (e) => {
