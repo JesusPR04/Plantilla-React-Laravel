@@ -17,6 +17,7 @@ class EntradaController extends Controller
             'idEvento' => 'required|exists:eventos,id',
             'cantidad' => 'required|integer|min:1',
             'metodoPago' => 'required|in:dinero,puntos', // Validar método de pago
+            'idTarjeta' => 'required|exists:tarjetas,id'
         ]);
 
         $evento = Eventos::findOrFail($validated['idEvento']);
@@ -38,6 +39,7 @@ class EntradaController extends Controller
             'idUsuario' => $validated['idUsuario'],
             'idEvento' => $validated['idEvento'],
             'cantidad' => $validated['cantidad'],
+            'idTarjeta' => $validated['idTarjeta'],
         ]);
 
         $user->save();
