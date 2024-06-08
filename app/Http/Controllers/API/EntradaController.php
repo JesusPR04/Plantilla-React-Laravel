@@ -20,7 +20,7 @@ class EntradaController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'idEvento' => 'required|exists:eventos,id',
-            'cantidad' => 'required|integer|min:1',
+            'cantidad' => 'required|integer|min:1|max:5',
             'metodoPago' => 'required|in:dinero,puntos', // Validar método de pago
             'idTarjeta' => 'nullable|exists:tarjetas,id'
         ]);
@@ -29,7 +29,7 @@ class EntradaController extends Controller
         $user = $request->user();
 
         $puntosGanados = $evento->precio * $request->cantidad;
-        $costoEnPuntos = $puntosGanados * 3;
+        $costoEnPuntos = $puntosGanados * 25;
 
         if ($request->metodoPago === 'puntos') {
             if ($user->puntos < $costoEnPuntos) {
@@ -43,7 +43,7 @@ class EntradaController extends Controller
             $user->puntos += $puntosGanados;
         }
 
-        if ($evento->precio > 0) {
+        if ($evento->precio > 0 && $request->metodoPago === 'dinero') {
             $tarjeta = Tarjetas::where('id', $request->idTarjeta)->where('idUsuario', $request->user()->id)->first();
             if (!isset($tarjeta)) {
                 return response()->json([
@@ -57,7 +57,7 @@ class EntradaController extends Controller
                 'cantidad' => $request->cantidad,
                 'idTarjeta' => $tarjeta->id,
             ]);
-        }else{
+        } else {
             $entrada = Entradas::create([
                 'idUsuario' => $request->user()->id,
                 'idEvento' => $request->idEvento,
@@ -65,9 +65,9 @@ class EntradaController extends Controller
             ]);
         }
 
-        if ($entrada) {
+        /* if ($entrada) {
             self::emailEntrada($entrada->idEvento, $request->user()->id, $evento->organizador->id, $entrada->cantidad);
-        }
+        } */
 
         $user->save();
 
@@ -79,9 +79,20 @@ class EntradaController extends Controller
 
     public function cancelarEntrada(Request $request, $id)
     {
-        $evento = Entradas::where('idEvento', $id)->where('idUsuario', $request->user()->id)->first();
-        if (isset($evento)) {
-            $evento->delete();
+        $entrada = Entradas::where('idEvento', $id)->where('idUsuario', $request->user()->id)->first();
+        $evento = Eventos::where('id', $entrada->idEvento)->first();
+        //Devolver puntos en caso de pago con puntos
+        if ($entrada->idtarjeta === null && $evento->precio > 0) {
+            $usuario = $request->user();
+
+            $puntosGanados = $evento->precio * $entrada->cantidad;
+            $costoEnPuntos = $puntosGanados * 25;
+
+            $usuario->puntos += $costoEnPuntos;
+            $usuario->save();
+        }
+        if (isset($entrada)) {
+            $entrada->delete();
             return response()->json([
                 'status' => true,
                 'message' => 'Entrada eliminada correctamente'
@@ -96,21 +107,21 @@ class EntradaController extends Controller
 
     public function emailEntrada($evento_id, $user_id, $organizador_id, $entrada_id)
     {
-        $evento=Eventos::find($evento_id);
-        $user=User::find($user_id);
-        $organizador=User::find($organizador_id);
-        $entrada=Entradas::find($entrada_id);
-        $empresa=Peticiones::where('idUsuario',$organizador->id)->first()->empresa;
+        $evento = Eventos::find($evento_id);
+        $user = User::find($user_id);
+        $organizador = User::find($organizador_id);
+        $entrada = Entradas::find($entrada_id);
+        $empresa = Peticiones::where('idUsuario', $organizador->id)->first()->empresa;
 
-        if(!$empresa){
-            $empresa=$organizador->nombre.' '.$organizador->apellidos;
+        if (!$empresa) {
+            $empresa = $organizador->nombre . ' ' . $organizador->apellidos;
         }
 
         try {
-            Mail::to('prf0005@alu.medac.es')->send(new eventoMail($empresa,$organizador->nombre, $organizador->apellidos, $user->nombre, $user->apellidos, $evento->nombre, $evento->fecha, $evento->hora, $evento->direccion, $evento->precio, $evento->ciudad->nombre, $organizador->nombre, $entrada->cantidad));
+            Mail::to('prf0005@alu.medac.es')->send(new eventoMail($empresa, $organizador->nombre, $organizador->apellidos, $user->nombre, $user->apellidos, $evento->nombre, $evento->fecha, $evento->hora, $evento->direccion, $evento->precio, $evento->ciudad->nombre, $organizador->nombre, $entrada->cantidad));
 
             return response()->json([
-                'status' => true, 
+                'status' => true,
                 'message' => 'Correo enviado correctamente'
             ], 200);
         } catch (\Throwable $th) {

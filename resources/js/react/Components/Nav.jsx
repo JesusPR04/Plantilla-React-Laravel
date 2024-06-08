@@ -96,7 +96,7 @@ const Nav = () => {
                                 <div className='flex gap-4 m-auto pt-0 '>
                                     <Link className='flex flex-shrink-0 items-center ' to="/">
                                         <img
-                                            className="h-8 w-auto "
+                                            className="h-8 w-auto flex justify-center"
                                             src={logo}
                                             alt="Eventia"
                                         />
@@ -144,7 +144,7 @@ const Nav = () => {
                                             navegacionSinToken.map((item) => (
                                                 <Link
                                                     key={item.name}
-                                                    to={item.href}
+                                                    href={item.href}
                                                     className={`block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] font-semibold hover:text-blue-500 ${item.name === 'Registrarse' && "block py-2 px-3 rounded-2xl md:rounded-md  md:text-white md:bg-blue-500 md:hover:bg-blue-700 md:hover:text-white text-colorFuente hover:bg-[#f8f7fa] hover:text-blue-500"}`}
                                                 >
                                                     {item.name}
@@ -156,13 +156,13 @@ const Nav = () => {
                                                         (
                                                             <>
                                                                 {navegacionUsuario.map((item) => (
-                                                                    <Link
+                                                                    <a
                                                                         key={item.name}
-                                                                        to={item.href}
-                                                                        className={`block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500`}
+                                                                        href={item.href}
+                                                                        className={`block py-2 px-3 font-semibold text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500`}
                                                                     >
                                                                         {item.name}
-                                                                    </Link>
+                                                                    </a>
                                                                 ))}
                                                             </>
                                                         ) :
@@ -170,13 +170,13 @@ const Nav = () => {
                                                             (
                                                                 <>
                                                                     {navegacionOrganizador.map((item) => (
-                                                                        <Link
+                                                                        <a
                                                                             key={item.name}
-                                                                            to={item.href}
-                                                                            className={`block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500`}
+                                                                            href={item.href}
+                                                                            className={`block py-2 px-3 font-semibold text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500`}
                                                                         >
                                                                             {item.name}
-                                                                        </Link>
+                                                                        </a>
                                                                     ))}
                                                                 </>
                                                             ) :
@@ -184,17 +184,17 @@ const Nav = () => {
                                                                 (
                                                                     <>
                                                                         {navegacionAdmin.map((item) => (
-                                                                            <Link
+                                                                            <a
                                                                                 key={item.name}
-                                                                                to={item.href}
-                                                                                className={`block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] font-semibold hover:text-blue-500`}
+                                                                                href={item.href}
+                                                                                className={`block py-2 px-3 font-semibold text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500`}
                                                                             >
                                                                                 {item.name}
-                                                                            </Link>
+                                                                            </a>
                                                                         ))}
                                                                     </>
                                                                 ) :
-                                                                (<>Error</>)
+                                                                (<>Cargando...</>)
                                                 }
                                             </>
                                         )}
@@ -204,9 +204,9 @@ const Nav = () => {
 
                             <div className={`${!token && 'hidden'} absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0`}>
                                 {/* Profile dropdown */}
-                                <Menu as="div" className="relative ml-3">
+                                <Menu as="div" className="relative ml-3 mt-1">
                                     <div>
-                                        <MenuButton className="relative flex text-xs bg-blue-500 hover:bg-blue-700 rounded focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 ">
+                                        <MenuButton className="relative flex text-xs sm:text-sm bg-blue-500 hover:bg-blue-700 rounded focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 ">
                                             <span className="absolute -inset-1.5" />
                                             <span className="sr-only">Abrir menú de usuario</span>
                                             <p className='px-4 py-2 text-white capitalize font-semibold flex items-center'>
@@ -227,6 +227,19 @@ const Nav = () => {
                                         leaveTo="transform opacity-0 scale-95"
                                     >
                                         <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                            <MenuItem>
+                                                {() => (
+                                                    <p
+                                                        className={classNames('flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100')}
+                                                    >
+                                                        Tus puntos
+                                                        <div className="flex flex-row gap-2 items-center justify-center">
+                                                            <span>{user.puntos}</span>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-badge-cent text-blue-500"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" /><path d="M12 7v10" /><path d="M15.4 10a4 4 0 1 0 0 4" /></svg>
+                                                        </div>
+                                                    </p>
+                                                )}
+                                            </MenuItem>
                                             <MenuItem>
                                                 {() => (
                                                     <Link
@@ -360,13 +373,13 @@ const Nav = () => {
                             </div>
                             {!token ? (
                                 navegacionSinToken.map((item) => (
-                                    <Link
+                                    <a
+                                        href={item.href}
                                         key={item.name}
-                                        to={item.href}
                                         className={`block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] font-semibold hover:text-blue-500 ${item.name === 'Registrarse' && "block py-2 px-3 rounded-2xl md:rounded-md  md:text-white md:bg-blue-500 md:hover:bg-blue-700 md:hover:text-white text-colorFuente hover:bg-[#f8f7fa] hover:text-blue-500"}`}
                                     >
                                         {item.name}
-                                    </Link>
+                                    </a>
                                 ))) : (
                                 <>
                                     {
@@ -374,13 +387,13 @@ const Nav = () => {
                                             (
                                                 <>
                                                     {navegacionUsuario.map((item) => (
-                                                        <Link
+                                                        <a
                                                             key={item.name}
-                                                            to={item.href}
+                                                            href={item.href}
                                                             className={`block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] font-semibold hover:text-blue-500`}
                                                         >
                                                             {item.name}
-                                                        </Link>
+                                                        </a>
                                                     ))}
                                                 </>
                                             ) :
@@ -388,13 +401,13 @@ const Nav = () => {
                                                 (
                                                     <>
                                                         {navegacionOrganizador.map((item) => (
-                                                            <Link
+                                                            <a
                                                                 key={item.name}
-                                                                to={item.href}
+                                                                href={item.href}
                                                                 className={`block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] font-semibold hover:text-blue-500`}
                                                             >
                                                                 {item.name}
-                                                            </Link>
+                                                            </a>
                                                         ))}
                                                     </>
                                                 ) :
@@ -402,17 +415,17 @@ const Nav = () => {
                                                     (
                                                         <>
                                                             {navegacionAdmin.map((item) => (
-                                                                <Link
+                                                                <a
                                                                     key={item.name}
-                                                                    to={item.href}
+                                                                    href={item.href}
                                                                     className={`block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] font-semibold hover:text-blue-500`}
                                                                 >
                                                                     {item.name}
-                                                                </Link>
+                                                                </a>
                                                             ))}
                                                         </>
                                                     ) :
-                                                    (<>Error</>)
+                                                    (<>Cargando...</>)
                                     }
                                 </>
                             )}

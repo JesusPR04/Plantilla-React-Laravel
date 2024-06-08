@@ -89,7 +89,7 @@ function EditarEvento() {
     const handleFileChange = (e) => {
         const { name, files } = e.target;
         let arrayFotos = Array.from(files)
-        if (files.length + evento.imagenes.length <= 5) {
+        if (files.length + evento.imagenes.length <= 5 && files.length + evento.imagenes.length !== 0) {
             for (let i = 0; i < files.length; i++) {
                 if (arrayFotos[i].type !== 'image/png' && arrayFotos[i].type !== 'image/jpeg' && arrayFotos[i].type !== 'image/jpg') {
                     arrayFotos.splice(i, 1);
@@ -104,7 +104,7 @@ function EditarEvento() {
                 [name]: arrayFotos
             });
         } else {
-            toast.error('Solo se pueden subir 5 imagenes incluyendo las editables')
+            toast.error('Se deben subir entre 0 y 5 imágenes incluyendo las editables y ')
             e.target.value = ''
         }
     };

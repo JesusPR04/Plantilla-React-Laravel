@@ -83,7 +83,7 @@ const Tarjetas = () => {
 
   return (
     <main className='min-h-[calc(100vh-436px)] bg-gray-100 p-10 text-colorFuente'>
-      <ToastContainer />
+      <ToastContainer/>
       <div className="grid gap-6 md:grid-cols-2">
         <div className="rounded-lg border bg-white text-card-foreground shadow-sm" data-v0-t="card">
           <div className="flex flex-col space-y-1.5 p-6">

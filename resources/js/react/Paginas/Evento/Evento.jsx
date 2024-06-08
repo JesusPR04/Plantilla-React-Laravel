@@ -75,28 +75,44 @@ const Evento = () => {
         }
 
         try {
-            if (tarjetas !== false || evento.precio === 0) {
-                if (evento.precio === 0) {
+            if (metodoPago === 'Dinero') {
+                if (tarjetas !== false || evento.precio === 0) {
+                    if (evento.precio === 0) {
+                        await comprarEntrada({
+                            idEvento: id,
+                            cantidad,
+                            metodoPago, // Añadir el método de pago
+                            idTarjeta: ''
+                        });
+                    } else {
+                        await comprarEntrada({
+                            idEvento: id,
+                            cantidad,
+                            metodoPago, // Añadir el método de pago
+                            idTarjeta: selectedTarjeta
+                        });
+                    }
+                    toast.success("Compra realizada con éxito");
+                    setTimeout(() => navigate('/entradas'), 2000); // 3 segundos de demora
+                } else {
+                    toast.info('Necesitas una tarjeta de crédito para comprar entradas')
+                    setTimeout(() => { navigate('/tarjetas') }, 2000)
+                }
+            }else if (metodoPago === 'puntos') {
+                if (precioEnPuntos <= user.puntos) {
                     await comprarEntrada({
                         idEvento: id,
                         cantidad,
                         metodoPago, // Añadir el método de pago
                         idTarjeta: ''
                     });
-                } else {
-                    await comprarEntrada({
-                        idEvento: id,
-                        cantidad,
-                        metodoPago, // Añadir el método de pago
-                        idTarjeta: selectedTarjeta
-                    });
+                    toast.success("Compra realizada con éxito");
+                    setTimeout(() => navigate('/entradas'), 3000);
+                }else{
+                    toast.error('No tiene los suficientes puntos')
                 }
-                toast.success("Compra realizada con éxito");
-                setTimeout(() => navigate('/entradas'), 3000); // 3 segundos de demora
-            } else {
-                toast.info('Necesitas una tarjeta de crédito para comprar entradas')
-                setTimeout(() => { navigate('/tarjetas') }, 2000)
             }
+
         } catch (error) {
             console.error("Error comprando entrada:", error);
             toast.error("Error comprando entrada");
@@ -205,6 +221,9 @@ const Evento = () => {
                                 {evento.descripcion}
                             </p>
                         </div>
+                        <h3 className="text-lg font-medium text-colorFuente">
+                            Entradas <span className="text-red-500 font-bold">*</span>
+                        </h3>
                         {user && user.id === evento.idOrganizador ?
                             (
                                 <div className="w-full flex justify-end">
@@ -242,8 +261,8 @@ const Evento = () => {
                                                     </button>
                                                     {favorito ? (
                                                         <button onClick={() => asignarFavorito(evento.id)}
-                                                            className="bg-red-500 hover:bg-red-700 text-white 
-                                 font-bold py-2 px-4 rounded"
+                                                            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded col-span-2 flex justify-center gap-2
+                                                shadow-lg transition duration-300 transform hover:scale-105 lg:col-span-1"
                                                         >Eliminar de favoritos</button>
                                                     ) : (
                                                         <button
@@ -267,7 +286,6 @@ const Evento = () => {
                                                                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                                                             </svg>
                                                         </button>
-
                                                     )}
                                                 </div>
                                                 <div>
@@ -289,6 +307,7 @@ const Evento = () => {
                                                         value={cantidad}
                                                         onChange={(e) => setCantidad(e.target.value)}
                                                         min="1"
+                                                        max='5'
                                                         className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
                                   focus:ring-blue-500 focus:border-blue-500 block p-2.5"
                                                     />
