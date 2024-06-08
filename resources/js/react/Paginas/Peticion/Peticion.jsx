@@ -165,7 +165,7 @@ const Peticion = () => {
                                     htmlFor="dni"
                                     className="block mb-2 text-sm font-medium text-colorFuente"
                                 >
-                                    DNI
+                                    NIF
                                 </label>
                                 <span className="bg-blue-500 text-white font-semibold px-2 py-1 text-xs rounded-full inline-block">
                                     Requerido

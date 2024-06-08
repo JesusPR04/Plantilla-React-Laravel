@@ -129,7 +129,7 @@ const Admin = () => {
                                                         <span className='capitalize'>{permiso.empresa}</span>
                                                     </div>
                                                     <div className="flex justify-between border-b pb-2 mb-2">
-                                                        <span className="font-semibold">DNI:</span>
+                                                        <span className="font-semibold">NIF:</span>
                                                         <span>{permiso.dni}</span>
                                                     </div>
                                                     <div className="flex justify-between border-b pb-2 mb-2">
