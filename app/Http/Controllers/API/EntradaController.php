@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+<<<<<<< Updated upstream
 use App\Models\User;
 use App\Models\Eventos;
 use App\Models\Entradas;
@@ -9,6 +10,17 @@ use App\Models\Tarjetas;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+=======
+use App\Http\Controllers\Controller;
+use App\Mail\eventoMail;
+use Illuminate\Http\Request;
+use App\Models\Entradas;
+use App\Models\User;
+use App\Models\Eventos;
+use App\Models\Peticiones;
+use BaconQrCode\Encoder\QrCode;
+use Illuminate\Support\Facades\Mail;
+>>>>>>> Stashed changes
 
 class EntradaController extends Controller
 {
@@ -55,6 +67,10 @@ class EntradaController extends Controller
             'idTarjeta' => $tarjeta->id,
         ]);
 
+        if ($entrada) {
+            self::emailEntrada($entrada->idEvento,$entrada->idUsuario,$evento->organizador->id, $entrada->cantidad);
+        }
+
         $user->save();
 
         return response()->json([
@@ -76,6 +92,33 @@ class EntradaController extends Controller
                 'status' => false,
                 'message' => 'No se pudo encontrar la entrada'
             ], 400);
+        }
+    }
+
+    public function emailEntrada($evento_id, $user_id, $organizador_id, $entrada_id)
+    {
+        $evento=Eventos::find($evento_id);
+        $user=User::find($user_id);
+        $organizador=User::find($organizador_id);
+        $entrada=Entradas::find($entrada_id);
+        $empresa=Peticiones::where('idUsuario',$organizador->id)->first()->empresa;
+
+        if(!$empresa){
+            $empresa=$organizador->nombre.' '.$organizador->apellidos;
+        }
+
+        try {
+            Mail::to('prf0005@alu.medac.es')->send(new eventoMail($empresa,$organizador->nombre, $organizador->apellidos, $user->nombre, $user->apellidos, $evento->nombre, $evento->fecha, $evento->hora, $evento->direccion, $evento->precio, $evento->ciudad->nombre, $organizador->nombre, $entrada->cantidad));
+
+            return response()->json([
+                'status' => true, 
+                'message' => 'Correo enviado correctamente'
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
         }
     }
 }

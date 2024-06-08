@@ -14,21 +14,41 @@ class eventoMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $nombre;
+    public $empresa;
+    public $nombreEvento;
+
+    public $nombreOrganizador;
+    public $apellidosOrganizador;
+    public $nombreUsuario;
+    public $apellidosUsuario;
     public $fecha;
     public $hora;
-    public $nPersonas;
+    public $precio;
+    public $organizador;
+    public $ciudad;
+    public $direccion;
+    public $cantidad;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($nombre, $fecha, $hora, $nPersonas) //Constructor
+    public function __construct($empresa, $nombreOrganizador,$apellidosOrganizador,$nombreUsuario,$apellidosUsuario,$nombreEvento, $fecha, $hora, $direccion, $precio, $ciudad, $organizador, $cantidad) //Constructor
     {
-        $this->nombre = $nombre;
+        $this->empresa = $empresa;
+        $this->nombreEvento = $nombreEvento;
+        $this->nombreOrganizador = $nombreOrganizador;
+        $this->apellidosOrganizador = $apellidosOrganizador;
+        $this->nombreUsuario = $nombreUsuario;
+        $this->apellidosUsuario = $apellidosUsuario;
         $this->fecha = $fecha;
         $this->hora = $hora;
-        $this->nPersonas = $nPersonas;
+        $this->direccion = $direccion;
+        $this->precio = $precio;
+        $this->ciudad = $ciudad;
+        $this->organizador = $organizador;
+        $this->cantidad = $cantidad;
     }
+    
     public function envelope(): Envelope
     {
         return new Envelope(
@@ -38,6 +58,7 @@ class eventoMail extends Mailable
     }
     public function build()
     {
-        return $this->view('correo');
+        return $this->view('email.evento');
     }
+    
 }
