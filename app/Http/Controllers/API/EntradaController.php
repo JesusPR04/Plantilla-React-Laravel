@@ -2,15 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
-<<<<<<< Updated upstream
-use App\Models\User;
-use App\Models\Eventos;
-use App\Models\Entradas;
 use App\Models\Tarjetas;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-=======
 use App\Http\Controllers\Controller;
 use App\Mail\eventoMail;
 use Illuminate\Http\Request;
@@ -20,7 +13,6 @@ use App\Models\Eventos;
 use App\Models\Peticiones;
 use BaconQrCode\Encoder\QrCode;
 use Illuminate\Support\Facades\Mail;
->>>>>>> Stashed changes
 
 class EntradaController extends Controller
 {
