@@ -224,7 +224,7 @@ function App() {
     }
 
     const importImage = (ruta) => {
-        return new URL(`../../assets/${ruta}`, import.meta.url).href;
+        return new URL(`../../assets/${ruta}`, import.meta.url).href; 
     };
 
     return (
