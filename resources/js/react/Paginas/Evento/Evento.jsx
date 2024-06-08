@@ -136,7 +136,7 @@ const Evento = () => {
         return <div className='min-h-[calc(100vh-436px)] text-2xl pt-12 font-bold tracking-tight text-colorFuente uppercase text-center'>No se encontró el evento</div>;
     }
 
-    const precioEnPuntos = evento.precio * 3 * cantidad;
+    const precioEnPuntos = evento.precio * 25 * cantidad;
 
     return (
         <section className="bg-gray-100 min-h-[calc(100vh-436px)] py-12 md:py-16 lg:py-20">
