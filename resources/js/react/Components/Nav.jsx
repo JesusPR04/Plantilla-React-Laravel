@@ -46,7 +46,7 @@ export default function Example() {
                   )}
                 </DisclosureButton>
               </div>
-              <div className="flex mx-auto items-center justify-center md:items-stretch md:justify-start xl:flex-row lg:mt-0 flex-col">
+              <div className="flex mx-auto items-center justify-center md:items-stretch md:justify-start xl:flex-row lg:mt-0 flex-col border-2">
                 <div className='flex gap-4 m-auto pt-0 sm:pt-3'>
                   <Link className='flex flex-shrink-0 items-center' to="/">
                     <img
@@ -91,7 +91,7 @@ export default function Example() {
                     />
                   </div>
                 </div>
-                <div className="hidden md:ml-6 md:block pt-2">
+                <div className="hidden md:ml-6 md:block pt-1 ">
                   <div className="flex items-center justify-center gap-4">
                     {!token ? (
                       navegacionSinToken.map((item) => (
