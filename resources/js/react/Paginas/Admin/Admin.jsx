@@ -41,7 +41,7 @@ const Admin = () => {
         comprobarSolicitud({ ...permiso, "decision": true })
             .then(respuesta => {
                 toast.success('Solicitud aceptada')
-                navigate(0)
+                setTimeout(() => navigate(0), 2000)
             })
             .catch(error => toast.error('Error al aceptar la solicitud'));
     };
@@ -50,7 +50,7 @@ const Admin = () => {
         comprobarSolicitud({ ...permiso, "decision": false })
             .then(respuesta => {
                 toast.success('Solicitud rechazada')
-                navigate(0)
+                setTimeout(() => navigate(0), 2000)
             })
             .catch(error => toast.error('Error al rechazar la solicitud'));
     };
