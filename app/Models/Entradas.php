@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Tarjetas;
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -13,7 +14,8 @@ class Entradas extends Model
         'idUsuario',
         'idEvento',
         'cantidad',
-        'fechaCompra'
+        'fechaCompra',
+        'idTarjeta'
     ];
 
     protected $hidden = [
@@ -28,6 +30,11 @@ class Entradas extends Model
     public function usuario()
     {
         return $this->belongsTo(User::class, 'idUsuario');
+    }
+
+    public function tarjeta()
+    {
+        return $this->belongsTo(Tarjetas::class, 'idTarjeta');
     }
 
     public function getEntradasByUser($idUsuario)

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getEventoById, fetchUserData, comprarEntrada, comprobarFavorito, marcarFavorito } from "../../api/requests";
+import { getEventoById, fetchUserData, comprarEntrada, comprobarFavorito, marcarFavorito, getTarjetas } from "../../api/requests";
 import ImageSlider from "../../Components/ImageSlider";
 import imagenDefecto from '../../assets/eventodefecto.png'
 
@@ -12,6 +12,8 @@ const Evento = () => {
     const [evento, setEvento] = useState(null);
     const [favorito, setFavorito] = useState(false);
     const [user, setUser] = useState(null);
+    const [tarjetas, setTarjetas] = useState([]);
+    const [selectedTarjeta, setSelectedTarjeta] = useState()
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [cantidad, setCantidad] = useState(1); // Para manejar la cantidad de entradas a comprar
@@ -47,6 +49,8 @@ const Evento = () => {
                 try {
                     const userData = await fetchUserData(token);
                     setUser(userData);
+                    const userTarjetas = await getTarjetas()
+                    setTarjetas(userTarjetas)
                 } catch (error) {
                     console.error("Error fetching user:", error.message);
                 }
@@ -64,11 +68,13 @@ const Evento = () => {
         }
 
         try {
+            console.log(selectedTarjeta)
             await comprarEntrada({
                 idUsuario: user.id,
                 idEvento: id,
                 cantidad,
                 metodoPago, // Añadir el método de pago
+                idTarjeta: selectedTarjeta
             });
             toast.success("Compra realizada con éxito");
             setTimeout(() => navigate('/entradas'), 3000); // 3 segundos de demora
@@ -258,7 +264,7 @@ const Evento = () => {
                                         :
                                         (
                                             <div>
-                                                <div className="grid grid-cols-2 gap-4">
+                                                <div className={`grid ${metodoPago === 'puntos' ? 'grid-cols-2' : 'grid-cols-2 lg:grid-cols-3'} gap-4`}>
                                                     <input
                                                         type="number"
                                                         value={cantidad}
@@ -273,12 +279,27 @@ const Evento = () => {
                                                         className="bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg
                                   focus:ring-blue-500 focus:border-blue-500 block p-2.5"
                                                     >
-                                                        <option value="dinero">Dinero</option>
+                                                        <option value="dinero">Tarjeta</option>
                                                         <option value="puntos">Puntos</option>
+                                                    </select>
+                                                    <select
+                                                        value={selectedTarjeta}
+                                                        onChange={(e) => setSelectedTarjeta(e.target.value)}
+                                                        className={`bg-gray-50 border border-gray-300 text-colorFuente sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 ${metodoPago === 'puntos' && 'hidden'} col-span-2 lg:col-span-1`}
+                                                    >
+                                                        {tarjetas.length > 0 ? (
+                                                            tarjetas.map((tarjeta) => (
+                                                                <option key={tarjeta.id} value={tarjeta.id}>
+                                                                    {tarjeta.numero}
+                                                                </option>
+                                                            ))
+                                                        ) : (
+                                                            <option value="sin-tarjetas">No tienes ninguna tarjeta de crédito</option>
+                                                        )} 
                                                     </select>
                                                     <button
                                                         onClick={handleCompra}
-                                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded col-span-2 lg:col-span-1"
+                                                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded col-span-2 lg:col-span-1 ${metodoPago === 'dinero' && ''}`}
                                                     >
                                                         Comprar Entradas
                                                     </button>
@@ -290,8 +311,8 @@ const Evento = () => {
                                                     ) : (
                                                         <button
                                                             onClick={() => asignarFavorito(evento.id)}
-                                                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded col-span-2 flex justify-center gap-2
-                                                shadow-lg transition duration-300 transform hover:scale-105 lg:col-span-1"
+                                                            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded col-span-2 flex justify-center gap-2
+                                                shadow-lg transition duration-300 transform hover:scale-105 lg:col-span-1 ${metodoPago === 'dinero' && ''}`}
                                                         >
                                                             <span>Añadir a Favoritos</span>
                                                             <svg
