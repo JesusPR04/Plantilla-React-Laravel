@@ -142,13 +142,13 @@ const Nav = () => {
                                         {/* HEADERS DINAMICOS */}
                                         {!token ? (
                                             navegacionSinToken.map((item) => (
-                                                <Link
+                                                <a
                                                     key={item.name}
                                                     href={item.href}
                                                     className={`block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] font-semibold hover:text-blue-500 ${item.name === 'Registrarse' && "block py-2 px-3 rounded-2xl md:rounded-md  md:text-white md:bg-blue-500 md:hover:bg-blue-700 md:hover:text-white text-colorFuente hover:bg-[#f8f7fa] hover:text-blue-500"}`}
                                                 >
                                                     {item.name}
-                                                </Link>
+                                                </a>
                                             ))) : (
                                             <>
                                                 {
