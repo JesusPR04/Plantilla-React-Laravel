@@ -5,6 +5,7 @@ import './index.css'
 
 import App from './Paginas/Index/App.jsx'
 import Header from './Components/Header.jsx'
+import Nav from './Components/Nav.jsx'
 import Footer from './Components/Footer.jsx'
 import Login from './Paginas/Login/Login.jsx'
 import Register from './Paginas/Register/Register.jsx'
@@ -29,7 +30,7 @@ import EditarEvento from './Paginas/Evento/EditarEvento.jsx'
 
 function AppLayout() {
   return <>
-    <Header /> 
+    <Nav /> 
     <Outlet />
     <Footer />
   </>
