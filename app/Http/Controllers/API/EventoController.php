@@ -151,7 +151,7 @@ class EventoController extends Controller
                 // Nombre de la imagen idEvento más id único aleatorio más la extensión de la imagen
                 $imageName = 'Event' . $evento->id . '_' . $uuid . '.' . $image->getClientOriginalExtension();
                 // Guarda la imagen en la carpeta 
-                $image->storeAs('public/images', $imageName);
+                $image->move(resource_path('js/react/assets/images'), $imageName);
 
                 $imagen = new Imagenes();
                 $imagen->ruta = 'images/' . $imageName; // Guarda la ruta de la imagen
@@ -260,7 +260,7 @@ class EventoController extends Controller
                     // Nombre de la imagen idEvento más id único aleatorio más la extensión de la imagen
                     $imageName = 'Event' . $id . '_' . $uuid . '.' . $image->getClientOriginalExtension();
                     // Guarda la imagen en la carpeta
-                    $image->storeAs('public/images', $imageName);
+                    $image->move(resource_path('js/react/assets/images'), $imageName);
     
                     $imagen = new Imagenes();
                     $imagen->ruta = 'images/' . $imageName; // Guarda la ruta de la imagen

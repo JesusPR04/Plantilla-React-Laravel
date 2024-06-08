@@ -10,7 +10,8 @@ import img from '../../assets/misEventos.jpg';
 import { fetchUserData } from "../../api/requests";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { PATH_API } from "../../api/env";
+import config from "../../../app";
+
 
 const MisEventos = () => {
     const navigate = useNavigate()
@@ -71,7 +72,8 @@ const MisEventos = () => {
         )
     }
     const importImage = (ruta) => {
-        return `http://localhost/storage/${ruta}`;
+        console.log(config.IMAGE_BASE_URL);
+        return new URL(`${config.IMAGE_BASE_URL}${ruta}`, import.meta.url).href;
     };
 
     if (eventos.length === 0 && permiso) {
