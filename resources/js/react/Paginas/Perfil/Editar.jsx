@@ -69,6 +69,7 @@ const Editar = () => {
         try {
             await updateUserData(userData);
             navigate('/perfil');
+            navigate(0)
         } catch (error) {
             console.error('Error updating user data:', error);
         }
