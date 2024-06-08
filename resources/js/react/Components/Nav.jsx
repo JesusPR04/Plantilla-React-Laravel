@@ -75,7 +75,7 @@ const Nav = () => {
     }
 
     return (
-        <Disclosure as="nav" className="bg-gray-700">
+        <Disclosure as="nav">
             {({ open }) => (
                 <>
                     <div className="mx-auto max-w-full px-2 lg:flex lg:justify-center ">
@@ -96,7 +96,7 @@ const Nav = () => {
                                 <div className='flex gap-4 m-auto pt-0 '>
                                     <Link className='flex flex-shrink-0 items-center ' to="/">
                                         <img
-                                            className="h-8 w-auto"
+                                            className="h-8 w-auto "
                                             src={logo}
                                             alt="Eventia"
                                         />
@@ -138,14 +138,14 @@ const Nav = () => {
                                     </div>
                                 </div>
                                 <div className="hidden md:ml-6 md:block pt-1">
-                                    <div className="flex items-center justify-center gap-4">
+                                    <div className="flex items-center justify-start gap-4">
                                         {/* HEADERS DINAMICOS */}
                                         {!token ? (
                                             navegacionSinToken.map((item) => (
                                                 <Link
                                                     key={item.name}
                                                     to={item.href}
-                                                    className={`text-white hover:text-blue-500 rounded-md px-3 font-medium flex items-center ${item.name === 'Registrarse' && "block py-2 px-3 rounded-2xl md:rounded-md  md:text-white md:bg-blue-500 md:hover:bg-blue-700 md:hover:text-white text-colorFuente hover:bg-[#f8f7fa] hover:text-blue-500"}`}
+                                                    className={`block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] font-semibold hover:text-blue-500 ${item.name === 'Registrarse' && "block py-2 px-3 rounded-2xl md:rounded-md  md:text-white md:bg-blue-500 md:hover:bg-blue-700 md:hover:text-white text-colorFuente hover:bg-[#f8f7fa] hover:text-blue-500"}`}
                                                 >
                                                     {item.name}
                                                 </Link>
@@ -159,42 +159,42 @@ const Nav = () => {
                                                                     <Link
                                                                         key={item.name}
                                                                         to={item.href}
-                                                                        className={`text-white hover:text-blue-500 rounded-md px-3 font-medium flex items-center`}
+                                                                        className={`block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500`}
                                                                     >
                                                                         {item.name}
                                                                     </Link>
                                                                 ))}
                                                             </>
                                                         ) :
-                                                    user.rol === 'Organizador' ?
-                                                        (
-                                                            <>
-                                                                {navegacionOrganizador.map((item) => (
-                                                                    <Link
-                                                                        key={item.name}
-                                                                        to={item.href}
-                                                                        className={`text-white hover:text-blue-500 rounded-md px-3 font-medium flex items-center`}
-                                                                    >
-                                                                        {item.name}
-                                                                    </Link>
-                                                                ))}
-                                                            </>
-                                                        ) :
-                                                    user.rol === 'Administrador' ?
-                                                        (
-                                                            <>
-                                                                {navegacionAdmin.map((item) => (
-                                                                    <Link
-                                                                        key={item.name}
-                                                                        to={item.href}
-                                                                        className={`text-white hover:text-blue-500 rounded-md px-3 font-medium flex items-center`}
-                                                                    >
-                                                                        {item.name}
-                                                                    </Link>
-                                                                ))}
-                                                            </>
-                                                        ) :
-                                                    (<>Error</>)
+                                                        user.rol === 'Organizador' ?
+                                                            (
+                                                                <>
+                                                                    {navegacionOrganizador.map((item) => (
+                                                                        <Link
+                                                                            key={item.name}
+                                                                            to={item.href}
+                                                                            className={`block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] hover:text-blue-500`}
+                                                                        >
+                                                                            {item.name}
+                                                                        </Link>
+                                                                    ))}
+                                                                </>
+                                                            ) :
+                                                            user.rol === 'Administrador' ?
+                                                                (
+                                                                    <>
+                                                                        {navegacionAdmin.map((item) => (
+                                                                            <Link
+                                                                                key={item.name}
+                                                                                to={item.href}
+                                                                                className={`block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] font-semibold hover:text-blue-500`}
+                                                                            >
+                                                                                {item.name}
+                                                                            </Link>
+                                                                        ))}
+                                                                    </>
+                                                                ) :
+                                                                (<>Error</>)
                                                 }
                                             </>
                                         )}
@@ -206,10 +206,16 @@ const Nav = () => {
                                 {/* Profile dropdown */}
                                 <Menu as="div" className="relative ml-3">
                                     <div>
-                                        <MenuButton className="relative flex text-sm bg-blue-500 hover:bg-blue-700 hover:scale-105 duration-100 rounded focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 ">
+                                        <MenuButton className="relative flex text-xs bg-blue-500 hover:bg-blue-700 rounded focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 ">
                                             <span className="absolute -inset-1.5" />
                                             <span className="sr-only">Abrir menú de usuario</span>
-                                            <p className='px-4 py-2 text-white  font-semibold'>{user.nombre}</p>
+                                            <p className='px-4 py-2 text-white capitalize font-semibold flex items-center'>
+                                                {user.nombre}
+                                                <svg
+                                                    className="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+                                                </svg>
+                                            </p>
                                         </MenuButton>
                                     </div>
                                     <Transition
@@ -321,7 +327,7 @@ const Nav = () => {
                     </div>
 
                     <DisclosurePanel className="xs:hidden">
-                        <div className="space-y-1 px-2 pb-3 pt-2">
+                        <div className="space-y-1 px-2 py-4">
                             <div className="relative md:block mx-2">
                                 <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                                     <svg
@@ -352,20 +358,64 @@ const Nav = () => {
                                     onKeyDown={(e) => buscarEventos(e)}
                                 />
                             </div>
-                            {navegacionSinToken.map((item) => (
-                                <DisclosureButton
-                                    key={item.name}
-                                    as="a"
-                                    href={item.href}
-                                    className={classNames(
-                                        item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                        'block rounded-md px-3 py-2 text-base font-medium'
-                                    )}
-                                    aria-current={item.current ? 'page' : undefined}
-                                >
-                                    {item.name}
-                                </DisclosureButton>
-                            ))}
+                            {!token ? (
+                                navegacionSinToken.map((item) => (
+                                    <Link
+                                        key={item.name}
+                                        to={item.href}
+                                        className={`block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] font-semibold hover:text-blue-500 ${item.name === 'Registrarse' && "block py-2 px-3 rounded-2xl md:rounded-md  md:text-white md:bg-blue-500 md:hover:bg-blue-700 md:hover:text-white text-colorFuente hover:bg-[#f8f7fa] hover:text-blue-500"}`}
+                                    >
+                                        {item.name}
+                                    </Link>
+                                ))) : (
+                                <>
+                                    {
+                                        user.rol === 'Usuario' ?
+                                            (
+                                                <>
+                                                    {navegacionUsuario.map((item) => (
+                                                        <Link
+                                                            key={item.name}
+                                                            to={item.href}
+                                                            className={`block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] font-semibold hover:text-blue-500`}
+                                                        >
+                                                            {item.name}
+                                                        </Link>
+                                                    ))}
+                                                </>
+                                            ) :
+                                            user.rol === 'Organizador' ?
+                                                (
+                                                    <>
+                                                        {navegacionOrganizador.map((item) => (
+                                                            <Link
+                                                                key={item.name}
+                                                                to={item.href}
+                                                                className={`block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] font-semibold hover:text-blue-500`}
+                                                            >
+                                                                {item.name}
+                                                            </Link>
+                                                        ))}
+                                                    </>
+                                                ) :
+                                                user.rol === 'Administrador' ?
+                                                    (
+                                                        <>
+                                                            {navegacionAdmin.map((item) => (
+                                                                <Link
+                                                                    key={item.name}
+                                                                    to={item.href}
+                                                                    className={`block py-2 px-3 text-colorFuente rounded-2xl hover:bg-[#f8f7fa] font-semibold hover:text-blue-500`}
+                                                                >
+                                                                    {item.name}
+                                                                </Link>
+                                                            ))}
+                                                        </>
+                                                    ) :
+                                                    (<>Error</>)
+                                    }
+                                </>
+                            )}
                         </div>
                     </DisclosurePanel>
                 </>

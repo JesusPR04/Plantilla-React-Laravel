@@ -25,6 +25,7 @@ class Peticiones extends Model
         'descripcion',
         'dni',
         'documento',
+        'comentario',
         'idUsuario'
     ];
 

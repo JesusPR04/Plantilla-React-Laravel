@@ -17,7 +17,7 @@ const Peticion = () => {
         empresa: "",
         dni: "",
         documento: null,
-        comentarios: ""
+        comentarios: null
     });
     const [errorVisible, setError] = useState(false);
 

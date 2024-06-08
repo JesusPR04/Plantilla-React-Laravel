@@ -67,7 +67,6 @@ class OrganizadorController extends Controller
 
             $documento = $request->file('documento');
             $nombreFichero = time() . '_' . $documento->getClientOriginalName();
-
             // Guarda el documento en el Storage en la carpeta peticiones
             if ($documento->storeAs('peticiones', $nombreFichero)) {
 
