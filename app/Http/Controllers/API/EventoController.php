@@ -144,7 +144,7 @@ class EventoController extends Controller
         $evento->save();
 
         // Comprueba si en la solicitud ($request) hay un archivo con el nombre imagenes.
-        /* if ($request->hasFile('imagenes')) {
+        if ($request->hasFile('imagenes')) {
             // Iteración sobre cada imagen
             foreach ($request->file('imagenes') as $image) {
                 $uuid = Str::uuid(); // Genera un UUID único
@@ -158,22 +158,7 @@ class EventoController extends Controller
                 $imagen->idEvento = $evento->id; // Asocia la imagen con el evento
                 $imagen->save();
             }
-        }  */
-        if ($request->hasFile('imagenes')) {
-            // Iteración sobre cada imagen
-            foreach ($request->file('imagenes') as $image) {
-                $uuid = Str::uuid(); // Genera un UUID único
-                // Nombre de la imagen idEvento más id único aleatorio más la extensión de la imagen
-                $imageName = 'Event' . $evento->id . '_' . $uuid . '.' . $image->getClientOriginalExtension();
-                // Guarda la imagen en la carpeta 
-                $image->move(public_path('images'), $imageName);
-
-                $imagen = new Imagenes();
-                $imagen->ruta = 'images/' . $imageName; // Guarda la ruta de la imagen
-                $imagen->idEvento = $evento->id; // Asocia la imagen con el evento
-                $imagen->save();
-            }
-        }
+        }  
 
         if ($evento) {
             return response()->json([
