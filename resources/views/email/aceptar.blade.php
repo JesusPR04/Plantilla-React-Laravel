@@ -50,7 +50,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>¡ Bienvenido a <span id="tituloEventia">Eventia</span> <?php echo $nombre ?></h1>
+            <h1>¡ Bienvenido a <span id="tituloEventia">Eventia</span> <?php echo $nombre ?> !</h1>
         </div>
         <div class="content">
             <p>¡Nos complace darte la bienvenida a la familia de Eventia! Estamos emocionados de tenerte como parte de nuestra comunidad de organizadores de eventos.</p>
@@ -58,7 +58,7 @@
             <p>Estamos aquí para ayudarte en cada paso del camino. Si tienes alguna pregunta o necesitas ayuda, no dudes en ponerte en contacto con nuestro equipo de soporte en cualquier momento.</p>
             <p>Gracias por unirte a nosotros en esta emocionante aventura. ¡Esperamos ver tus eventos brillar en Eventia!</p>
             <p>Saludos cordiales,</p>
-            <p>El equipo de Eventia</p>
+            <p>El equipo de Eventia.</p>
         </div>
         <div class="footer">
             <p>Este es un mensaje generado automáticamente, por favor no respondas a este correo.</p>

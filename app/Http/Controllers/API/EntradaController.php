@@ -57,6 +57,8 @@ class EntradaController extends Controller
                 'cantidad' => $request->cantidad,
                 'idTarjeta' => $tarjeta->id,
             ]);
+            $evento->aforoDisponible -= 1;
+            $evento->save();
         } else {
             $entrada = Entradas::create([
                 'idUsuario' => $request->user()->id,
@@ -65,9 +67,9 @@ class EntradaController extends Controller
             ]);
         }
 
-        /* if ($entrada) {
+        if ($entrada) {
             self::emailEntrada($entrada->idEvento, $request->user()->id, $evento->organizador->id, $entrada->cantidad);
-        } */
+        }
 
         $user->save();
 
@@ -92,6 +94,8 @@ class EntradaController extends Controller
             $usuario->save();
         }
         if (isset($entrada)) {
+            $evento->aforoDisponible += 1;
+            $evento->save();
             $entrada->delete();
             return response()->json([
                 'status' => true,
@@ -118,7 +122,7 @@ class EntradaController extends Controller
         }
 
         try {
-            Mail::to('prf0005@alu.medac.es')->send(new eventoMail($empresa, $organizador->nombre, $organizador->apellidos, $user->nombre, $user->apellidos, $evento->nombre, $evento->fecha, $evento->hora, $evento->direccion, $evento->precio, $evento->ciudad->nombre, $organizador->nombre, $entrada->cantidad));
+            Mail::to($user->email)->send(new eventoMail($empresa, $organizador->nombre, $organizador->apellidos, $user->nombre, $user->apellidos, $evento->nombre, $evento->fecha, $evento->hora, $evento->direccion, $evento->precio, $evento->ciudad->nombre, $organizador->nombre, $entrada->cantidad));
 
             return response()->json([
                 'status' => true,

@@ -17,9 +17,11 @@ class rechazarMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public $nombre; 
+
+    public function __construct($nombre)
     {
-        //
+        $this->nombre = $nombre;
     }
 
     /**
@@ -29,7 +31,7 @@ class rechazarMail extends Mailable
     {
         return new Envelope(
             from: new Address('eventia.eventos.spain@gmail.com', 'Eventia'),
-            subject: 'Entrada reservada',
+            subject: 'Petición rechazada',
         );
     }
 
