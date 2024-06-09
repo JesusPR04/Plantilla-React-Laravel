@@ -15,12 +15,14 @@ class aceptarMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $nombre;
+    
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($nombre)
     {
-        //
+        $this->nombre = $nombre;
     }
 
     /**
@@ -30,7 +32,7 @@ class aceptarMail extends Mailable
     {
         return new Envelope(
             from: new Address('eventia.eventos.spain@gmail.com', 'Eventia'),
-            subject: 'Entrada reservada',
+            subject: 'Petición aceptada',
         );
     }
     public function build()
