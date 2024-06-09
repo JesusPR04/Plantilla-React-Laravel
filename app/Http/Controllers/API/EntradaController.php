@@ -115,10 +115,17 @@ class EntradaController extends Controller
         $user = User::find($user_id);
         $organizador = User::find($organizador_id);
         $entrada = Entradas::find($entrada_id);
-        $empresa = Peticiones::where('idUsuario', $organizador->id)->first()->empresa;
+        $peticion = Peticiones::where('idUsuario', $organizador->id)->first();
 
+
+        if ($peticion) {
+            $empresa=$peticion->empresa;
+        }
+    
         if (!$empresa) {
             $empresa = $organizador->nombre . ' ' . $organizador->apellidos;
+        }else{
+            $empresa ='Empresa de '. $organizador->nombre.' '.$organizador->apellidos; 
         }
 
         try {
