@@ -118,7 +118,7 @@ class EntradaController extends Controller
         }
 
         try {
-            Mail::to('prf0005@alu.medac.es')->send(new eventoMail($empresa, $organizador->nombre, $organizador->apellidos, $user->nombre, $user->apellidos, $evento->nombre, $evento->fecha, $evento->hora, $evento->direccion, $evento->precio, $evento->ciudad->nombre, $organizador->nombre, $entrada->cantidad));
+            Mail::to($user->email)->send(new eventoMail($empresa, $organizador->nombre, $organizador->apellidos, $user->nombre, $user->apellidos, $evento->nombre, $evento->fecha, $evento->hora, $evento->direccion, $evento->precio, $evento->ciudad->nombre, $organizador->nombre, $entrada->cantidad));
 
             return response()->json([
                 'status' => true,
