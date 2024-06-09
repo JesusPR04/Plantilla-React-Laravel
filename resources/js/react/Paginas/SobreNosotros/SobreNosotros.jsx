@@ -2,6 +2,7 @@ import React from 'react'
 import Card from './Card'
 import avatarJesus from '../../assets/Avatar_Jesus.jpg'
 import avatarJose from '../../assets/Avatar_Jose.jpeg'
+import avatarPablo from '../../assets/pablofoto.png'
 
 function SobreNosotros() {
     return (
@@ -45,7 +46,7 @@ function SobreNosotros() {
                             habilidades={['Laravel', 'PHP', 'Base de datos MySQL']}
                         />
                         <Card 
-                            avatar={''}
+                            avatar={avatarPablo}
                             nombre={"Pablo Rino Flores"} 
                             email={"prf0005@alu.medac.es"}
                             especialidad={"Desarrollador Web"}
