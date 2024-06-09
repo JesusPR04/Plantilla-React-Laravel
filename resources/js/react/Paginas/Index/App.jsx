@@ -225,7 +225,7 @@ function App() {
 
     const importImage = (ruta) => {
         /* return new URL(`../../assets/${ruta}`, import.meta.url).href;  */
-        return `https://proyecto2.medacarena.com.es${ruta}`
+        return `https://proyecto2.medacarena.com.es/${ruta}`
     };
 
     return (
