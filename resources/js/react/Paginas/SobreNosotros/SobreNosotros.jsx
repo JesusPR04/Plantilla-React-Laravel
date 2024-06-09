@@ -3,6 +3,7 @@ import Card from './Card'
 import avatarJesus from '../../assets/Avatar_Jesus.jpg'
 import avatarJose from '../../assets/Avatar_Jose.jpeg'
 import avatarPablo from '../../assets/pablofoto.png'
+import avatarDiego from '../../assets/diegoavatar.jpg'
 
 function SobreNosotros() {
     return (
@@ -38,7 +39,7 @@ function SobreNosotros() {
                             habilidades={['React', 'JavaScript', 'TailwindCSS']}
                         />
                         <Card 
-                            avatar={''}
+                            avatar={avatarDiego}
                             nombre={"Diego Mendigorri Pérez"} 
                             email={"dmp0005@alu.medac.es"}
                             especialidad={"Desarrollador Web"}
