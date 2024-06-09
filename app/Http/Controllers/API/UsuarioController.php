@@ -10,16 +10,6 @@ use Illuminate\Support\Facades\Validator;
 
 class UsuarioController extends Controller
 {
-    public function correoPrueba(){
-        try {
-            Mail::to('jpc0016@alu.medac.es')->send(new eventoMail(12,12,12,12));
-            dd('enviado');
-        } catch (\Throwable $th) {
-            dd('No enviado');
-        }
-        
-    }
-
     public function updateUserData(Request $request)
     {
         $user = $request->user();
