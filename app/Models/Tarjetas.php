@@ -24,6 +24,7 @@ class Tarjetas extends Model
         'numero',
         'caducidad',
         'cvv',
+        'idTarjeta',
         'idUsuario'
     ];
 

@@ -75,7 +75,7 @@ const Evento = () => {
         }
 
         try {
-            if (metodoPago === 'Dinero') {
+            if (metodoPago === 'dinero') {
                 if (tarjetas !== false || evento.precio === 0) {
                     if (evento.precio === 0) {
                         await comprarEntrada({

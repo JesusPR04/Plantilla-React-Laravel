@@ -40,7 +40,7 @@ class EntradaController extends Controller
             }
             $user->puntos -= $costoEnPuntos;
         } else {
-            $user->puntos += $puntosGanados;
+            $user->puntos += $costoEnPuntos;
         }
 
         if ($evento->precio > 0 && $request->metodoPago === 'dinero') {
@@ -84,13 +84,15 @@ class EntradaController extends Controller
         $entrada = Entradas::where('idEvento', $id)->where('idUsuario', $request->user()->id)->first();
         $evento = Eventos::where('id', $entrada->idEvento)->first();
         //Devolver puntos en caso de pago con puntos
-        if ($entrada->idtarjeta === null && $evento->precio > 0) {
-            $usuario = $request->user();
-
-            $puntosGanados = $evento->precio * $entrada->cantidad;
-            $costoEnPuntos = $puntosGanados * 25;
+        $puntosGanados = $evento->precio * $entrada->cantidad;
+        $costoEnPuntos = $puntosGanados * 25;
+        $usuario = $request->user();
+        if ($entrada->idTarjeta === null && $evento->precio > 0) {
 
             $usuario->puntos += $costoEnPuntos;
+            $usuario->save();
+        } else {
+            $usuario->puntos -= $costoEnPuntos;
             $usuario->save();
         }
         if (isset($entrada)) {
@@ -116,14 +118,14 @@ class EntradaController extends Controller
         $organizador = User::find($organizador_id);
         $entrada = Entradas::find($entrada_id);
         $peticion = Peticiones::where('idUsuario', $organizador->id)->first();
-
+        $empresa = false;
 
         if ($peticion) {
-            $empresa=$peticion->empresa;
+            $empresa = $peticion->empresa;
         }
-    
+
         if (!$empresa) {
-            $empresa ='Empresa de '. $organizador->nombre.' '.$organizador->apellidos; 
+            $empresa = 'Empresa de ' . $organizador->nombre . ' ' . $organizador->apellidos;
         }
 
         try {
