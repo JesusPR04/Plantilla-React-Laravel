@@ -98,7 +98,7 @@ const Evento = () => {
                     toast.info('Necesitas una tarjeta de crédito para comprar entradas')
                     setTimeout(() => { navigate('/tarjetas') }, 2000)
                 }
-            }else if (metodoPago === 'puntos') {
+            } else if (metodoPago === 'puntos') {
                 if (precioEnPuntos <= user.puntos) {
                     await comprarEntrada({
                         idEvento: id,
@@ -108,7 +108,7 @@ const Evento = () => {
                     });
                     toast.success("Compra realizada con éxito");
                     setTimeout(() => navigate('/entradas'), 3000);
-                }else{
+                } else {
                     toast.error('No tiene los suficientes puntos')
                 }
             }
@@ -221,9 +221,6 @@ const Evento = () => {
                                 {evento.descripcion}
                             </p>
                         </div>
-                        <h3 className="text-lg font-medium text-colorFuente">
-                            Entradas <span className="text-red-500 font-bold">*</span>
-                        </h3>
                         {user && user.id === evento.idOrganizador ?
                             (
                                 <div className="w-full flex justify-end">
@@ -301,6 +298,9 @@ const Evento = () => {
                                         :
                                         (
                                             <div>
+                                                <h3 className="text-lg font-medium text-colorFuente">
+                                                    Entradas <span className="text-red-500 font-bold">*</span>
+                                                </h3>
                                                 <div className={`grid ${metodoPago === 'puntos' ? 'grid-cols-2' : 'grid-cols-2 lg:grid-cols-3'} gap-4`}>
                                                     <input
                                                         type="number"
