@@ -123,8 +123,6 @@ class EntradaController extends Controller
         }
     
         if (!$empresa) {
-            $empresa = $organizador->nombre . ' ' . $organizador->apellidos;
-        }else{
             $empresa ='Empresa de '. $organizador->nombre.' '.$organizador->apellidos; 
         }
 
