@@ -158,7 +158,7 @@ class EventoController extends Controller
                 $imagen->idEvento = $evento->id; // Asocia la imagen con el evento
                 $imagen->save();
             }
-        } 
+        }  
 
         if ($evento) {
             return response()->json([
