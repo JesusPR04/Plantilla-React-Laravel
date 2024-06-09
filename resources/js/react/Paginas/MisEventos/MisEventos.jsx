@@ -10,7 +10,6 @@ import img from '../../assets/misEventos.jpg';
 import { fetchUserData } from "../../api/requests";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import config from "../../../app";
 
 
 const MisEventos = () => {
@@ -72,8 +71,7 @@ const MisEventos = () => {
         )
     }
     const importImage = (ruta) => {
-        console.log(config.IMAGE_BASE_URL);
-        return new URL(`${config.IMAGE_BASE_URL}${ruta}`, import.meta.url).href;
+        return new URL(`../../assets/${ruta}`, import.meta.url).href;
     };
 
     if (eventos.length === 0 && permiso) {
