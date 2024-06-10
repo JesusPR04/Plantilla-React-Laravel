@@ -68,7 +68,7 @@ class EntradaController extends Controller
         }
 
         if ($entrada) {
-            self::emailEntrada($entrada->idEvento, $request->user()->id, $evento->organizador->id, $entrada->cantidad);
+            self::emailEntrada($entrada->idEvento, $request->user()->id, $evento->idOrganizador, $entrada->cantidad);
         }
 
         $user->save();
